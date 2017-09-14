@@ -3,5 +3,5 @@
 //
 
 #define HAS_LIBCXX
-#import "Structure.h"
-#import "StructureSLAM.h"
+#import <Structure/Structure.h>
+#import <Structure/StructureSLAM.h>
