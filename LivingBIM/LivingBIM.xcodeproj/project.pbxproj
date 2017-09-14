@@ -7,27 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2BE54D9A1F6A440D00F2F424 /* Structure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE54D991F6A440D00F2F424 /* Structure.framework */; };
 		2BE54D9C1F6A499400F2F424 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE54D9B1F6A499400F2F424 /* libz.1.dylib */; };
 		2BE54D9E1F6A49C900F2F424 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE54D9D1F6A49C900F2F424 /* ExternalAccessory.framework */; };
 		2BE54DA01F6A49D100F2F424 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE54D9F1F6A49D100F2F424 /* ImageIO.framework */; };
 		2BE54DA21F6A49D700F2F424 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE54DA11F6A49D700F2F424 /* Accelerate.framework */; };
-		2BE54DA51F6A4AC300F2F424 /* StructureBridgingHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE54DA41F6A4AC300F2F424 /* StructureBridgingHeader.m */; };
 		2BEDC3551F69EF1B00C27C36 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEDC3541F69EF1B00C27C36 /* AppDelegate.swift */; };
 		2BEDC3571F69EF1B00C27C36 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEDC3561F69EF1B00C27C36 /* ViewController.swift */; };
 		2BEDC35A1F69EF1B00C27C36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BEDC3581F69EF1B00C27C36 /* Main.storyboard */; };
 		2BEDC35C1F69EF1B00C27C36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BEDC35B1F69EF1B00C27C36 /* Assets.xcassets */; };
 		2BEDC35F1F69EF1B00C27C36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BEDC35D1F69EF1B00C27C36 /* LaunchScreen.storyboard */; };
+		6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1709AA1F6A6AD000570746 /* Structure.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2BE54D991F6A440D00F2F424 /* Structure.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Structure.framework; sourceTree = "<group>"; };
 		2BE54D9B1F6A499400F2F424 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		2BE54D9D1F6A49C900F2F424 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		2BE54D9F1F6A49D100F2F424 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		2BE54DA11F6A49D700F2F424 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		2BE54DA31F6A4AC300F2F424 /* LivingBIM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LivingBIM-Bridging-Header.h"; sourceTree = "<group>"; };
-		2BE54DA41F6A4AC300F2F424 /* StructureBridgingHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StructureBridgingHeader.m; sourceTree = "<group>"; };
 		2BEDC3511F69EF1B00C27C36 /* LivingBIM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LivingBIM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BEDC3541F69EF1B00C27C36 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BEDC3561F69EF1B00C27C36 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,6 +31,8 @@
 		2BEDC35B1F69EF1B00C27C36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2BEDC35E1F69EF1B00C27C36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2BEDC3601F69EF1B00C27C36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D1709AA1F6A6AD000570746 /* Structure.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Structure.framework; sourceTree = "<group>"; };
+		6D1709AC1F6A6B2700570746 /* LivingBIM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LivingBIM-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,11 +40,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */,
 				2BE54DA21F6A49D700F2F424 /* Accelerate.framework in Frameworks */,
 				2BE54DA01F6A49D100F2F424 /* ImageIO.framework in Frameworks */,
 				2BE54D9E1F6A49C900F2F424 /* ExternalAccessory.framework in Frameworks */,
 				2BE54D9C1F6A499400F2F424 /* libz.1.dylib in Frameworks */,
-				2BE54D9A1F6A440D00F2F424 /* Structure.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,11 +54,11 @@
 		2BC0482A1F69F35C00407536 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6D1709AA1F6A6AD000570746 /* Structure.framework */,
 				2BE54DA11F6A49D700F2F424 /* Accelerate.framework */,
 				2BE54D9F1F6A49D100F2F424 /* ImageIO.framework */,
 				2BE54D9D1F6A49C900F2F424 /* ExternalAccessory.framework */,
 				2BE54D9B1F6A499400F2F424 /* libz.1.dylib */,
-				2BE54D991F6A440D00F2F424 /* Structure.framework */,
 			);
 			name = Frameworks;
 			path = LivingBIM;
@@ -92,8 +90,7 @@
 				2BEDC35B1F69EF1B00C27C36 /* Assets.xcassets */,
 				2BEDC35D1F69EF1B00C27C36 /* LaunchScreen.storyboard */,
 				2BEDC3601F69EF1B00C27C36 /* Info.plist */,
-				2BE54DA41F6A4AC300F2F424 /* StructureBridgingHeader.m */,
-				2BE54DA31F6A4AC300F2F424 /* LivingBIM-Bridging-Header.h */,
+				6D1709AC1F6A6B2700570746 /* LivingBIM-Bridging-Header.h */,
 			);
 			path = LivingBIM;
 			sourceTree = "<group>";
@@ -173,7 +170,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BEDC3571F69EF1B00C27C36 /* ViewController.swift in Sources */,
-				2BE54DA51F6A4AC300F2F424 /* StructureBridgingHeader.m in Sources */,
 				2BEDC3551F69EF1B00C27C36 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,6 +301,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 92MEC287CA;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/LivingBIM",
@@ -327,6 +324,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 92MEC287CA;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/LivingBIM",

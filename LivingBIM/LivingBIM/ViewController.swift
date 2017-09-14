@@ -16,6 +16,10 @@ class ViewController: UIViewController, STSensorControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // For logging
+        let error: NSErrorPointer = nil
+        STWirelessLog.broadcastLogsToWirelessConsole(atAddress: "192.168.1.2", usingPort: 4999, error: error)
+        
         // Set delegate
         STSensorController.shared().delegate = self
         
@@ -30,7 +34,6 @@ class ViewController: UIViewController, STSensorControllerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("View Appear")
         if tryInitializeSensor() && STSensorController.shared().isConnected() {
             tryStartStreaming()
         }
@@ -41,6 +44,7 @@ class ViewController: UIViewController, STSensorControllerDelegate {
     }
     
     func tryInitializeSensor() -> Bool {
+        print("Initializing Sensor")
         let result = STSensorController.shared().initializeSensorConnection()
         print(result.rawValue)
         if result == .alreadyInitialized || result == .success {
