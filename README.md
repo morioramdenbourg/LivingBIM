@@ -1,88 +1,32 @@
-# Project Title
+# LivingBIM
 
-One Paragraph of project description goes here
+LivingBIM iOS application to collect data by connecting to a Range Camera mounted on an iPad Air 2 using the structure.io SDK.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+The SDK has already been bridged and the environment has already been set up.
+A brief description of the project is in Resources/Part-Time_iOS_developer_position_advert_Civil_Engineering_Department.pdf.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+--
 
-```
-Give examples
-```
+### Tasks Completed
 
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+- [x] Set up Xcode with SDK
+- [x] Bridge in Xcode to use SDK in Swift
+- [ ] Structure sensor view mounted onto the iPad's camera
+- [ ] View 1 (tabular view)
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Morio Ramdenbourg** - *iOS Development* - [morioramdenbourg](https://github.com/morioramdenbourg)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+See also the list of [contributors](https://github.com/morioramdenbourg/LivingBIM/contributors) who participated in this project.
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+Guides:
+* http://forums.structure.io/t/guide-to-setting-up-a-swift-project/4020
+* https://github.com/ponderousmad/StructureViewerSwift
 
