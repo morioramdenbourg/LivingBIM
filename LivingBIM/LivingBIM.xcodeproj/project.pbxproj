@@ -12,11 +12,12 @@
 		2BE54DA01F6A49D100F2F424 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE54D9F1F6A49D100F2F424 /* ImageIO.framework */; };
 		2BE54DA21F6A49D700F2F424 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE54DA11F6A49D700F2F424 /* Accelerate.framework */; };
 		2BEDC3551F69EF1B00C27C36 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEDC3541F69EF1B00C27C36 /* AppDelegate.swift */; };
-		2BEDC3571F69EF1B00C27C36 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEDC3561F69EF1B00C27C36 /* ViewController.swift */; };
+		2BEDC3571F69EF1B00C27C36 /* CaptureFrameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEDC3561F69EF1B00C27C36 /* CaptureFrameViewController.swift */; };
 		2BEDC35A1F69EF1B00C27C36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BEDC3581F69EF1B00C27C36 /* Main.storyboard */; };
 		2BEDC35C1F69EF1B00C27C36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BEDC35B1F69EF1B00C27C36 /* Assets.xcassets */; };
 		2BEDC35F1F69EF1B00C27C36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BEDC35D1F69EF1B00C27C36 /* LaunchScreen.storyboard */; };
 		6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1709AA1F6A6AD000570746 /* Structure.framework */; };
+		6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,13 +27,14 @@
 		2BE54DA11F6A49D700F2F424 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		2BEDC3511F69EF1B00C27C36 /* LivingBIM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LivingBIM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BEDC3541F69EF1B00C27C36 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2BEDC3561F69EF1B00C27C36 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2BEDC3561F69EF1B00C27C36 /* CaptureFrameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureFrameViewController.swift; sourceTree = "<group>"; };
 		2BEDC3591F69EF1B00C27C36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2BEDC35B1F69EF1B00C27C36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2BEDC35E1F69EF1B00C27C36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2BEDC3601F69EF1B00C27C36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D1709AA1F6A6AD000570746 /* Structure.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Structure.framework; sourceTree = "<group>"; };
 		6D1709AC1F6A6B2700570746 /* LivingBIM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LivingBIM-Bridging-Header.h"; sourceTree = "<group>"; };
+		6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +87,8 @@
 			isa = PBXGroup;
 			children = (
 				2BEDC3541F69EF1B00C27C36 /* AppDelegate.swift */,
-				2BEDC3561F69EF1B00C27C36 /* ViewController.swift */,
+				2BEDC3561F69EF1B00C27C36 /* CaptureFrameViewController.swift */,
+				6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */,
 				2BEDC3581F69EF1B00C27C36 /* Main.storyboard */,
 				2BEDC35B1F69EF1B00C27C36 /* Assets.xcassets */,
 				2BEDC35D1F69EF1B00C27C36 /* LaunchScreen.storyboard */,
@@ -122,7 +125,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = CAEE;
 				TargetAttributes = {
 					2BEDC3501F69EF1B00C27C36 = {
@@ -169,8 +172,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BEDC3571F69EF1B00C27C36 /* ViewController.swift in Sources */,
+				2BEDC3571F69EF1B00C27C36 /* CaptureFrameViewController.swift in Sources */,
 				2BEDC3551F69EF1B00C27C36 /* AppDelegate.swift in Sources */,
+				6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +210,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -214,7 +220,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -259,7 +269,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -267,7 +279,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
