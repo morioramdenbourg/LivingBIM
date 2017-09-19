@@ -33,14 +33,6 @@
                                 <rect key="frame" x="256" y="0.0" width="512" height="384"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gh9-Em-nRQ">
-                                <rect key="frame" x="878" y="177" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="captureButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Az-XW-877"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0v-uj-GWM">
                                 <rect key="frame" x="0.0" y="180" width="256" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -48,6 +40,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gh9-Em-nRQ">
+                                <rect key="frame" x="835" y="131" width="144" height="122"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="ios-camera-button"/>
+                                <connections>
+                                    <action selector="captureButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Az-XW-877"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -61,5 +61,64 @@
             </objects>
             <point key="canvasLocation" x="137.109375" y="137.5"/>
         </scene>
+        <!--Item 2-->
+        <scene sceneID="KmS-op-43k">
+            <objects>
+                <viewController id="vNX-mM-YlH" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QGu-Zb-Vp1"/>
+                        <viewControllerLayoutGuide type="bottom" id="OiM-05-Cpl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PZg-fI-gAF">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 2" id="1zc-bw-Hw1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RlO-ta-wk6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2174" y="-53"/>
+        </scene>
+        <!--Item 1-->
+        <scene sceneID="fuV-Xy-zMk">
+            <objects>
+                <viewController id="Bw3-hY-Tkz" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nvX-1p-zT2"/>
+                        <viewControllerLayoutGuide type="bottom" id="36d-ok-QZi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oQs-fd-niV">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 1" id="5e3-Kp-dJE"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NE5-hD-TIn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2174" y="-846"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="6Fr-KV-xSo">
+            <objects>
+                <tabBarController id="yBB-fb-IRk" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7Xb-JT-2jg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Bw3-hY-Tkz" kind="relationship" relationship="viewControllers" id="BI5-fT-KVr"/>
+                        <segue destination="vNX-mM-YlH" kind="relationship" relationship="viewControllers" id="53Y-m4-gK0"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bMk-6y-V2B" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1458" y="-486"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="ios-camera-button" width="150" height="126"/>
+    </resources>
 </document>
