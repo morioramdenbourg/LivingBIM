@@ -12,6 +12,7 @@ import CoreLocation
 class HomeViewController: UIViewController, CLLocationManagerDelegate {
     
     private var locationManager: CLLocationManager?
+    private var defaults: UserDefaults?
     
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -19,11 +20,19 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Instance of user defaults
+        defaults = UserDefaults.standard
+        
         // Get current location
         getLocation()
         
         // Get the username and set the label to that username
-        getUsername()
+        if let username = defaults?.string(forKey: "username") {
+            self.usernameLabel.text = username
+        }
+        else {
+            getUsername()
+        }
     }
     
     private func getLocation() {
@@ -44,7 +53,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         var inputTextField: UITextField?
         
         // Create the AlertController
-        let actionSheetController: UIAlertController = UIAlertController(title: "Name Required", message: "What is your name?", preferredStyle: .alert)
+        let actionSheetController: UIAlertController = UIAlertController(title: "Username Required", message: "What is your username?", preferredStyle: .alert)
         
         // Create and add the Cancel action
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
@@ -52,8 +61,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         
         // Create and an option action
         let saveAction: UIAlertAction = UIAlertAction(title: "Save", style: .default) { action -> Void in
-            // Save the name to the user defaults
+            // Get text
+            let text: String = inputTextField?.text ?? ""
             
+            // Save the name to the user defaults
+            self.defaults?.set(text, forKey: "username")
             
             // Set the label
             self.usernameLabel.text = inputTextField?.text
@@ -64,7 +76,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         // Add a text field
         actionSheetController.addTextField { textField -> Void in
             inputTextField = textField
-            inputTextField?.placeholder = "Name"
+            inputTextField?.placeholder = "Username"
             saveAction.isEnabled = false
         }
         
