@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,26 +21,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WxX-s2-qBD">
-                                <rect key="frame" x="0.0" y="384" width="512" height="384"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aj4-JZ-22D">
-                                <rect key="frame" x="512" y="384" width="512" height="384"/>
+                                <rect key="frame" x="0.0" y="0.0" width="512" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IXv-A4-17k">
-                                <rect key="frame" x="256" y="0.0" width="512" height="384"/>
+                                <rect key="frame" x="512" y="0.0" width="512" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0v-uj-GWM">
-                                <rect key="frame" x="0.0" y="180" width="256" height="25"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="&lt;Status&gt;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0v-uj-GWM">
+                                <rect key="frame" x="384" y="20" width="256" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="1" green="0.054307855670000002" blue="0.1048083603" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gh9-Em-nRQ">
-                                <rect key="frame" x="835" y="131" width="144" height="122"/>
+                                <rect key="frame" x="438" y="626" width="149" height="122"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="ios-camera-button"/>
                                 <connections>
@@ -77,10 +72,10 @@
             </objects>
             <point key="canvasLocation" x="920" y="-172"/>
         </scene>
-        <!--View Controller-->
+        <!--Home View Controller-->
         <scene sceneID="Siv-j9-cTo">
             <objects>
-                <viewController id="5bC-PB-Pom" sceneMemberID="viewController">
+                <viewController id="5bC-PB-Pom" customClass="HomeViewController" customModule="LivingBIM" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Xi2-mr-pHN"/>
                         <viewControllerLayoutGuide type="bottom" id="SOF-di-Yvt"/>
@@ -189,7 +184,7 @@
         <image name="bim_transparent" width="376" height="102"/>
         <image name="capture_single_frame_transparent" width="178" height="192"/>
         <image name="help_transparent" width="174" height="184"/>
-        <image name="ios-camera-button" width="150" height="126"/>
+        <image name="ios-camera-button" width="129" height="126"/>
         <image name="location_icon_transparent" width="100" height="112"/>
         <image name="set_location_transparent" width="172" height="196"/>
         <image name="upload_icon_transparent" width="164" height="172"/>

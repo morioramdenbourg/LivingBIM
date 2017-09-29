@@ -344,6 +344,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Structure.framework/Headers";
 				INFOPLIST_FILE = LivingBIM/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.utexas.caee.LivingBIM;
@@ -351,6 +352,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "LivingBIM/LivingBIM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -367,12 +369,14 @@
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Structure.framework/Headers";
 				INFOPLIST_FILE = LivingBIM/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.utexas.caee.LivingBIM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "LivingBIM/LivingBIM-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

@@ -14,7 +14,7 @@ let cls = "SensorViewController"
 class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     private let position = AVCaptureDevicePosition.back
-    private let quality = AVCaptureSessionPresetMedium
+    private let quality = AVCaptureSessionPreset640x480
     
     private var permissionGranted = false
     private let sessionQueue = DispatchQueue(label: "session queue")
@@ -27,6 +27,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     
     var controller : STSensorController?
     var toRGBA : STDepthToRgba?
+    var captureNext = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,10 +98,12 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     
     // MARK: AVCaptureVideoDataOutputSampleBufferDelegate
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
-        guard let uiImage = imageFromSampleBuffer(sampleBuffer) else { return }
-        DispatchQueue.main.async { [unowned self] in
-            self.cameraView.image = uiImage;
-        }
+//        guard let uiImage = imageFromSampleBuffer(sampleBuffer) else { return }
+//        DispatchQueue.main.async { [unowned self] in
+//            self.cameraView.image = uiImage;
+//        }
+        controller?.frameSyncNewColorBuffer(sampleBuffer)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -140,7 +143,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         if tryInitializeSensor() {
             let options: [AnyHashable: Any] = [
                 kSTStreamConfigKey: NSNumber(value: STStreamConfig.depth640x480.rawValue as Int),
-                kSTFrameSyncConfigKey: NSNumber(value: STFrameSyncConfig.off.rawValue as Int),
+                kSTFrameSyncConfigKey: NSNumber(value: STFrameSyncConfig.depthAndRgb.rawValue as Int),
                 kSTHoleFilterEnabledKey: true
             ]
             do {
@@ -188,19 +191,47 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         statusLabel.text = "Low Battery"
     }
     
-    func sensorDidOutputDepthFrame(_ depthFrame: STDepthFrame!) {
-        print(cls, "sensorDidOutputDepthFrame")
-        if let renderer = toRGBA {
+//    func sensorDidOutputDepthFrame(_ depthFrame: STDepthFrame!) {
+//        print(cls, "sensorDidOutputDepthFrame")
+//        if let renderer = toRGBA {
+//            let pixels = renderer.convertDepthFrame(toRgba: depthFrame)
+//            depthView.image = imageFromPixels(pixels!, width: Int(renderer.width), height: Int(renderer.height))
+//        }
+//    }
+    
+    func sensorDidOutputSynchronizedDepthFrame(_ depthFrame: STDepthFrame!, colorFrame: STColorFrame!) {
+//        print(cls, "sensorDidOutputSynchronizedDepthFrame")
+//        if let image = imageFromSampleBuffer(colorFrame.sampleBuffer) {
+//            cameraView.image = image
+//        }
+        
+        if let renderer = toRGBA, let uiImage = imageFromSampleBuffer(colorFrame.sampleBuffer) {
+            // Render depth view
             let pixels = renderer.convertDepthFrame(toRgba: depthFrame)
-            depthView.image = imageFromPixels(pixels!, width: Int(renderer.width), height: Int(renderer.height))
+            let depthImage = imageFromPixels(pixels!, width: Int(renderer.width), height: Int(renderer.height))!
+            
+            DispatchQueue.main.async { [unowned self] in
+                self.cameraView.image = uiImage;
+                self.depthView.image = depthImage
+            }
+            
+            if (captureNext) {
+                save(depthImage: depthImage, colorImage: uiImage)
+                stopStreaming()
+                captureNext = false
+            }
         }
     }
     
-    func sensorDidOutputSynchronizedDepthFrame(_ depthFrame: STDepthFrame!, colorFrame: STColorFrame!) {
-        print(cls, "sensorDidOutputSynchronizedDepthFrame")
-        if let image = imageFromSampleBuffer(colorFrame.sampleBuffer) {
-            cameraView.image = image
-        }
+    func save(depthImage dImage: UIImage, colorImage cImage: UIImage) {
+        let data = UIImagePNGRepresentation(cImage)
+        print("DATA", data)
+    }
+    
+    func stopStreaming() {
+        print(cls, "Stopped streaming")
+        STSensorController.shared().stopStreaming()
+        statusLabel.text = "Stopped"
     }
     
     func imageFromSampleBuffer(_ sampleBuffer : CMSampleBuffer) -> UIImage? {
@@ -239,6 +270,8 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     @IBAction func captureButton(_ sender: Any) {
+        print("Capturing image");
+        captureNext = true
     }
 }
 
