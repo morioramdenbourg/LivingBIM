@@ -120,15 +120,15 @@
                     </view>
                     <navigationItem key="navigationItem" id="K1u-4i-mva">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="Gdd-Oo-E3m">
+                        <barButtonItem key="leftBarButtonItem" id="Gdd-Oo-E3m">
                             <view key="customView" contentMode="scaleToFill" id="ixc-LZ-OOg">
                                 <rect key="frame" x="20" y="22" width="0.0" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Fx-aV-y10">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Fx-aV-y10">
                                         <rect key="frame" x="30" y="0.0" width="136" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -159,7 +159,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="adc-jd-WBh">
+                        <barButtonItem key="rightBarButtonItem" id="adc-jd-WBh">
                             <view key="customView" contentMode="scaleToFill" id="TTa-qa-vrk">
                                 <rect key="frame" x="1004" y="22" width="0.0" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -173,6 +173,10 @@
                             </view>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="locationLabel" destination="rSu-Xo-HgJ" id="RIG-3J-I5g"/>
+                        <outlet property="usernameLabel" destination="b3X-wS-udW" id="qeP-Vu-jcQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Spi-MM-ghb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
