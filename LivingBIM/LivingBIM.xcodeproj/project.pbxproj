@@ -18,6 +18,7 @@
 		2BEDC35F1F69EF1B00C27C36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BEDC35D1F69EF1B00C27C36 /* LaunchScreen.storyboard */; };
 		6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1709AA1F6A6AD000570746 /* Structure.framework */; };
 		6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */; };
+		6D4522591F8217CE004480F3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4522581F8217CE004480F3 /* Logger.swift */; };
 		6D866F3B1F7E29BE00273D3E /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D866F3A1F7E29BE00273D3E /* Util.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		6D1709AA1F6A6AD000570746 /* Structure.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Structure.framework; sourceTree = "<group>"; };
 		6D1709AC1F6A6B2700570746 /* LivingBIM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LivingBIM-Bridging-Header.h"; sourceTree = "<group>"; };
 		6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		6D4522581F8217CE004480F3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6D866F3A1F7E29BE00273D3E /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,7 +90,7 @@
 		2BEDC3531F69EF1B00C27C36 /* LivingBIM */ = {
 			isa = PBXGroup;
 			children = (
-				6D965FFB1F7E23F800AD3C7A /* Home */,
+				6D45225A1F8217F3004480F3 /* Home */,
 				6DCE0A9F1F70E46D008EA942 /* Util */,
 				6DCE0A9E1F6FBA3D008EA942 /* Capture */,
 				2BEDC3541F69EF1B00C27C36 /* AppDelegate.swift */,
@@ -101,13 +103,12 @@
 			path = LivingBIM;
 			sourceTree = "<group>";
 		};
-		6D965FFB1F7E23F800AD3C7A /* Home */ = {
+		6D45225A1F8217F3004480F3 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */,
 			);
-			name = Home;
-			path = "New Group";
+			path = Home;
 			sourceTree = "<group>";
 		};
 		6DCE0A9E1F6FBA3D008EA942 /* Capture */ = {
@@ -122,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				6D866F3A1F7E29BE00273D3E /* Util.swift */,
+				6D4522581F8217CE004480F3 /* Logger.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -200,6 +202,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D4522591F8217CE004480F3 /* Logger.swift in Sources */,
 				2BEDC3571F69EF1B00C27C36 /* CaptureFrameViewController.swift in Sources */,
 				2BEDC3551F69EF1B00C27C36 /* AppDelegate.swift in Sources */,
 				6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */,

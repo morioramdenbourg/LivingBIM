@@ -80,6 +80,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
             saveAction.isEnabled = false
         }
         
+        // If the text field is empty, then disable the Save button
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UITextFieldTextDidChange, object: inputTextField, queue: OperationQueue.main) { (notification) in
             saveAction.isEnabled = inputTextField?.text?.count ?? 0 > 0
         }
