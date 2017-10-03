@@ -8,15 +8,26 @@
 
 import UIKit
 import CoreLocation
+import CoreData
 
 let cls = "HomeViewController"
 
 class HomeViewController: UIViewController, CLLocationManagerDelegate {
     
-    private let cls = String(describing: HomeViewController.self)
-    private var locationManager: CLLocationManager?
+    // Core Data
+    private var appDelegate: AppDelegate?
+    private var managedContext: NSManagedObjectContext?
+    private var entity: NSEntityDescription?
+    
+    // User Defaults
     private var defaults: UserDefaults?
     
+    // Class name
+    private let cls = String(describing: HomeViewController.self)
+    
+    // Location
+    private var locationManager: CLLocationManager?
+
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
     
@@ -25,11 +36,31 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         
         print(cls, "viewDidLoad")
         
+        // Core Data
+        print(cls, "setting up Core Data")
+        appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let appDelegate = self.appDelegate else {
+            return
+        }
+        
+        managedContext = appDelegate.persistentContainer.viewContext
+        guard let managedContext = self.managedContext else {
+            return
+        }
+        
+        entity = NSEntityDescription.entity(forEntityName: Keys.CoreData.Capture.Key, in: managedContext)
+        print(cls, "finished setting up Core Data")
+        
         // Instance of user defaults
         defaults = UserDefaults.standard
         
         // Get current location
-        getLocation()
+        if let location = defaults?.string(forKey: Keys.UserDefaults.Location) {
+            self.locationLabel.text = location
+        }
+        else {
+            getLocation()
+        }
         
         // Get the username and set the label to that username
         if let username = defaults?.string(forKey: Keys.UserDefaults.Username) {
@@ -45,9 +76,26 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         
         // Show navigation bar
         self.navigationController?.navigationBar.isHidden = false
+        
+        // Load the table
+        guard let managedContext = self.managedContext else {
+            return
+        }
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Keys.CoreData.Capture.Key)
+        fetchRequest.returnsObjectsAsFaults = false // TODO: remove for debug
+        do {
+            let captures = try managedContext.fetch(fetchRequest)
+            print(cls, "CAPTURES:", captures)
+        } catch let error as NSError {
+            print(cls, "ERROR:", "Could not fetch from Core Data")
+            print(cls, error)
+        }
+        
     }
     
     private func getLocation() {
+        print(cls, "getting location")
         locationManager = CLLocationManager()
         locationManager?.delegate = self;
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
@@ -57,7 +105,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        self.locationLabel.text = String(format: "%.2f", locValue.latitude) + ", " + String(format: "%.2f", locValue.longitude)
+        let formattedLoc = formatLocation(locValue)
+        self.locationLabel.text = formattedLoc
+        self.defaults?.set(formattedLoc, forKey: Keys.UserDefaults.Location)
+        locationManager?.stopUpdatingLocation()
+        print(cls, "stop getting location")
     }
     
     private func getUsername() {
@@ -67,11 +119,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         var inputTextField: UITextField?
         
         // Create the AlertController
-        let actionSheetController: UIAlertController = UIAlertController(title: "Username Required", message: "What is your username?", preferredStyle: .alert)
-        
-        // Create and add the Cancel action
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
-        actionSheetController.addAction(cancelAction)
+        let actionSheetController: UIAlertController = UIAlertController(title: "Username Required", message: "Enter Username", preferredStyle: .alert)
         
         // Create and an option action
         let saveAction: UIAlertAction = UIAlertAction(title: "Save", style: .default) { action -> Void in
@@ -86,6 +134,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
             
         }
         actionSheetController.addAction(saveAction)
+        
+        // Create and add the Cancel action
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
+        actionSheetController.addAction(cancelAction)
         
         // Add a text field
         actionSheetController.addTextField { textField -> Void in

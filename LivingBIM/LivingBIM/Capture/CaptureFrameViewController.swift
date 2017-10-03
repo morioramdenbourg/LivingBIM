@@ -8,30 +8,62 @@
 
 import UIKit
 import AVFoundation
+import CoreData
 
 class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    // Core data
+    private var appDelegate: AppDelegate?
+    private var managedContext: NSManagedObjectContext?
+    private var entity: NSEntityDescription?
+    
+    // User Defaults
+    private var defaults: UserDefaults?
+    
+    // Class name
     private let cls = String(describing: CaptureFrameViewController.self)
+    
+    // Camera
     private let position = AVCaptureDevicePosition.back
     private let quality = AVCaptureSessionPreset640x480
-    
-    private var permissionGranted = false
     private let sessionQueue = DispatchQueue(label: "session queue")
     private let captureSession = AVCaptureSession()
     private let context = CIContext()
+    private var permissionGranted = false
     
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var depthView: UIImageView!
     @IBOutlet weak var cameraView: UIImageView!
     
-    var controller : STSensorController?
-    var toRGBA : STDepthToRgba?
-    var captureNext = false
+    private var controller : STSensorController?
+    private var toRGBA : STDepthToRgba?
+    private var captureNext = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print(cls, "viewDidLoad")
+        
+        // Set up core data
+        print(cls, "setting up Core Data")
+        
+        appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let appDelegate = self.appDelegate else {
+            return
+        }
+        
+        managedContext = appDelegate.persistentContainer.viewContext
+        guard let managedContext = self.managedContext else {
+            return
+        }
+        
+        entity = NSEntityDescription.entity(forEntityName: Keys.CoreData.Capture.Key, in: managedContext)
+        print(cls, "finished setting up Core Data")
+        
+        // Set up user defaults
+        print(cls, "setting up User Defaults")
+        defaults = UserDefaults.standard
+        print(cls, "finished setting up User Defaults")
         
         // Disable navigation bar
         self.navigationController?.navigationBar.isHidden = true
@@ -218,26 +250,11 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
             }
             
             if (captureNext) {
-                save(depthImage: depthImage, colorImage: uiImage)
                 stopStreaming()
+                save(depthImage: depthImage, colorImage: uiImage)
                 captureNext = false
             }
         }
-    }
-    
-    func save(depthImage dImage: UIImage, colorImage cImage: UIImage) {
-        print(cls, "Saving image")
-        
-        // Convert both images to PNGs
-        let rgbData = UIImagePNGRepresentation(cImage)
-        let depthData = UIImagePNGRepresentation(dImage)
-        
-        // Popup modal to describe capture
-        
-        
-        // Save to core Data
-        
-        print(cls, "Saved image")
     }
     
     func stopStreaming() {
@@ -281,10 +298,94 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         return UIImage(cgImage: image!)
     }
     
+    private func save(depthImage dImage: UIImage, colorImage cImage: UIImage) {
+        print(cls, "Saving image")
+        
+        // Alert to ask save/discard capture
+        let actionSheetController: UIAlertController = UIAlertController(title: "Capture", message: "Save or Discard?", preferredStyle: .alert)
+
+        // Create and add Save action
+        let saveAction: UIAlertAction = UIAlertAction(title: "Save", style: .default) { action -> Void in
+            self.describeCapture(depthImage: dImage, colorImage: cImage)
+        }
+        actionSheetController.addAction(saveAction)
+        
+        // Create and add the Discard action
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Discard", style: .cancel) { action -> Void in
+            // Restart the camera
+        }
+        actionSheetController.addAction(cancelAction)
+        
+        // Present alert
+        self.present(actionSheetController, animated: true, completion: nil)
+    }
+    
+    private func describeCapture(depthImage dImage: UIImage, colorImage cImage: UIImage) {
+        print(cls, "displaying describe capture popup")
+        
+        // Create text field
+        var inputTextField: UITextField?
+        
+        // Create the AlertController
+        let actionSheetController: UIAlertController = UIAlertController(title: "Capture", message: "Describe the capture", preferredStyle: .alert)
+        
+        // Create and an option action
+        let saveAction: UIAlertAction = UIAlertAction(title: "Save", style: .default) { action -> Void in
+            // Get text
+            let text: String = inputTextField?.text ?? ""
+            
+            // Save to core Data
+            guard let entity = self.entity, let managedContext = self.managedContext else {
+                return
+            }
+            
+            let capture = NSManagedObject(entity: entity, insertInto: managedContext)
+            let username = self.defaults?.string(forKey: Keys.UserDefaults.Username)
+            let timestamp = Date()
+            let location = self.defaults?.string(forKey: Keys.UserDefaults.Location)
+            let rgbData = UIImagePNGRepresentation(cImage)
+            let depthData = UIImagePNGRepresentation(dImage)
+            
+            capture.setValue(username, forKeyPath: Keys.CoreData.Capture.Username)
+            capture.setValue(timestamp, forKeyPath: Keys.CoreData.Capture.Date)
+            capture.setValue(text, forKeyPath: Keys.CoreData.Capture.Text)
+            capture.setValue(location, forKeyPath: Keys.CoreData.Capture.Location)
+            capture.setValue(rgbData, forKeyPath: Keys.CoreData.Capture.RGBFrame)
+            capture.setValue(depthData, forKeyPath: Keys.CoreData.Capture.DepthFrame)
+    
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print(self.cls, "ERROR:", "Could not save to Core Data.")
+                print(self.cls, "ERROR:", error)
+            }
+    
+            print(self.cls, "Saved image")
+    
+            self.navigationController?.popViewController(animated: true)
+            
+        }
+        actionSheetController.addAction(saveAction)
+        
+        // Add a text field
+        actionSheetController.addTextField { textField -> Void in
+            inputTextField = textField
+            inputTextField?.placeholder = "Description"
+        }
+        
+        // Present alert
+        self.present(actionSheetController, animated: true, completion: nil)
+    }
+    
     @IBAction func captureButton(_ sender: Any) {
         print(cls, "Capturing image...");
         captureNext = true
-        self.navigationController?.popViewController(animated: true)
+        
+        // test save
+        let testrgb = UIImage(named: "testRGB")
+        let testDepth = UIImage(named: "testDepth")
+        
+        save(depthImage: testDepth!, colorImage: testrgb!)
     }
 }
 

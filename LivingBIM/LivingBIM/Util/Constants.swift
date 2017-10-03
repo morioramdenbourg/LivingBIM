@@ -10,5 +10,21 @@ struct Keys {
     // Constants for UserDefaults
     struct UserDefaults {
         static let Username = "username"
+        static let Location = "location"
+    }
+    
+    // Constants for CoreData
+    struct CoreData {
+        
+        // Keys for capture entity
+        struct Capture {
+            static let Key = "Capture"
+            static let Username = "username"
+            static let Date = "date"
+            static let Location = "location"
+            static let Text = "text"
+            static let RGBFrame = "rgbFrame"
+            static let DepthFrame = "depthFrame"
+        }
     }
 }
