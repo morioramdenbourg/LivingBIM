@@ -9,10 +9,9 @@
 import UIKit
 import AVFoundation
 
-let cls = "SensorViewController"
-
 class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    private let cls = String(describing: CaptureFrameViewController.self)
     private let position = AVCaptureDevicePosition.back
     private let quality = AVCaptureSessionPreset640x480
     

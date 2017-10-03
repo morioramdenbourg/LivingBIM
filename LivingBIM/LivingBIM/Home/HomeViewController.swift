@@ -9,10 +9,11 @@
 import UIKit
 import CoreLocation
 
-const cls = "HomeViewController"
+let cls = "HomeViewController"
 
 class HomeViewController: UIViewController, CLLocationManagerDelegate {
     
+    private let cls = String(describing: HomeViewController.self)
     private var locationManager: CLLocationManager?
     private var defaults: UserDefaults?
     
@@ -21,6 +22,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(cls, "viewDidLoad")
         
         // Instance of user defaults
         defaults = UserDefaults.standard
@@ -38,6 +41,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print(cls, "viewWillAppear")
+        
         // Show navigation bar
         self.navigationController?.navigationBar.isHidden = false
     }
