@@ -19,7 +19,7 @@
 		6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1709AA1F6A6AD000570746 /* Structure.framework */; };
 		6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */; };
 		6D4522591F8217CE004480F3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4522581F8217CE004480F3 /* Logger.swift */; };
-		6D866F3B1F7E29BE00273D3E /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D866F3A1F7E29BE00273D3E /* Util.swift */; };
+		6DA2BAC51F822BBF004DEE36 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BAC41F822BBF004DEE36 /* Keys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,7 +38,7 @@
 		6D1709AC1F6A6B2700570746 /* LivingBIM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LivingBIM-Bridging-Header.h"; sourceTree = "<group>"; };
 		6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6D4522581F8217CE004480F3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		6D866F3A1F7E29BE00273D3E /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		6DA2BAC41F822BBF004DEE36 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,8 +91,8 @@
 			isa = PBXGroup;
 			children = (
 				6D45225A1F8217F3004480F3 /* Home */,
-				6DCE0A9F1F70E46D008EA942 /* Util */,
 				6DCE0A9E1F6FBA3D008EA942 /* Capture */,
+				6DCE0A9F1F70E46D008EA942 /* Util */,
 				2BEDC3541F69EF1B00C27C36 /* AppDelegate.swift */,
 				2BEDC3581F69EF1B00C27C36 /* Main.storyboard */,
 				2BEDC35B1F69EF1B00C27C36 /* Assets.xcassets */,
@@ -122,8 +122,8 @@
 		6DCE0A9F1F70E46D008EA942 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				6D866F3A1F7E29BE00273D3E /* Util.swift */,
 				6D4522581F8217CE004480F3 /* Logger.swift */,
+				6DA2BAC41F822BBF004DEE36 /* Keys.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -203,10 +203,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D4522591F8217CE004480F3 /* Logger.swift in Sources */,
+				6DA2BAC51F822BBF004DEE36 /* Keys.swift in Sources */,
 				2BEDC3571F69EF1B00C27C36 /* CaptureFrameViewController.swift in Sources */,
 				2BEDC3551F69EF1B00C27C36 /* AppDelegate.swift in Sources */,
 				6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */,
-				6D866F3B1F7E29BE00273D3E /* Util.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

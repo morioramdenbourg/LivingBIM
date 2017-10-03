@@ -34,6 +34,9 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         
         print(cls, "viewDidLoad")
         
+        // Disable navigation bar
+        self.navigationController?.navigationBar.isHidden = true
+        
         // Set controller
         controller = STSensorController.shared()
     
@@ -49,6 +52,11 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
             self.configureSession()
             self.captureSession.startRunning()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // Disable navigation bar
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     // MARK: AVSession configuration
@@ -98,12 +106,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     
     // MARK: AVCaptureVideoDataOutputSampleBufferDelegate
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
-//        guard let uiImage = imageFromSampleBuffer(sampleBuffer) else { return }
-//        DispatchQueue.main.async { [unowned self] in
-//            self.cameraView.image = uiImage;
-//        }
         controller?.frameSyncNewColorBuffer(sampleBuffer)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -224,8 +227,18 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     func save(depthImage dImage: UIImage, colorImage cImage: UIImage) {
-        let data = UIImagePNGRepresentation(cImage)
-        print("DATA", data)
+        print(cls, "Saving image")
+        
+        // Convert both images to PNGs
+        let rgbData = UIImagePNGRepresentation(cImage)
+        let depthData = UIImagePNGRepresentation(dImage)
+        
+        // Popup modal to describe capture
+        
+        
+        // Save to core Data
+        
+        print(cls, "Saved image")
     }
     
     func stopStreaming() {
@@ -270,8 +283,9 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     @IBAction func captureButton(_ sender: Any) {
-        print("Capturing image");
+        print(cls, "Capturing image...");
         captureNext = true
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

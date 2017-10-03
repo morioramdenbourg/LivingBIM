@@ -9,6 +9,8 @@
 import UIKit
 import CoreLocation
 
+const cls = "HomeViewController"
+
 class HomeViewController: UIViewController, CLLocationManagerDelegate {
     
     private var locationManager: CLLocationManager?
@@ -27,12 +29,17 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         getLocation()
         
         // Get the username and set the label to that username
-        if let username = defaults?.string(forKey: "username") {
+        if let username = defaults?.string(forKey: Keys.UserDefaults.Username) {
             self.usernameLabel.text = username
         }
         else {
             getUsername()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // Show navigation bar
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     private func getLocation() {
@@ -49,6 +56,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     private func getUsername() {
+        print(cls, "getting username")
+        
         // Create text field
         var inputTextField: UITextField?
         
@@ -65,7 +74,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
             let text: String = inputTextField?.text ?? ""
             
             // Save the name to the user defaults
-            self.defaults?.set(text, forKey: "username")
+            self.defaults?.set(text, forKey: Keys.UserDefaults.Username)
             
             // Set the label
             self.usernameLabel.text = inputTextField?.text
@@ -93,16 +102,4 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
