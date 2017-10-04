@@ -9,7 +9,16 @@
 import Foundation
 import CoreLocation
 
-// Format 
+// Format location string
 func formatLocation(_ location: CLLocationCoordinate2D) -> String {
     return String(format: "%.2f", location.latitude) + ", " + String(format: "%.2f", location.longitude)
+}
+
+// Convert date to string
+extension Date {
+    func toString(dateFormat format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
+    }
 }

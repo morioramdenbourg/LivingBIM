@@ -343,6 +343,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
             let username = self.defaults?.string(forKey: Keys.UserDefaults.Username)
             let timestamp = Date()
             let location = self.defaults?.string(forKey: Keys.UserDefaults.Location)
+            
             let rgbData = UIImagePNGRepresentation(cImage)
             let depthData = UIImagePNGRepresentation(dImage)
             

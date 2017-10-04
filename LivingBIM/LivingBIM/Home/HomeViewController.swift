@@ -12,7 +12,7 @@ import CoreData
 
 let cls = "HomeViewController"
 
-class HomeViewController: UIViewController, CLLocationManagerDelegate {
+class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     // Core Data
     private var appDelegate: AppDelegate?
@@ -27,14 +27,24 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     
     // Location
     private var locationManager: CLLocationManager?
+    
+    // Constants
+    private var cellHeight: CGFloat = 200
 
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
+    
+    private var captures: [NSManagedObject]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print(cls, "viewDidLoad")
+        
+        // Set table view delegates
+        tableView.delegate = self
+        tableView.dataSource = self
         
         // Core Data
         print(cls, "setting up Core Data")
@@ -85,13 +95,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Keys.CoreData.Capture.Key)
         fetchRequest.returnsObjectsAsFaults = false // TODO: remove for debug
         do {
-            let captures = try managedContext.fetch(fetchRequest)
-            print(cls, "CAPTURES:", captures)
+            captures = try managedContext.fetch(fetchRequest)
+            tableView.reloadData()
         } catch let error as NSError {
             print(cls, "ERROR:", "Could not fetch from Core Data")
             print(cls, error)
         }
-        
     }
     
     private func getLocation() {
@@ -153,6 +162,51 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     
         // Present alert
         self.present(actionSheetController, animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return captures?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: HomeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: Keys.Cell) as! HomeTableViewCell
+        
+        guard let capture = captures?[indexPath.row] else {
+            return cell
+        }
+        
+        // Grab data
+        let username = capture.value(forKeyPath: Keys.CoreData.Capture.Username) as? String
+        let location = capture.value(forKeyPath: Keys.CoreData.Capture.Location) as? String
+        let date = capture.value(forKeyPath: Keys.CoreData.Capture.Date) as? Date
+        
+        // Put on cell
+        cell.usernameLabel.text = username
+        cell.locationLabel.text = location
+        cell.dateLabel.text = date?.toString(dateFormat: "yyy-MM-dd HH:mm:ss")
+        
+        // Add tag for async operations
+        cell.tag = indexPath.row
+        
+        DispatchQueue.main.async { _ in
+            if cell.tag == indexPath.row {
+                if let data = capture.value(forKeyPath: Keys.CoreData.Capture.RGBFrame) as? Data {
+                    print("row:", indexPath.row)
+                    cell.imgView.image = UIImage(data: data)
+                }
+            }
+        }
+    
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(cls, "Tapped cell at:", indexPath.row)
     }
 
     override func didReceiveMemoryWarning() {

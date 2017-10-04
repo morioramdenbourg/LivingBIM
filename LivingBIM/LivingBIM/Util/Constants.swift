@@ -7,6 +7,9 @@
 //
 struct Keys {
     
+    // Cell reuse identifier
+    static let Cell = "captureCell"
+    
     // Constants for UserDefaults
     struct UserDefaults {
         static let Username = "username"
