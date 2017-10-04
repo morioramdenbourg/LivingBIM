@@ -16,15 +16,15 @@ No current prerequisites
 - [x] Set up Xcode with SDK
 - [x] Bridge in Xcode to use SDK in Swift
 - [x] Integrate structure sensor view mounted onto the iPad's camera
-- [] View 1
+- [-] View 1
 - [x] View 2
-- [] View 3
-- [] View 4
+- [-] View 3
+- [-] View 4
 - [x] View 5
 - [x] View 6
-- [] View 7
-- [] View 8
-- [] View 9
+- [-] View 7
+- [-] View 8
+- [-] View 9
 
 ## Authors
 
