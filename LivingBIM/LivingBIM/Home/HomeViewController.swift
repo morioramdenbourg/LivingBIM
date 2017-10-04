@@ -96,6 +96,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         fetchRequest.returnsObjectsAsFaults = false // TODO: remove for debug
         do {
             captures = try managedContext.fetch(fetchRequest)
+            print(captures)
             tableView.reloadData()
         } catch let error as NSError {
             print(cls, "ERROR:", "Could not fetch from Core Data")
@@ -185,13 +186,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         cell.locationLabel.text = location
         cell.dateLabel.text = date?.toString(dateFormat: "yyy-MM-dd HH:mm:ss")
         
-        // Add tag for async operations
+        // Hack - set to nil for async operations and add tag
+        cell.imgView.image = nil
         cell.tag = indexPath.row
         
         DispatchQueue.main.async { _ in
             if cell.tag == indexPath.row {
                 if let data = capture.value(forKeyPath: Keys.CoreData.Capture.RGBFrame) as? Data {
-                    print("row:", indexPath.row)
                     cell.imgView.image = UIImage(data: data)
                 }
             }
