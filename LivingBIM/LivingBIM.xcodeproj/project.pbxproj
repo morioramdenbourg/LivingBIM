@@ -23,9 +23,12 @@
 		6DA2BAC91F8357E5004DEE36 /* LivingBIM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BAC61F8357A8004DEE36 /* LivingBIM.xcdatamodeld */; };
 		6DA2BACB1F837320004DEE36 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BACA1F837320004DEE36 /* Util.swift */; };
 		6DA2BACD1F837DED004DEE36 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BACC1F837DED004DEE36 /* HomeTableViewCell.swift */; };
+		8F78E655890CCAEC4BAAABA8 /* Pods_LivingBIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CD143DCABF9F31645418B0E /* Pods_LivingBIM.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03069959369C29F25A1B4D01 /* Pods-LivingBIM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LivingBIM.release.xcconfig"; path = "Pods/Target Support Files/Pods-LivingBIM/Pods-LivingBIM.release.xcconfig"; sourceTree = "<group>"; };
+		0CD143DCABF9F31645418B0E /* Pods_LivingBIM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LivingBIM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE54D9B1F6A499400F2F424 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		2BE54D9D1F6A49C900F2F424 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		2BE54D9F1F6A49D100F2F424 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -45,6 +48,7 @@
 		6DA2BAC71F8357A8004DEE36 /* LivingBIM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LivingBIM.xcdatamodel; sourceTree = "<group>"; };
 		6DA2BACA1F837320004DEE36 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		6DA2BACC1F837DED004DEE36 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		74A8FD7DD900B0003922583E /* Pods-LivingBIM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LivingBIM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LivingBIM/Pods-LivingBIM.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,7 @@
 				2BE54DA01F6A49D100F2F424 /* ImageIO.framework in Frameworks */,
 				2BE54D9E1F6A49C900F2F424 /* ExternalAccessory.framework in Frameworks */,
 				2BE54D9C1F6A499400F2F424 /* libz.1.dylib in Frameworks */,
+				8F78E655890CCAEC4BAAABA8 /* Pods_LivingBIM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +76,7 @@
 				2BE54D9F1F6A49D100F2F424 /* ImageIO.framework */,
 				2BE54D9D1F6A49C900F2F424 /* ExternalAccessory.framework */,
 				2BE54D9B1F6A499400F2F424 /* libz.1.dylib */,
+				0CD143DCABF9F31645418B0E /* Pods_LivingBIM.framework */,
 			);
 			name = Frameworks;
 			path = LivingBIM;
@@ -82,6 +88,7 @@
 				2BC0482A1F69F35C00407536 /* Frameworks */,
 				2BEDC3531F69EF1B00C27C36 /* LivingBIM */,
 				2BEDC3521F69EF1B00C27C36 /* Products */,
+				775036790D52B530F477EEAC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +144,15 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		775036790D52B530F477EEAC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				74A8FD7DD900B0003922583E /* Pods-LivingBIM.debug.xcconfig */,
+				03069959369C29F25A1B4D01 /* Pods-LivingBIM.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,9 +160,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2BEDC3631F69EF1B00C27C36 /* Build configuration list for PBXNativeTarget "LivingBIM" */;
 			buildPhases = (
+				69CF57EC5F4BFF2E530A9109 /* [CP] Check Pods Manifest.lock */,
 				2BEDC34D1F69EF1B00C27C36 /* Sources */,
 				2BEDC34E1F69EF1B00C27C36 /* Frameworks */,
 				2BEDC34F1F69EF1B00C27C36 /* Resources */,
+				16F7747EDDF6DAE17173C6D1 /* [CP] Embed Pods Frameworks */,
+				B1AEFBD53FF6358D333BC552 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -205,6 +224,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		16F7747EDDF6DAE17173C6D1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LivingBIM/Pods-LivingBIM-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		69CF57EC5F4BFF2E530A9109 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B1AEFBD53FF6358D333BC552 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LivingBIM/Pods-LivingBIM-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2BEDC34D1F69EF1B00C27C36 /* Sources */ = {
@@ -358,6 +425,7 @@
 		};
 		2BEDC3641F69EF1B00C27C36 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74A8FD7DD900B0003922583E /* Pods-LivingBIM.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -383,6 +451,7 @@
 		};
 		2BEDC3651F69EF1B00C27C36 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03069959369C29F25A1B4D01 /* Pods-LivingBIM.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
