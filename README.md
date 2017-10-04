@@ -9,14 +9,22 @@ A brief description of the project is in Resources/Part-Time_iOS_developer_posit
 
 ### Prerequisites
 
---
+No current prerequisites
 
 ### Tasks Completed
 
 - [x] Set up Xcode with SDK
 - [x] Bridge in Xcode to use SDK in Swift
-- [ ] Structure sensor view mounted onto the iPad's camera
-- [ ] View 1 (tabular view)
+- [x] Integrate structure sensor view mounted onto the iPad's camera
+- [] View 1
+- [x] View 2
+- [] View 3
+- [] View 4
+- [x] View 5
+- [x] View 6
+- [] View 7
+- [] View 8
+- [] View 9
 
 ## Authors
 
@@ -27,6 +35,5 @@ See also the list of [contributors](https://github.com/morioramdenbourg/LivingBI
 ## Acknowledgments
 
 Guides:
-* http://forums.structure.io/t/guide-to-setting-up-a-swift-project/4020
 * https://github.com/ponderousmad/StructureViewerSwift
 

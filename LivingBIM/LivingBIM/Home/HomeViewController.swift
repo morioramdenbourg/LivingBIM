@@ -96,7 +96,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         fetchRequest.returnsObjectsAsFaults = false // TODO: remove for debug
         do {
             captures = try managedContext.fetch(fetchRequest)
-            print(captures)
             tableView.reloadData()
         } catch let error as NSError {
             print(cls, "ERROR:", "Could not fetch from Core Data")
@@ -207,7 +206,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(cls, "Tapped cell at:", indexPath.row)
+        print(cls, "tapped cell at:", indexPath.row)
     }
 
     override func didReceiveMemoryWarning() {
