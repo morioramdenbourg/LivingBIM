@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import CoreData
+import BoxContentSDK
 
 let cls = "HomeViewController"
 
@@ -208,7 +209,22 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(cls, "tapped cell at:", indexPath.row)
     }
-
+    
+    @IBAction func uploadButton(_ sender: Any) {
+        print(cls, "uploading to box")
+        
+        // Authenticate box
+        BOXContentClient.default().authenticate(completionBlock: { (user: BOXUser?, error: Error?) -> Void in
+            if (error == nil) {
+                print(self.cls, "login successful")
+                print(self.cls, "logged in as:", (user?.login!)! as String)
+                
+                
+                
+            }
+        })
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

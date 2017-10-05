@@ -92,6 +92,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="134" height="140"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="upload_icon_transparent"/>
+                                        <connections>
+                                            <action selector="uploadButton:" destination="5bC-PB-Pom" eventType="touchUpInside" id="Eqj-mV-Nk7"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KnW-Jk-Ykw">
                                         <rect key="frame" x="0.0" y="140" width="134" height="140"/>
