@@ -31,6 +31,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     
     // Constants
     private var cellHeight: CGFloat = 200
+    private var folderName: String = "capture"
 
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -210,17 +211,91 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         print(cls, "tapped cell at:", indexPath.row)
     }
     
+    // Upload to Box
     @IBAction func uploadButton(_ sender: Any) {
         print(cls, "uploading to box")
         
+        guard let contentClient = BOXContentClient.default() else {
+            print(cls, "error while uploading")
+            return
+        }
+        
         // Authenticate box
-        BOXContentClient.default().authenticate(completionBlock: { (user: BOXUser?, error: Error?) -> Void in
+        contentClient.authenticate(completionBlock: { (user: BOXUser?, error: Error?) -> Void in
             if (error == nil) {
                 print(self.cls, "login successful")
                 print(self.cls, "logged in as:", (user?.login!)! as String)
                 
+                guard let captures = self.captures else {
+                    print(self.cls, "captures empty")
+                    return;
+                }
                 
-                
+                // Iterate through the captures
+                for capture in captures {
+                    
+                    // Grab from Core Data
+                    guard let date = capture.value(forKeyPath: Keys.CoreData.Capture.Date) as? Date else {
+                        print(self.cls, "no date for the capture ... skipping")
+                        continue;
+                    }
+
+                    let username = capture.value(forKeyPath: Keys.CoreData.Capture.Username) as? String ?? "<invalid_name>"
+                    let location = capture.value(forKeyPath: Keys.CoreData.Capture.Location) as? String ?? "<invalid_location>"
+                    let text = capture.value(forKeyPath: Keys.CoreData.Capture.Text) as? String ?? ""
+                    let rgbData = capture.value(forKeyPath: Keys.CoreData.Capture.RGBFrame) as? Data ?? Data()
+                    let depthData = capture.value(forKeyPath: Keys.CoreData.Capture.DepthFrame) as? Data ?? Data()
+                    
+                    // Create the folder to hold the data
+                    let format = "yyy-MM-dd_HH-mm-ss"
+                    let dateString = date.toString(dateFormat: format)
+                    let folderName = self.folderName + "-" + "frame" + "--" + dateString;
+                    let folderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: folderName, parentFolderID: BOXAPIFolderIDRoot)
+                    
+                    print(self.cls, "uploading:", folderName)
+                    folderRequest.perform(completion: { (folder: BOXFolder?, error: Error?) in
+                        if (error == nil) {
+                            let folder = folder!
+                            print(self.cls, "created folder:", folder.name)
+                            
+                            // Create metadata file
+                            var capture = ""
+                            capture += "Capture Details:\n"
+                            capture += "--------------------------------\n"
+                            capture += "Username: " + username + "\n"
+                            capture += "Date: " + dateString + "\n"
+                            capture += "Location: " + location + "\n"
+                            capture += "Description: " + text
+                            
+                            print(self.cls, "uploading data to folder:", folder.name)
+                            // Completion handler for file upload
+                            let uploadCheck = { (file: BOXFile?, error: Error?) in
+                                if (error == nil && file != nil) {
+                                    print(self.cls, "completed upload to", (folder.name)!)
+                                }
+                                else {
+                                    print(self.cls, "error while uploading to", (folder.name)!)
+                                    print(self.cls, error!)
+                                }
+                            }
+                            
+                            // Add the rgb photo
+                            contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: rgbData, fileName: "color-image.png").perform(progress: nil, completion: uploadCheck)
+                            
+                            // Add depth photo
+                            contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: depthData, fileName: "depth-image.png").perform(progress: nil, completion: uploadCheck)
+                            
+                            // Add capture data file
+                            if let captureData = capture.data(using: .utf8) {
+                                contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: captureData, fileName: "capture.txt").perform(progress: nil, completion: uploadCheck)
+                            }
+                        }
+                        else {
+                            print(self.cls, "error creating folder:", folderName)
+                            print(self.cls, error!)
+                        }
+                    })
+                }
             }
         })
     }
