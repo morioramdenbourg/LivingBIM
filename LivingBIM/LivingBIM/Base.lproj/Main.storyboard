@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -228,6 +228,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="buttonOutlet" destination="YNa-LG-HOF" id="Hd2-WV-lei"/>
                         <outlet property="locationLabel" destination="rSu-Xo-HgJ" id="RIG-3J-I5g"/>
                         <outlet property="tableView" destination="CnO-Hq-KHM" id="6DE-bl-Q6s"/>
                         <outlet property="usernameLabel" destination="b3X-wS-udW" id="qeP-Vu-jcQ"/>
