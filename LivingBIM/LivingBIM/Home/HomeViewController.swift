@@ -26,6 +26,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     // Other variables
     private var locationManager: CLLocationManager? // Location
     private var captures: [NSManagedObject]? // Store captures
+    private var screenSize: CGRect? // Screen size
+    private var spinner: SpinnerView? // Spinner
     
     // Constants
     private let cellHeight: CGFloat = 200
@@ -41,6 +43,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Get the screen size and initialize spinner
+        screenSize = UIScreen.main.bounds
+        spinner = SpinnerView(frame: CGRect(x: (screenSize?.width)! / 2, y: (screenSize?.height)! / 2, width: 100, height: 100))
         
         print(cls, "viewDidLoad")
         
@@ -228,6 +234,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     @IBAction func uploadButton(_ sender: Any) {
         print(cls, "uploading to box")
         
+        // Disable the button
+        buttonOutlet.isEnabled = false
+        
+        // Display the spinner
+        self.view.addSubview(spinner!)
+        
         guard let contentClient = BOXContentClient.default() else {
             print(cls, "error while uploading")
             return
@@ -365,6 +377,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
                             print(self.cls, "Error while deleting objects")
                             print(self.cls, error)
                         }
+                        
+                        // Remove spinner
+                        self.spinner?.removeFromSuperview()
                     }
                 }
                 else {
