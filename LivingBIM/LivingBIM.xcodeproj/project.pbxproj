@@ -20,6 +20,37 @@
 		6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1709AA1F6A6AD000570746 /* Structure.framework */; };
 		6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */; };
 		6D4522591F8217CE004480F3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4522581F8217CE004480F3 /* Logger.swift */; };
+		6D7005961F9AB2BE00C7410E /* ViewController+SLAM.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005621F9AB2BB00C7410E /* ViewController+SLAM.mm */; };
+		6D7005971F9AB2BE00C7410E /* GraphicsRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005641F9AB2BB00C7410E /* GraphicsRenderer.mm */; };
+		6D7005981F9AB2BE00C7410E /* ViewpointController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005671F9AB2BB00C7410E /* ViewpointController.mm */; };
+		6D7005991F9AB2BE00C7410E /* CalibrationOverlay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005691F9AB2BB00C7410E /* CalibrationOverlay.mm */; };
+		6D70059A1F9AB2BE00C7410E /* measurementTape.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D70056A1F9AB2BB00C7410E /* measurementTape.png */; };
+		6D70059B1F9AB2BE00C7410E /* MeshRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D70056B1F9AB2BB00C7410E /* MeshRenderer.mm */; };
+		6D70059C1F9AB2BE00C7410E /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D70056D1F9AB2BB00C7410E /* AppDelegate.mm */; };
+		6D70059D1F9AB2BE00C7410E /* calibration.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D70056F1F9AB2BB00C7410E /* calibration.png */; };
+		6D70059E1F9AB2BE00C7410E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005701F9AB2BB00C7410E /* Default-568h@2x.png */; };
+		6D70059F1F9AB2BE00C7410E /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005711F9AB2BB00C7410E /* Default-Landscape@2x~ipad.png */; };
+		6D7005A01F9AB2BE00C7410E /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005721F9AB2BB00C7410E /* Default-Landscape~ipad.png */; };
+		6D7005A11F9AB2BE00C7410E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005731F9AB2BB00C7410E /* Default@2x.png */; };
+		6D7005A21F9AB2BE00C7410E /* doneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005741F9AB2BB00C7410E /* doneButton@2x.png */; };
+		6D7005A31F9AB2BE00C7410E /* innerCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005751F9AB2BB00C7410E /* innerCircle@2x.png */; };
+		6D7005A41F9AB2BE00C7410E /* measurementTape.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005761F9AB2BB00C7410E /* measurementTape.png */; };
+		6D7005A51F9AB2BE00C7410E /* outerCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005771F9AB2BB00C7410E /* outerCircle@2x.png */; };
+		6D7005A61F9AB2BE00C7410E /* resetScanButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005781F9AB2BB00C7410E /* resetScanButton@2x.png */; };
+		6D7005A71F9AB2BE00C7410E /* Splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005791F9AB2BB00C7410E /* Splash.png */; };
+		6D7005A81F9AB2BE00C7410E /* startScanButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D70057A1F9AB2BB00C7410E /* startScanButton@2x.png */; };
+		6D7005A91F9AB2BE00C7410E /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D70057C1F9AB2BC00C7410E /* ViewController.mm */; };
+		6D7005AA1F9AB2BE00C7410E /* ViewController+OpenGL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D70057E1F9AB2BC00C7410E /* ViewController+OpenGL.mm */; };
+		6D7005AB1F9AB2BE00C7410E /* ViewController+Sensor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D70057F1F9AB2BC00C7410E /* ViewController+Sensor.mm */; };
+		6D7005AD1F9AB2BE00C7410E /* ViewController+Camera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005821F9AB2BC00C7410E /* ViewController+Camera.mm */; };
+		6D7005AE1F9AB2BE00C7410E /* MeshViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005831F9AB2BC00C7410E /* MeshViewController.mm */; };
+		6D7005B01F9AB2BE00C7410E /* MeshView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005861F9AB2BD00C7410E /* MeshView.xib */; };
+		6D7005B11F9AB2BE00C7410E /* CustomShaders.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005871F9AB2BD00C7410E /* CustomShaders.mm */; };
+		6D7005B21F9AB2BE00C7410E /* CustomUIKitStyles.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005881F9AB2BD00C7410E /* CustomUIKitStyles.mm */; };
+		6D7005B31F9AB2BE00C7410E /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D70058B1F9AB2BD00C7410E /* EAGLView.mm */; };
+		6D7005B51F9AB2BE00C7410E /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D70058F1F9AB2BD00C7410E /* ViewController_iPad.xib */; };
+		6D7005B61F9AB2BE00C7410E /* Joystick.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005921F9AB2BE00C7410E /* Joystick.mm */; };
+		6D7005B71F9AB4A200C7410E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D7004F91F9AB0DC00C7410E /* MessageUI.framework */; };
 		6DA2BAC51F822BBF004DEE36 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BAC41F822BBF004DEE36 /* Constants.swift */; };
 		6DA2BAC91F8357E5004DEE36 /* LivingBIM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BAC61F8357A8004DEE36 /* LivingBIM.xcdatamodeld */; };
 		6DA2BACB1F837320004DEE36 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BACA1F837320004DEE36 /* Util.swift */; };
@@ -46,6 +77,64 @@
 		6D1709AC1F6A6B2700570746 /* LivingBIM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LivingBIM-Bridging-Header.h"; sourceTree = "<group>"; };
 		6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6D4522581F8217CE004480F3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		6D7004F81F9AB0D600C7410E /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		6D7004F91F9AB0DC00C7410E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		6D7004FA1F9AB0E200C7410E /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		6D7004FB1F9AB0EF00C7410E /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		6D7004FC1F9AB10500C7410E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6D7004FD1F9AB10B00C7410E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		6D7004FE1F9AB11100C7410E /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		6D7004FF1F9AB11500C7410E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6D7005001F9AB11C00C7410E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		6D7005011F9AB12100C7410E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6D7005021F9AB12700C7410E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		6D7005031F9AB12B00C7410E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		6D70055F1F9AB2BB00C7410E /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = "../../../../Structure SDK/Samples/RoomCapture/EAGLView.h"; sourceTree = "<group>"; };
+		6D7005601F9AB2BB00C7410E /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Joystick.h; path = "../../../../Structure SDK/Samples/RoomCapture/Joystick.h"; sourceTree = "<group>"; };
+		6D7005621F9AB2BB00C7410E /* ViewController+SLAM.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "ViewController+SLAM.mm"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+SLAM.mm"; sourceTree = "<group>"; };
+		6D7005631F9AB2BB00C7410E /* CalibrationOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalibrationOverlay.h; path = "../../../../Structure SDK/Samples/RoomCapture/CalibrationOverlay.h"; sourceTree = "<group>"; };
+		6D7005641F9AB2BB00C7410E /* GraphicsRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GraphicsRenderer.mm; path = "../../../../Structure SDK/Samples/RoomCapture/GraphicsRenderer.mm"; sourceTree = "<group>"; };
+		6D7005651F9AB2BB00C7410E /* ViewController+Sensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ViewController+Sensor.h"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+Sensor.h"; sourceTree = "<group>"; };
+		6D7005661F9AB2BB00C7410E /* ViewController+Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ViewController+Camera.h"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+Camera.h"; sourceTree = "<group>"; };
+		6D7005671F9AB2BB00C7410E /* ViewpointController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ViewpointController.mm; path = "../../../../Structure SDK/Samples/RoomCapture/ViewpointController.mm"; sourceTree = "<group>"; };
+		6D7005681F9AB2BB00C7410E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "../../../../Structure SDK/Samples/RoomCapture/AppDelegate.h"; sourceTree = "<group>"; };
+		6D7005691F9AB2BB00C7410E /* CalibrationOverlay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CalibrationOverlay.mm; path = "../../../../Structure SDK/Samples/RoomCapture/CalibrationOverlay.mm"; sourceTree = "<group>"; };
+		6D70056A1F9AB2BB00C7410E /* measurementTape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = measurementTape.png; path = "../../../../Structure SDK/Samples/RoomCapture/measurementTape.png"; sourceTree = "<group>"; };
+		6D70056B1F9AB2BB00C7410E /* MeshRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MeshRenderer.mm; path = "../../../../Structure SDK/Samples/RoomCapture/MeshRenderer.mm"; sourceTree = "<group>"; };
+		6D70056C1F9AB2BB00C7410E /* MeshViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshViewController.h; path = "../../../../Structure SDK/Samples/RoomCapture/MeshViewController.h"; sourceTree = "<group>"; };
+		6D70056D1F9AB2BB00C7410E /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = "../../../../Structure SDK/Samples/RoomCapture/AppDelegate.mm"; sourceTree = "<group>"; };
+		6D70056F1F9AB2BB00C7410E /* calibration.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calibration.png; sourceTree = "<group>"; };
+		6D7005701F9AB2BB00C7410E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		6D7005711F9AB2BB00C7410E /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		6D7005721F9AB2BB00C7410E /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		6D7005731F9AB2BB00C7410E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		6D7005741F9AB2BB00C7410E /* doneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doneButton@2x.png"; sourceTree = "<group>"; };
+		6D7005751F9AB2BB00C7410E /* innerCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "innerCircle@2x.png"; sourceTree = "<group>"; };
+		6D7005761F9AB2BB00C7410E /* measurementTape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = measurementTape.png; sourceTree = "<group>"; };
+		6D7005771F9AB2BB00C7410E /* outerCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "outerCircle@2x.png"; sourceTree = "<group>"; };
+		6D7005781F9AB2BB00C7410E /* resetScanButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resetScanButton@2x.png"; sourceTree = "<group>"; };
+		6D7005791F9AB2BB00C7410E /* Splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Splash.png; sourceTree = "<group>"; };
+		6D70057A1F9AB2BB00C7410E /* startScanButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "startScanButton@2x.png"; sourceTree = "<group>"; };
+		6D70057B1F9AB2BC00C7410E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController.h"; sourceTree = "<group>"; };
+		6D70057C1F9AB2BC00C7410E /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ViewController.mm; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController.mm"; sourceTree = "<group>"; };
+		6D70057D1F9AB2BC00C7410E /* ViewController+OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ViewController+OpenGL.h"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+OpenGL.h"; sourceTree = "<group>"; };
+		6D70057E1F9AB2BC00C7410E /* ViewController+OpenGL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "ViewController+OpenGL.mm"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+OpenGL.mm"; sourceTree = "<group>"; };
+		6D70057F1F9AB2BC00C7410E /* ViewController+Sensor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "ViewController+Sensor.mm"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+Sensor.mm"; sourceTree = "<group>"; };
+		6D7005811F9AB2BC00C7410E /* CustomShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomShaders.h; path = "../../../../Structure SDK/Samples/RoomCapture/CustomShaders.h"; sourceTree = "<group>"; };
+		6D7005821F9AB2BC00C7410E /* ViewController+Camera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "ViewController+Camera.mm"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+Camera.mm"; sourceTree = "<group>"; };
+		6D7005831F9AB2BC00C7410E /* MeshViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MeshViewController.mm; path = "../../../../Structure SDK/Samples/RoomCapture/MeshViewController.mm"; sourceTree = "<group>"; };
+		6D7005851F9AB2BD00C7410E /* RoomCapture-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RoomCapture-Prefix.pch"; path = "../../../../Structure SDK/Samples/RoomCapture/RoomCapture-Prefix.pch"; sourceTree = "<group>"; };
+		6D7005861F9AB2BD00C7410E /* MeshView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MeshView.xib; path = "../../../../Structure SDK/Samples/RoomCapture/MeshView.xib"; sourceTree = "<group>"; };
+		6D7005871F9AB2BD00C7410E /* CustomShaders.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CustomShaders.mm; path = "../../../../Structure SDK/Samples/RoomCapture/CustomShaders.mm"; sourceTree = "<group>"; };
+		6D7005881F9AB2BD00C7410E /* CustomUIKitStyles.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CustomUIKitStyles.mm; path = "../../../../Structure SDK/Samples/RoomCapture/CustomUIKitStyles.mm"; sourceTree = "<group>"; };
+		6D7005891F9AB2BD00C7410E /* CustomUIKitStyles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomUIKitStyles.h; path = "../../../../Structure SDK/Samples/RoomCapture/CustomUIKitStyles.h"; sourceTree = "<group>"; };
+		6D70058A1F9AB2BD00C7410E /* MeshRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshRenderer.h; path = "../../../../Structure SDK/Samples/RoomCapture/MeshRenderer.h"; sourceTree = "<group>"; };
+		6D70058B1F9AB2BD00C7410E /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = EAGLView.mm; path = "../../../../Structure SDK/Samples/RoomCapture/EAGLView.mm"; sourceTree = "<group>"; };
+		6D7005901F9AB2BD00C7410E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ViewController_iPad.xib; sourceTree = "<group>"; };
+		6D7005911F9AB2BE00C7410E /* GraphicsRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GraphicsRenderer.h; path = "../../../../Structure SDK/Samples/RoomCapture/GraphicsRenderer.h"; sourceTree = "<group>"; };
+		6D7005921F9AB2BE00C7410E /* Joystick.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Joystick.mm; path = "../../../../Structure SDK/Samples/RoomCapture/Joystick.mm"; sourceTree = "<group>"; };
+		6D7005931F9AB2BE00C7410E /* ViewController+SLAM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ViewController+SLAM.h"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+SLAM.h"; sourceTree = "<group>"; };
+		6D7005941F9AB2BE00C7410E /* ViewpointController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewpointController.h; path = "../../../../Structure SDK/Samples/RoomCapture/ViewpointController.h"; sourceTree = "<group>"; };
 		6DA2BAC41F822BBF004DEE36 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		6DA2BAC71F8357A8004DEE36 /* LivingBIM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LivingBIM.xcdatamodel; sourceTree = "<group>"; };
 		6DA2BACA1F837320004DEE36 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -58,6 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D7005B71F9AB4A200C7410E /* MessageUI.framework in Frameworks */,
 				6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */,
 				2BE54DA21F6A49D700F2F424 /* Accelerate.framework in Frameworks */,
 				2BE54DA01F6A49D100F2F424 /* ImageIO.framework in Frameworks */,
@@ -73,6 +163,18 @@
 		2BC0482A1F69F35C00407536 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6D7005031F9AB12B00C7410E /* OpenGLES.framework */,
+				6D7005021F9AB12700C7410E /* UIKit.framework */,
+				6D7005011F9AB12100C7410E /* Foundation.framework */,
+				6D7005001F9AB11C00C7410E /* AVFoundation.framework */,
+				6D7004FF1F9AB11500C7410E /* QuartzCore.framework */,
+				6D7004FE1F9AB11100C7410E /* CoreVideo.framework */,
+				6D7004FD1F9AB10B00C7410E /* CoreMedia.framework */,
+				6D7004FC1F9AB10500C7410E /* CoreGraphics.framework */,
+				6D7004FB1F9AB0EF00C7410E /* CoreMotion.framework */,
+				6D7004FA1F9AB0E200C7410E /* CoreImage.framework */,
+				6D7004F91F9AB0DC00C7410E /* MessageUI.framework */,
+				6D7004F81F9AB0D600C7410E /* Metal.framework */,
 				6D1709AA1F6A6AD000570746 /* Structure.framework */,
 				2BE54DA11F6A49D700F2F424 /* Accelerate.framework */,
 				2BE54D9F1F6A49D100F2F424 /* ImageIO.framework */,
@@ -128,10 +230,90 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		6DCE0A9E1F6FBA3D008EA942 /* Capture */ = {
+		6D7005041F9AB16300C7410E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6D7005681F9AB2BB00C7410E /* AppDelegate.h */,
+				6D70056D1F9AB2BB00C7410E /* AppDelegate.mm */,
+				6D7005631F9AB2BB00C7410E /* CalibrationOverlay.h */,
+				6D7005691F9AB2BB00C7410E /* CalibrationOverlay.mm */,
+				6D7005811F9AB2BC00C7410E /* CustomShaders.h */,
+				6D7005871F9AB2BD00C7410E /* CustomShaders.mm */,
+				6D7005891F9AB2BD00C7410E /* CustomUIKitStyles.h */,
+				6D7005881F9AB2BD00C7410E /* CustomUIKitStyles.mm */,
+				6D70055F1F9AB2BB00C7410E /* EAGLView.h */,
+				6D70058B1F9AB2BD00C7410E /* EAGLView.mm */,
+				6D70058C1F9AB2BD00C7410E /* en.lproj */,
+				6D70056E1F9AB2BB00C7410E /* Graphics */,
+				6D7005911F9AB2BE00C7410E /* GraphicsRenderer.h */,
+				6D7005641F9AB2BB00C7410E /* GraphicsRenderer.mm */,
+				6D7005601F9AB2BB00C7410E /* Joystick.h */,
+				6D7005921F9AB2BE00C7410E /* Joystick.mm */,
+				6D70056A1F9AB2BB00C7410E /* measurementTape.png */,
+				6D70058A1F9AB2BD00C7410E /* MeshRenderer.h */,
+				6D70056B1F9AB2BB00C7410E /* MeshRenderer.mm */,
+				6D7005861F9AB2BD00C7410E /* MeshView.xib */,
+				6D70056C1F9AB2BB00C7410E /* MeshViewController.h */,
+				6D7005831F9AB2BC00C7410E /* MeshViewController.mm */,
+				6D7005851F9AB2BD00C7410E /* RoomCapture-Prefix.pch */,
+				6D70057B1F9AB2BC00C7410E /* ViewController.h */,
+				6D70057C1F9AB2BC00C7410E /* ViewController.mm */,
+				6D7005661F9AB2BB00C7410E /* ViewController+Camera.h */,
+				6D7005821F9AB2BC00C7410E /* ViewController+Camera.mm */,
+				6D70057D1F9AB2BC00C7410E /* ViewController+OpenGL.h */,
+				6D70057E1F9AB2BC00C7410E /* ViewController+OpenGL.mm */,
+				6D7005651F9AB2BB00C7410E /* ViewController+Sensor.h */,
+				6D70057F1F9AB2BC00C7410E /* ViewController+Sensor.mm */,
+				6D7005931F9AB2BE00C7410E /* ViewController+SLAM.h */,
+				6D7005621F9AB2BB00C7410E /* ViewController+SLAM.mm */,
+				6D7005941F9AB2BE00C7410E /* ViewpointController.h */,
+				6D7005671F9AB2BB00C7410E /* ViewpointController.mm */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6D7005061F9AB16E00C7410E /* Frame */ = {
 			isa = PBXGroup;
 			children = (
 				2BEDC3561F69EF1B00C27C36 /* CaptureFrameViewController.swift */,
+			);
+			path = Frame;
+			sourceTree = "<group>";
+		};
+		6D70056E1F9AB2BB00C7410E /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				6D70056F1F9AB2BB00C7410E /* calibration.png */,
+				6D7005701F9AB2BB00C7410E /* Default-568h@2x.png */,
+				6D7005711F9AB2BB00C7410E /* Default-Landscape@2x~ipad.png */,
+				6D7005721F9AB2BB00C7410E /* Default-Landscape~ipad.png */,
+				6D7005731F9AB2BB00C7410E /* Default@2x.png */,
+				6D7005741F9AB2BB00C7410E /* doneButton@2x.png */,
+				6D7005751F9AB2BB00C7410E /* innerCircle@2x.png */,
+				6D7005761F9AB2BB00C7410E /* measurementTape.png */,
+				6D7005771F9AB2BB00C7410E /* outerCircle@2x.png */,
+				6D7005781F9AB2BB00C7410E /* resetScanButton@2x.png */,
+				6D7005791F9AB2BB00C7410E /* Splash.png */,
+				6D70057A1F9AB2BB00C7410E /* startScanButton@2x.png */,
+			);
+			name = Graphics;
+			path = "../../../../Structure SDK/Samples/RoomCapture/Graphics";
+			sourceTree = "<group>";
+		};
+		6D70058C1F9AB2BD00C7410E /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				6D70058F1F9AB2BD00C7410E /* ViewController_iPad.xib */,
+			);
+			name = en.lproj;
+			path = "../../../../Structure SDK/Samples/RoomCapture/en.lproj";
+			sourceTree = "<group>";
+		};
+		6DCE0A9E1F6FBA3D008EA942 /* Capture */ = {
+			isa = PBXGroup;
+			children = (
+				6D7005061F9AB16E00C7410E /* Frame */,
+				6D7005041F9AB16300C7410E /* Model */,
 			);
 			path = Capture;
 			sourceTree = "<group>";
@@ -220,9 +402,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D7005A21F9AB2BE00C7410E /* doneButton@2x.png in Resources */,
+				6D7005A61F9AB2BE00C7410E /* resetScanButton@2x.png in Resources */,
+				6D7005B01F9AB2BE00C7410E /* MeshView.xib in Resources */,
+				6D7005B51F9AB2BE00C7410E /* ViewController_iPad.xib in Resources */,
+				6D7005A81F9AB2BE00C7410E /* startScanButton@2x.png in Resources */,
 				2BEDC35F1F69EF1B00C27C36 /* LaunchScreen.storyboard in Resources */,
+				6D7005A41F9AB2BE00C7410E /* measurementTape.png in Resources */,
 				2BEDC35C1F69EF1B00C27C36 /* Assets.xcassets in Resources */,
+				6D70059D1F9AB2BE00C7410E /* calibration.png in Resources */,
+				6D7005A11F9AB2BE00C7410E /* Default@2x.png in Resources */,
+				6D7005A71F9AB2BE00C7410E /* Splash.png in Resources */,
+				6D70059F1F9AB2BE00C7410E /* Default-Landscape@2x~ipad.png in Resources */,
+				6D70059A1F9AB2BE00C7410E /* measurementTape.png in Resources */,
+				6D7005A51F9AB2BE00C7410E /* outerCircle@2x.png in Resources */,
+				6D7005A31F9AB2BE00C7410E /* innerCircle@2x.png in Resources */,
 				2BEDC35A1F69EF1B00C27C36 /* Main.storyboard in Resources */,
+				6D7005A01F9AB2BE00C7410E /* Default-Landscape~ipad.png in Resources */,
+				6D70059E1F9AB2BE00C7410E /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,15 +478,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D7005981F9AB2BE00C7410E /* ViewpointController.mm in Sources */,
+				6D7005AE1F9AB2BE00C7410E /* MeshViewController.mm in Sources */,
+				6D70059C1F9AB2BE00C7410E /* AppDelegate.mm in Sources */,
 				6D4522591F8217CE004480F3 /* Logger.swift in Sources */,
 				6D13726D1F9A89AE0052B3E9 /* SpinnerView.swift in Sources */,
+				6D7005A91F9AB2BE00C7410E /* ViewController.mm in Sources */,
+				6D7005971F9AB2BE00C7410E /* GraphicsRenderer.mm in Sources */,
+				6D70059B1F9AB2BE00C7410E /* MeshRenderer.mm in Sources */,
 				6DA2BAC51F822BBF004DEE36 /* Constants.swift in Sources */,
+				6D7005B61F9AB2BE00C7410E /* Joystick.mm in Sources */,
 				2BEDC3571F69EF1B00C27C36 /* CaptureFrameViewController.swift in Sources */,
 				6DA2BAC91F8357E5004DEE36 /* LivingBIM.xcdatamodeld in Sources */,
+				6D7005B21F9AB2BE00C7410E /* CustomUIKitStyles.mm in Sources */,
+				6D7005961F9AB2BE00C7410E /* ViewController+SLAM.mm in Sources */,
+				6D7005AB1F9AB2BE00C7410E /* ViewController+Sensor.mm in Sources */,
+				6D7005B31F9AB2BE00C7410E /* EAGLView.mm in Sources */,
 				6DA2BACB1F837320004DEE36 /* Util.swift in Sources */,
+				6D7005AA1F9AB2BE00C7410E /* ViewController+OpenGL.mm in Sources */,
 				2BEDC3551F69EF1B00C27C36 /* AppDelegate.swift in Sources */,
+				6D7005B11F9AB2BE00C7410E /* CustomShaders.mm in Sources */,
 				6DA2BACD1F837DED004DEE36 /* HomeTableViewCell.swift in Sources */,
 				6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */,
+				6D7005991F9AB2BE00C7410E /* CalibrationOverlay.mm in Sources */,
+				6D7005AD1F9AB2BE00C7410E /* ViewController+Camera.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +523,14 @@
 				2BEDC35E1F69EF1B00C27C36 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		6D70058F1F9AB2BD00C7410E /* ViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6D7005901F9AB2BD00C7410E /* en */,
+			);
+			name = ViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -439,11 +659,16 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/LivingBIM",
 				);
+				GCC_INPUT_FILETYPE = automatic;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Structure.framework/Headers";
 				INFOPLIST_FILE = LivingBIM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-lc++";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.utexas.caee.LivingBIM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "LivingBIM/LivingBIM-Bridging-Header.h";
@@ -465,11 +690,16 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/LivingBIM",
 				);
+				GCC_INPUT_FILETYPE = automatic;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Structure.framework/Headers";
 				INFOPLIST_FILE = LivingBIM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-lc++";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.utexas.caee.LivingBIM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "LivingBIM/LivingBIM-Bridging-Header.h";
