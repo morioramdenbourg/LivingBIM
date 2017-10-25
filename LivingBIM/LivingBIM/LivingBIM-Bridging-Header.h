@@ -13,5 +13,4 @@
 #define HAS_LIBCXX
 #import <Structure/Structure.h>
 #import <Structure/StructureSLAM.h>
-#import "ViewController.h"
-
+#import "Wrapper.h"
