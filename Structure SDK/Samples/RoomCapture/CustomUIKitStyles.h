@@ -4,6 +4,8 @@
   http://structure.io
 */
 
+#import <UIKit/UIKit.h>
+
 // Predefined colors used in the app.
 extern UIColor* const redButtonColorWithAlpha;
 extern UIColor* const blueButtonColorWithAlpha;
