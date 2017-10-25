@@ -414,6 +414,15 @@ enum MeasurementState {
     glDeleteRenderbuffers(1, &depthRenderBuffer);
 }
 
+- (void)uploadMeshToBox
+{
+//    NSLog("MeshViewController:", )
+    // Format:
+    // Capture - frame, model
+    // Frame - N/S/E/W Magnetemeter, time, accelerometer
+    
+}
+
 - (void)emailMesh
 {
     self.mailViewController = [[MFMailComposeViewController alloc] init];

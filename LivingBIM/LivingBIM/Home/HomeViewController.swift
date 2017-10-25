@@ -395,11 +395,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         let w: SwiftWrapper = SwiftWrapper()
         let vc = w.getVC()
         self.present(vc as! UIViewController, animated: true, completion: nil)
-        
-//        vc.
-
-//        print(w)
-//        print(w.getVC())
     }
     
     override func didReceiveMemoryWarning() {
