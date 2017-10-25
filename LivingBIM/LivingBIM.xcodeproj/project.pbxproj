@@ -18,13 +18,13 @@
 		2BEDC35F1F69EF1B00C27C36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BEDC35D1F69EF1B00C27C36 /* LaunchScreen.storyboard */; };
 		6D13726D1F9A89AE0052B3E9 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D13726C1F9A89AE0052B3E9 /* SpinnerView.swift */; };
 		6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1709AA1F6A6AD000570746 /* Structure.framework */; };
+		6D30438F1FA102C300154EA3 /* measurementTape.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D30438E1FA102C300154EA3 /* measurementTape.png */; };
 		6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */; };
 		6D4522591F8217CE004480F3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4522581F8217CE004480F3 /* Logger.swift */; };
 		6D7005961F9AB2BE00C7410E /* ViewController+SLAM.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005621F9AB2BB00C7410E /* ViewController+SLAM.mm */; };
 		6D7005971F9AB2BE00C7410E /* GraphicsRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005641F9AB2BB00C7410E /* GraphicsRenderer.mm */; };
 		6D7005981F9AB2BE00C7410E /* ViewpointController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005671F9AB2BB00C7410E /* ViewpointController.mm */; };
 		6D7005991F9AB2BE00C7410E /* CalibrationOverlay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005691F9AB2BB00C7410E /* CalibrationOverlay.mm */; };
-		6D70059A1F9AB2BE00C7410E /* measurementTape.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D70056A1F9AB2BB00C7410E /* measurementTape.png */; };
 		6D70059B1F9AB2BE00C7410E /* MeshRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D70056B1F9AB2BB00C7410E /* MeshRenderer.mm */; };
 		6D70059C1F9AB2BE00C7410E /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D70056D1F9AB2BB00C7410E /* AppDelegate.mm */; };
 		6D70059D1F9AB2BE00C7410E /* calibration.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D70056F1F9AB2BB00C7410E /* calibration.png */; };
@@ -34,7 +34,6 @@
 		6D7005A11F9AB2BE00C7410E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005731F9AB2BB00C7410E /* Default@2x.png */; };
 		6D7005A21F9AB2BE00C7410E /* doneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005741F9AB2BB00C7410E /* doneButton@2x.png */; };
 		6D7005A31F9AB2BE00C7410E /* innerCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005751F9AB2BB00C7410E /* innerCircle@2x.png */; };
-		6D7005A41F9AB2BE00C7410E /* measurementTape.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005761F9AB2BB00C7410E /* measurementTape.png */; };
 		6D7005A51F9AB2BE00C7410E /* outerCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005771F9AB2BB00C7410E /* outerCircle@2x.png */; };
 		6D7005A61F9AB2BE00C7410E /* resetScanButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005781F9AB2BB00C7410E /* resetScanButton@2x.png */; };
 		6D7005A71F9AB2BE00C7410E /* Splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D7005791F9AB2BB00C7410E /* Splash.png */; };
@@ -76,6 +75,7 @@
 		6D13726C1F9A89AE0052B3E9 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		6D1709AA1F6A6AD000570746 /* Structure.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Structure.framework; sourceTree = "<group>"; };
 		6D1709AC1F6A6B2700570746 /* LivingBIM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LivingBIM-Bridging-Header.h"; sourceTree = "<group>"; };
+		6D30438E1FA102C300154EA3 /* measurementTape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = measurementTape.png; sourceTree = "<group>"; };
 		6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6D4522581F8217CE004480F3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6D7004F81F9AB0D600C7410E /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
@@ -111,7 +111,6 @@
 		6D7005731F9AB2BB00C7410E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		6D7005741F9AB2BB00C7410E /* doneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doneButton@2x.png"; sourceTree = "<group>"; };
 		6D7005751F9AB2BB00C7410E /* innerCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "innerCircle@2x.png"; sourceTree = "<group>"; };
-		6D7005761F9AB2BB00C7410E /* measurementTape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = measurementTape.png; sourceTree = "<group>"; };
 		6D7005771F9AB2BB00C7410E /* outerCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "outerCircle@2x.png"; sourceTree = "<group>"; };
 		6D7005781F9AB2BB00C7410E /* resetScanButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resetScanButton@2x.png"; sourceTree = "<group>"; };
 		6D7005791F9AB2BB00C7410E /* Splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Splash.png; sourceTree = "<group>"; };
@@ -288,6 +287,7 @@
 		6D70056E1F9AB2BB00C7410E /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6D30438E1FA102C300154EA3 /* measurementTape.png */,
 				6D70056F1F9AB2BB00C7410E /* calibration.png */,
 				6D7005701F9AB2BB00C7410E /* Default-568h@2x.png */,
 				6D7005711F9AB2BB00C7410E /* Default-Landscape@2x~ipad.png */,
@@ -295,7 +295,6 @@
 				6D7005731F9AB2BB00C7410E /* Default@2x.png */,
 				6D7005741F9AB2BB00C7410E /* doneButton@2x.png */,
 				6D7005751F9AB2BB00C7410E /* innerCircle@2x.png */,
-				6D7005761F9AB2BB00C7410E /* measurementTape.png */,
 				6D7005771F9AB2BB00C7410E /* outerCircle@2x.png */,
 				6D7005781F9AB2BB00C7410E /* resetScanButton@2x.png */,
 				6D7005791F9AB2BB00C7410E /* Splash.png */,
@@ -407,19 +406,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D30438F1FA102C300154EA3 /* measurementTape.png in Resources */,
 				6D7005A21F9AB2BE00C7410E /* doneButton@2x.png in Resources */,
 				6D7005A61F9AB2BE00C7410E /* resetScanButton@2x.png in Resources */,
 				6D7005B01F9AB2BE00C7410E /* MeshView.xib in Resources */,
 				6D7005B51F9AB2BE00C7410E /* ViewController_iPad.xib in Resources */,
 				6D7005A81F9AB2BE00C7410E /* startScanButton@2x.png in Resources */,
 				2BEDC35F1F69EF1B00C27C36 /* LaunchScreen.storyboard in Resources */,
-				6D7005A41F9AB2BE00C7410E /* measurementTape.png in Resources */,
 				2BEDC35C1F69EF1B00C27C36 /* Assets.xcassets in Resources */,
 				6D70059D1F9AB2BE00C7410E /* calibration.png in Resources */,
 				6D7005A11F9AB2BE00C7410E /* Default@2x.png in Resources */,
 				6D7005A71F9AB2BE00C7410E /* Splash.png in Resources */,
 				6D70059F1F9AB2BE00C7410E /* Default-Landscape@2x~ipad.png in Resources */,
-				6D70059A1F9AB2BE00C7410E /* measurementTape.png in Resources */,
 				6D7005A51F9AB2BE00C7410E /* outerCircle@2x.png in Resources */,
 				6D7005A31F9AB2BE00C7410E /* innerCircle@2x.png in Resources */,
 				2BEDC35A1F69EF1B00C27C36 /* Main.storyboard in Resources */,
