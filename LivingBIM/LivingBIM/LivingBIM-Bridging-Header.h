@@ -13,3 +13,4 @@
 #define HAS_LIBCXX
 #import <Structure/Structure.h>
 #import <Structure/StructureSLAM.h>
+#import "Wrapper.h"

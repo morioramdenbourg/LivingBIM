@@ -14,6 +14,7 @@
 
 #include <vector>
 
+
 struct Options
 {
     // The initial scanning volume size will be 6.0 x 4.0 x 6.0 meters

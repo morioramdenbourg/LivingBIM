@@ -390,6 +390,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         }
     }
     
+    @IBAction func modelButton(_ sender: Any) {
+        print(cls, "going to model view")
+        let w: SwiftWrapper = SwiftWrapper()
+        let vc = w.getVC()
+        self.present(vc as! UIViewController, animated: true, completion: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

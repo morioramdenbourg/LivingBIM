@@ -108,6 +108,9 @@
                                         <rect key="frame" x="0.0" y="280" width="134" height="140"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="3d_model_transparent"/>
+                                        <connections>
+                                            <action selector="modelButton:" destination="5bC-PB-Pom" eventType="touchUpInside" id="pgO-5i-tT0"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-Nq-SQ3">
                                         <rect key="frame" x="0.0" y="420" width="134" height="140"/>
