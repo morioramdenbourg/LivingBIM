@@ -76,6 +76,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         defaults = UserDefaults.standard
         
         // Get current location
+        // TODO: have it always updating
         if let location = defaults?.string(forKey: Keys.UserDefaults.Location) {
             self.locationLabel.text = location
         }
@@ -103,6 +104,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             return
         }
         
+        // Fetching from core data
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Keys.CoreData.Capture.Key)
         fetchRequest.returnsObjectsAsFaults = false // TODO: remove for debug
         do {
@@ -114,6 +116,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         }
     }
     
+    // Check if the button should be enabled or not when reloading
     private func reloadCheck() {
         if (self.captures?.count == 0) {
             buttonOutlet.isEnabled = false
@@ -138,8 +141,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         let formattedLoc = formatLocation(locValue)
         self.locationLabel.text = formattedLoc
         self.defaults?.set(formattedLoc, forKey: Keys.UserDefaults.Location)
-        locationManager?.stopUpdatingLocation()
-        print(cls, "stop getting location")
+//        locationManager?.stopUpdatingLocation()
+//        print(cls, "stopped getting location")
+        print(cls, "LOC")
     }
     
     private func getUsername() {

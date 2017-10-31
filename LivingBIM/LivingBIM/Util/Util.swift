@@ -11,7 +11,7 @@ import CoreLocation
 
 // Format location string
 func formatLocation(_ location: CLLocationCoordinate2D) -> String {
-    return String(format: "%.2f", location.latitude) + ", " + String(format: "%.2f", location.longitude)
+    return String(location.latitude) + ", " + String(location.longitude)
 }
 
 // Convert date to string
