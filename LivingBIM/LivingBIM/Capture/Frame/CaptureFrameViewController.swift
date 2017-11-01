@@ -225,20 +225,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         statusLabel.text = "Low Battery"
     }
     
-//    func sensorDidOutputDepthFrame(_ depthFrame: STDepthFrame!) {
-//        log(moduleName: cls, "sensorDidOutputDepthFrame")
-//        if let renderer = toRGBA {
-//            let pixels = renderer.convertDepthFrame(toRgba: depthFrame)
-//            depthView.image = imageFromPixels(pixels!, width: Int(renderer.width), height: Int(renderer.height))
-//        }
-//    }
-    
     func sensorDidOutputSynchronizedDepthFrame(_ depthFrame: STDepthFrame!, colorFrame: STColorFrame!) {
-//        log(moduleName: cls, "sensorDidOutputSynchronizedDepthFrame")
-//        if let image = imageFromSampleBuffer(colorFrame.sampleBuffer) {
-//            cameraView.image = image
-//        }
-        
         if let renderer = toRGBA, let uiImage = imageFromSampleBuffer(colorFrame.sampleBuffer) {
             // Render depth view
             let pixels = renderer.convertDepthFrame(toRgba: depthFrame)
@@ -302,22 +289,22 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         log(moduleName: cls, "Saving image")
         
         // Alert to ask save/discard capture
-        let actionSheetController: UIAlertController = UIAlertController(title: "Capture", message: "Save or Discard?", preferredStyle: .alert)
+        let actionController: UIAlertController = UIAlertController(title: "Capture", message: "Save or Discard?", preferredStyle: .alert)
 
         // Create and add Save action
         let saveAction: UIAlertAction = UIAlertAction(title: "Save", style: .default) { action -> Void in
             self.describeCapture(depthImage: dImage, colorImage: cImage)
         }
-        actionSheetController.addAction(saveAction)
+        actionController.addAction(saveAction)
         
         // Create and add the Discard action
         let cancelAction: UIAlertAction = UIAlertAction(title: "Discard", style: .cancel) { action -> Void in
-            // Restart the camera
+            // TODO: Restart the camera
         }
-        actionSheetController.addAction(cancelAction)
+        actionController.addAction(cancelAction)
         
         // Present alert
-        self.present(actionSheetController, animated: true, completion: nil)
+        self.present(actionController, animated: true, completion: nil)
     }
     
     private func describeCapture(depthImage dImage: UIImage, colorImage cImage: UIImage) {
