@@ -42,10 +42,10 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(cls, "viewDidLoad")
+        log(moduleName: cls, "viewDidLoad")
         
         // Set up core data
-        print(cls, "setting up Core Data")
+        log(moduleName: cls, "setting up Core Data")
         
         appDelegate = UIApplication.shared.delegate as? AppDelegate
         guard let appDelegate = self.appDelegate else {
@@ -58,12 +58,12 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         }
         
         entity = NSEntityDescription.entity(forEntityName: Keys.CoreData.Capture.Key, in: managedContext)
-        print(cls, "finished setting up Core Data")
+        log(moduleName: cls, "finished setting up Core Data")
         
         // Set up user defaults
-        print(cls, "setting up User Defaults")
+        log(moduleName: cls, "setting up User Defaults")
         defaults = UserDefaults.standard
-        print(cls, "finished setting up User Defaults")
+        log(moduleName: cls, "finished setting up User Defaults")
         
         // Disable navigation bar
         self.navigationController?.navigationBar.isHidden = true
@@ -141,7 +141,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print(cls, "viewWillAppear")
+        log(moduleName: cls, "viewWillAppear")
         if tryInitializeSensor() && STSensorController.shared().isConnected() {
             tryStartStreaming()
         }
@@ -156,14 +156,14 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     func appDidBecomeActive() {
-        print(cls, "appDidBecomeActive")
+        log(moduleName: cls, "appDidBecomeActive")
         if STSensorController.shared().isConnected() {
             tryStartStreaming()
         }
     }
     
     func tryInitializeSensor() -> Bool {
-        print(cls, "Initializing Sensor")
+        log(moduleName: cls, "Initializing Sensor")
         let result = STSensorController.shared().initializeSensorConnection()
         if result == .alreadyInitialized || result == .success {
             return true
@@ -173,7 +173,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     
     @discardableResult
     func tryStartStreaming() -> Bool {
-        print(cls, "tryStartStreaming")
+        log(moduleName: cls, "tryStartStreaming")
         if tryInitializeSensor() {
             let options: [AnyHashable: Any] = [
                 kSTStreamConfigKey: NSNumber(value: STStreamConfig.depth640x480.rawValue as Int),
@@ -183,21 +183,21 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
             do {
                 try STSensorController.shared().startStreaming(options: options as [AnyHashable: Any])
                 statusLabel.text = "Streaming"
-                print(cls, "started streaming")
+                log(moduleName: cls, "started streaming")
                 let toRGBAOptions : [AnyHashable: Any] = [
                     kSTDepthToRgbaStrategyKey : NSNumber(value: STDepthToRgbaStrategy.redToBlueGradient.rawValue as Int)
                 ]
                 toRGBA = STDepthToRgba(options: toRGBAOptions)
                 return true
             } catch let error as NSError {
-                print(error)
+                log(moduleName: cls, error)
             }
         }
         return false
     }
 
     func sensorDidConnect() {
-        print(cls, "sensorDidConnect")
+        log(moduleName: cls, "sensorDidConnect")
         if tryStartStreaming() {
             statusLabel.text = "Streaming"
         }
@@ -207,26 +207,26 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     func sensorDidDisconnect() {
-        print(cls, "sensorDidDisconnect")
+        log(moduleName: cls, "sensorDidDisconnect")
         statusLabel.text = "Disconnected"
     }
     
     func sensorDidStopStreaming(_ reason: STSensorControllerDidStopStreamingReason) {
-        print(cls, "sensorDidStopStreaming")
+        log(moduleName: cls, "sensorDidStopStreaming")
         statusLabel.text = "Stopped Streaming"
     }
     
     func sensorDidLeaveLowPowerMode() {
-        print(cls, "sensorDidLeaveLowPowerMode")
+        log(moduleName: cls, "sensorDidLeaveLowPowerMode")
     }
     
     func sensorBatteryNeedsCharging() {
-        print(cls, "sensorBatteryNeedsCharging")
+        log(moduleName: cls, "sensorBatteryNeedsCharging")
         statusLabel.text = "Low Battery"
     }
     
 //    func sensorDidOutputDepthFrame(_ depthFrame: STDepthFrame!) {
-//        print(cls, "sensorDidOutputDepthFrame")
+//        log(moduleName: cls, "sensorDidOutputDepthFrame")
 //        if let renderer = toRGBA {
 //            let pixels = renderer.convertDepthFrame(toRgba: depthFrame)
 //            depthView.image = imageFromPixels(pixels!, width: Int(renderer.width), height: Int(renderer.height))
@@ -234,7 +234,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
 //    }
     
     func sensorDidOutputSynchronizedDepthFrame(_ depthFrame: STDepthFrame!, colorFrame: STColorFrame!) {
-//        print(cls, "sensorDidOutputSynchronizedDepthFrame")
+//        log(moduleName: cls, "sensorDidOutputSynchronizedDepthFrame")
 //        if let image = imageFromSampleBuffer(colorFrame.sampleBuffer) {
 //            cameraView.image = image
 //        }
@@ -258,7 +258,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     func stopStreaming() {
-        print(cls, "Stopped streaming")
+        log(moduleName: cls, "Stopped streaming")
         STSensorController.shared().stopStreaming()
         statusLabel.text = "Stopped"
     }
@@ -299,7 +299,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     private func save(depthImage dImage: UIImage, colorImage cImage: UIImage) {
-        print(cls, "Saving image")
+        log(moduleName: cls, "Saving image")
         
         // Alert to ask save/discard capture
         let actionSheetController: UIAlertController = UIAlertController(title: "Capture", message: "Save or Discard?", preferredStyle: .alert)
@@ -321,7 +321,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     private func describeCapture(depthImage dImage: UIImage, colorImage cImage: UIImage) {
-        print(cls, "displaying describe capture popup")
+        log(moduleName: cls, "displaying describe capture popup")
         
         // Create text field
         var inputTextField: UITextField?
@@ -357,11 +357,11 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
             do {
                 try managedContext.save()
             } catch let error as NSError {
-                print(self.cls, "ERROR:", "Could not save to Core Data.")
-                print(self.cls, "ERROR:", error)
+                log(moduleName: self.cls, "ERROR:", "Could not save to Core Data.")
+                log(moduleName: self.cls, "ERROR:", error)
             }
     
-            print(self.cls, "Saved image")
+            log(moduleName: self.cls, "Saved image")
     
             self.navigationController?.popViewController(animated: true)
             
@@ -379,7 +379,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     @IBAction func captureButton(_ sender: Any) {
-        print(cls, "Capturing image...");
+        log(moduleName: cls, "Capturing image...");
         captureNext = true
         
         // test save

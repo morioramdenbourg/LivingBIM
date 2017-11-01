@@ -22,3 +22,12 @@ extension Date {
         return dateFormatter.string(from: self)
     }
 }
+
+// Log to the console
+func log(moduleName mName: String, _ items: Any...) {
+    print("[" + mName + "]", terminator: " ")
+    for item in items {
+        print(item, terminator: " ")
+    }
+    print()
+}

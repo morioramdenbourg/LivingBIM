@@ -20,7 +20,6 @@
 		6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1709AA1F6A6AD000570746 /* Structure.framework */; };
 		6D30438F1FA102C300154EA3 /* measurementTape.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D30438E1FA102C300154EA3 /* measurementTape.png */; };
 		6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */; };
-		6D4522591F8217CE004480F3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4522581F8217CE004480F3 /* Logger.swift */; };
 		6D7005961F9AB2BE00C7410E /* ViewController+SLAM.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005621F9AB2BB00C7410E /* ViewController+SLAM.mm */; };
 		6D7005971F9AB2BE00C7410E /* GraphicsRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005641F9AB2BB00C7410E /* GraphicsRenderer.mm */; };
 		6D7005981F9AB2BE00C7410E /* ViewpointController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005671F9AB2BB00C7410E /* ViewpointController.mm */; };
@@ -77,7 +76,6 @@
 		6D1709AC1F6A6B2700570746 /* LivingBIM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LivingBIM-Bridging-Header.h"; sourceTree = "<group>"; };
 		6D30438E1FA102C300154EA3 /* measurementTape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = measurementTape.png; sourceTree = "<group>"; };
 		6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		6D4522581F8217CE004480F3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6D7004F81F9AB0D600C7410E /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		6D7004F91F9AB0DC00C7410E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		6D7004FA1F9AB0E200C7410E /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
@@ -325,7 +323,6 @@
 		6DCE0A9F1F70E46D008EA942 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				6D4522581F8217CE004480F3 /* Logger.swift */,
 				6DA2BAC41F822BBF004DEE36 /* Constants.swift */,
 				6DA2BACA1F837320004DEE36 /* Util.swift */,
 				6D13726C1F9A89AE0052B3E9 /* SpinnerView.swift */,
@@ -484,7 +481,6 @@
 				6D7005981F9AB2BE00C7410E /* ViewpointController.mm in Sources */,
 				6D7005AE1F9AB2BE00C7410E /* MeshViewController.mm in Sources */,
 				6D70059C1F9AB2BE00C7410E /* AppDelegate.mm in Sources */,
-				6D4522591F8217CE004480F3 /* Logger.swift in Sources */,
 				6D13726D1F9A89AE0052B3E9 /* SpinnerView.swift in Sources */,
 				6D7005A91F9AB2BE00C7410E /* ViewController.mm in Sources */,
 				6D7005971F9AB2BE00C7410E /* GraphicsRenderer.mm in Sources */,

@@ -48,7 +48,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         screenSize = UIScreen.main.bounds
         spinner = SpinnerView(frame: CGRect(x: (screenSize?.width)! / 2, y: (screenSize?.height)! / 2, width: 100, height: 100))
         
-        print(cls, "viewDidLoad")
+        log(moduleName: cls, "viewDidLoad")
         
         // Remove the lines on an empty table
         self.tableView.tableFooterView = UIView(frame: .zero)
@@ -58,7 +58,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         tableView.dataSource = self
         
         // Core Data
-        print(cls, "setting up Core Data")
+        log(moduleName: cls, "setting up Core Data")
         appDelegate = UIApplication.shared.delegate as? AppDelegate
         guard let appDelegate = self.appDelegate else {
             return
@@ -70,7 +70,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         }
         
         entity = NSEntityDescription.entity(forEntityName: Keys.CoreData.Capture.Key, in: managedContext)
-        print(cls, "finished setting up Core Data")
+        log(moduleName: cls, "finished setting up Core Data")
         
         // Instance of user defaults
         defaults = UserDefaults.standard
@@ -94,7 +94,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print(cls, "viewWillAppear")
+        log(moduleName: cls, "viewWillAppear")
         
         // Show navigation bar
         self.navigationController?.navigationBar.isHidden = false
@@ -111,8 +111,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             captures = try managedContext.fetch(fetchRequest)
             reloadCheck()
         } catch let error as NSError {
-            print(cls, "ERROR:", "Could not fetch from Core Data")
-            print(cls, error)
+            log(moduleName: cls, "ERROR:", "Could not fetch from Core Data")
+            log(moduleName: cls, error)
         }
     }
     
@@ -128,7 +128,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     }
     
     private func getLocation() {
-        print(cls, "getting location")
+        log(moduleName: cls, "getting location")
         locationManager = CLLocationManager()
         locationManager?.delegate = self;
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
@@ -142,12 +142,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         self.locationLabel.text = formattedLoc
         self.defaults?.set(formattedLoc, forKey: Keys.UserDefaults.Location)
 //        locationManager?.stopUpdatingLocation()
-//        print(cls, "stopped getting location")
-        print(cls, "LOC")
+//        log(moduleName: cls, "stopped getting location")
+        log(moduleName: cls, "LOC")
     }
     
     private func getUsername() {
-        print(cls, "getting username")
+        log(moduleName: cls, "getting username")
         
         // Create text field
         var inputTextField: UITextField?
@@ -231,12 +231,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(cls, "tapped cell at:", indexPath.row)
+        log(moduleName: cls, "tapped cell at:", indexPath.row)
     }
     
     // Upload to Box
     @IBAction func uploadButton(_ sender: Any) {
-        print(cls, "uploading to box")
+        log(moduleName: cls, "uploading to box")
         
         // Disable the button
         buttonOutlet.isEnabled = false
@@ -245,15 +245,15 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         self.view.addSubview(spinner!)
         
         guard let contentClient = BOXContentClient.default() else {
-            print(cls, "error while uploading")
+            log(moduleName: cls, "error while uploading")
             return
         }
         
         // Authenticate box
         contentClient.authenticate(completionBlock: { (user: BOXUser?, error: Error?) -> Void in
             if (error == nil) {
-                print(self.cls, "login successful")
-                print(self.cls, "logged in as:", (user?.login!)! as String)
+                log(moduleName: self.cls, "login successful")
+                log(moduleName: self.cls, "logged in as:", (user?.login!)! as String)
                 
                 // Add all to the "rootFolderName" folder, create if it doesn't exist
                 let folderItemsRequest: BOXFolderItemsRequest = contentClient.folderItemsRequest(withID: BOXAPIFolderIDRoot)
@@ -295,7 +295,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     private func performUpload(_ contentClient: BOXContentClient, modelID id: String) {
         // Get the captures
         guard let captures = self.captures else {
-            print(self.cls, "captures empty")
+            log(moduleName: self.cls, "captures empty")
             return;
         }
         
@@ -304,7 +304,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             
             // Grab from Core Data
             guard let date = capture.value(forKeyPath: Keys.CoreData.Capture.Date) as? Date else {
-                print(self.cls, "no date for the capture ... skipping")
+                log(moduleName: self.cls, "no date for the capture ... skipping")
                 continue;
             }
             
@@ -324,7 +324,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             folderRequest.perform(completion: { (folder: BOXFolder?, error: Error?) in
                 if (error == nil) {
                     let folder = folder!
-                    print(self.cls, "created folder:", folder.name)
+                    log(moduleName: self.cls, "created folder:", folder.name)
                     
                     // Create metadata file
                     var capture = ""
@@ -335,15 +335,15 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
                     capture += "Location: " + location + "\n"
                     capture += "Description: " + text
                     
-                    print(self.cls, "uploading data to folder:", folder.name)
+                    log(moduleName: self.cls, "uploading data to folder:", folder.name)
                     // Completion handler for file upload
                     let uploadCheck = { (file: BOXFile?, error: Error?) in
                         if (error == nil && file != nil) {
-//                            print(self.cls, "completed upload to", (folder.name)!)
+//                            log(moduleName: self.cls, "completed upload to", (folder.name)!)
                         }
                         else {
-                            print(self.cls, "error while uploading to", (folder.name)!)
-                            print(self.cls, error!)
+                            log(moduleName: self.cls, "error while uploading to", (folder.name)!)
+                            log(moduleName: self.cls, error!)
                         }
                     }
                     
@@ -360,7 +360,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
                     
                     // If last element has been uploaded, then remove all
                     if (index == captures.count - 1) {
-                        print(self.cls, "Deleting the captures")
+                        log(moduleName: self.cls, "Deleting the captures")
                         
                         // Get managed object
                         guard let managedContext = self.managedContext else {
@@ -378,8 +378,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
                             self.reloadCheck()
                         } catch let error as NSError {
                             // Handle error
-                            print(self.cls, "Error while deleting objects")
-                            print(self.cls, error)
+                            log(moduleName: self.cls, "Error while deleting objects")
+                            log(moduleName: self.cls, error)
                         }
                         
                         // Remove spinner
@@ -387,15 +387,15 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
                     }
                 }
                 else {
-                    print(self.cls, "error creating folder:", folderName)
-                    print(self.cls, error!)
+                    log(moduleName: self.cls, "error creating folder:", folderName)
+                    log(moduleName: self.cls, error!)
                 }
             })
         }
     }
     
     @IBAction func modelButton(_ sender: Any) {
-        print(cls, "going to model view")
+        log(moduleName: cls, "going to model view")
         let w: SwiftWrapper = SwiftWrapper()
         let vc = w.getVC()
         self.present(vc as! UIViewController, animated: true, completion: nil)
