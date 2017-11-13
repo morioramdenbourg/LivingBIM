@@ -56,6 +56,55 @@
             </objects>
             <point key="canvasLocation" x="2431" y="-704"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="Y5L-S2-hbz">
+            <objects>
+                <tableViewController title="Settings" id="F8q-QH-1yf" customClass="SettingsTableViewController" customModule="LivingBIM" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="I1l-6T-f5Y">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingsCell" id="v86-dE-PYr" customClass="SettingsTableViewCell" customModule="LivingBIM" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="1024" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="v86-dE-PYr" id="e9B-bS-7sm">
+                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIY-Io-MpM">
+                                            <rect key="frame" x="8" y="11" width="263" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5IZ-cw-Edu">
+                                            <rect key="frame" x="599" y="7" width="417" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Button"/>
+                                            <connections>
+                                                <action selector="detailsAction:" destination="v86-dE-PYr" eventType="touchUpInside" id="p6L-0b-9HX"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="detailsButton" destination="5IZ-cw-Edu" id="fMM-11-1p2"/>
+                                    <outlet property="label" destination="iIY-Io-MpM" id="9r7-x3-kue"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="F8q-QH-1yf" id="Qrk-uR-eEj"/>
+                            <outlet property="delegate" destination="F8q-QH-1yf" id="5UR-Xv-IHU"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jbP-nY-Jcb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2429.8828125" y="126.5625"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="cH0-Se-jDe">
             <objects>
@@ -121,6 +170,9 @@
                                         <rect key="frame" x="0.0" y="560" width="134" height="144"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="help_transparent"/>
+                                        <connections>
+                                            <segue destination="F8q-QH-1yf" kind="show" id="cc4-WD-dzs"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </view>

@@ -20,6 +20,9 @@
 		6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1709AA1F6A6AD000570746 /* Structure.framework */; };
 		6D30438F1FA102C300154EA3 /* measurementTape.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D30438E1FA102C300154EA3 /* measurementTape.png */; };
 		6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */; };
+		6D6761E91FB2E9CE00BEF3CE /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6761E81FB2E9CE00BEF3CE /* SettingsTableViewController.swift */; };
+		6D6761EB1FB2EA9900BEF3CE /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6761EA1FB2EA9900BEF3CE /* Settings.swift */; };
+		6D6761ED1FB2EB9C00BEF3CE /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6761EC1FB2EB9C00BEF3CE /* SettingsTableViewCell.swift */; };
 		6D7005961F9AB2BE00C7410E /* ViewController+SLAM.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005621F9AB2BB00C7410E /* ViewController+SLAM.mm */; };
 		6D7005971F9AB2BE00C7410E /* GraphicsRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005641F9AB2BB00C7410E /* GraphicsRenderer.mm */; };
 		6D7005981F9AB2BE00C7410E /* ViewpointController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005671F9AB2BB00C7410E /* ViewpointController.mm */; };
@@ -76,6 +79,9 @@
 		6D1709AC1F6A6B2700570746 /* LivingBIM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LivingBIM-Bridging-Header.h"; sourceTree = "<group>"; };
 		6D30438E1FA102C300154EA3 /* measurementTape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = measurementTape.png; sourceTree = "<group>"; };
 		6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		6D6761E81FB2E9CE00BEF3CE /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		6D6761EA1FB2EA9900BEF3CE /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		6D6761EC1FB2EB9C00BEF3CE /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		6D7004F81F9AB0D600C7410E /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		6D7004F91F9AB0DC00C7410E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		6D7004FA1F9AB0E200C7410E /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
@@ -207,6 +213,7 @@
 		2BEDC3531F69EF1B00C27C36 /* LivingBIM */ = {
 			isa = PBXGroup;
 			children = (
+				6D6761E71FB2E3FA00BEF3CE /* Settings */,
 				6D45225A1F8217F3004480F3 /* Home */,
 				6DCE0A9E1F6FBA3D008EA942 /* Capture */,
 				6DCE0A9F1F70E46D008EA942 /* Util */,
@@ -230,6 +237,16 @@
 				6DA2BACC1F837DED004DEE36 /* HomeTableViewCell.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		6D6761E71FB2E3FA00BEF3CE /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				6D6761E81FB2E9CE00BEF3CE /* SettingsTableViewController.swift */,
+				6D6761EA1FB2EA9900BEF3CE /* Settings.swift */,
+				6D6761EC1FB2EB9C00BEF3CE /* SettingsTableViewCell.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		6D7005041F9AB16300C7410E /* Model */ = {
@@ -480,6 +497,8 @@
 			files = (
 				6D7005981F9AB2BE00C7410E /* ViewpointController.mm in Sources */,
 				6D7005AE1F9AB2BE00C7410E /* MeshViewController.mm in Sources */,
+				6D6761ED1FB2EB9C00BEF3CE /* SettingsTableViewCell.swift in Sources */,
+				6D6761EB1FB2EA9900BEF3CE /* Settings.swift in Sources */,
 				6D70059C1F9AB2BE00C7410E /* AppDelegate.mm in Sources */,
 				6D13726D1F9A89AE0052B3E9 /* SpinnerView.swift in Sources */,
 				6D7005A91F9AB2BE00C7410E /* ViewController.mm in Sources */,
@@ -489,6 +508,7 @@
 				6DA2BAC51F822BBF004DEE36 /* Constants.swift in Sources */,
 				6D7005B61F9AB2BE00C7410E /* Joystick.mm in Sources */,
 				2BEDC3571F69EF1B00C27C36 /* CaptureFrameViewController.swift in Sources */,
+				6D6761E91FB2E9CE00BEF3CE /* SettingsTableViewController.swift in Sources */,
 				6DA2BAC91F8357E5004DEE36 /* LivingBIM.xcdatamodeld in Sources */,
 				6D7005B21F9AB2BE00C7410E /* CustomUIKitStyles.mm in Sources */,
 				6D7005961F9AB2BE00C7410E /* ViewController+SLAM.mm in Sources */,

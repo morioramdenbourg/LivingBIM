@@ -11,7 +11,7 @@ import CoreLocation
 import CoreData
 import BoxContentSDK
 
-let cls = "HomeViewController"
+fileprivate let cls = "HomeViewController"
 
 class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -76,20 +76,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         defaults = UserDefaults.standard
         
         // Get current location
-        // TODO: have it always updating
         if let location = defaults?.string(forKey: Keys.UserDefaults.Location) {
             self.locationLabel.text = location
         }
         else {
             getLocation()
-        }
-        
-        // Get the username and set the label to that username
-        if let username = defaults?.string(forKey: Keys.UserDefaults.Username) {
-            self.usernameLabel.text = username
-        }
-        else {
-            getUsername()
         }
     }
     
@@ -98,6 +89,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         
         // Show navigation bar
         self.navigationController?.navigationBar.isHidden = false
+                
+        // Get the username and set the label to that username
+        if let username = getUsername() {
+            self.usernameLabel.text = username
+        }
+        else {
+            askUsername(viewController: self) { (text: String) in
+                self.usernameLabel.text = text
+            }
+        }
         
         // Load the table
         guard let managedContext = self.managedContext else {
@@ -143,50 +144,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         self.defaults?.set(formattedLoc, forKey: Keys.UserDefaults.Location)
 //        locationManager?.stopUpdatingLocation()
 //        log(moduleName: cls, "stopped getting location")
-        log(moduleName: cls, "LOC")
-    }
-    
-    private func getUsername() {
-        log(moduleName: cls, "getting username")
-        
-        // Create text field
-        var inputTextField: UITextField?
-        
-        // Create the AlertController
-        let actionSheetController: UIAlertController = UIAlertController(title: "Username Required", message: "Enter Username", preferredStyle: .alert)
-        
-        // Create and an option action
-        let saveAction: UIAlertAction = UIAlertAction(title: "Save", style: .default) { action -> Void in
-            // Get text
-            let text: String = inputTextField?.text ?? ""
-            
-            // Save the name to the user defaults
-            self.defaults?.set(text, forKey: Keys.UserDefaults.Username)
-            
-            // Set the label
-            self.usernameLabel.text = inputTextField?.text
-            
-        }
-        actionSheetController.addAction(saveAction)
-        
-        // Create and add the Cancel action
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
-        actionSheetController.addAction(cancelAction)
-        
-        // Add a text field
-        actionSheetController.addTextField { textField -> Void in
-            inputTextField = textField
-            inputTextField?.placeholder = "Username"
-            saveAction.isEnabled = false
-        }
-        
-        // If the text field is empty, then disable the Save button
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UITextFieldTextDidChange, object: inputTextField, queue: OperationQueue.main) { (notification) in
-            saveAction.isEnabled = inputTextField?.text?.count ?? 0 > 0
-        }
-    
-        // Present alert
-        self.present(actionSheetController, animated: true, completion: nil)
+        log(moduleName: cls, "LOC:", formattedLoc)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -248,7 +206,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             log(moduleName: cls, "error while uploading")
             return
         }
-        
+                
         // Authenticate box
         contentClient.authenticate(completionBlock: { (user: BOXUser?, error: Error?) -> Void in
             if (error == nil) {

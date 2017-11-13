@@ -23,7 +23,7 @@ extension Date {
     }
 }
 
-// Log to the console
+// Log to the console for a module
 func log(moduleName mName: String, _ items: Any...) {
     print("[" + mName + "]", terminator: " ")
     for item in items {

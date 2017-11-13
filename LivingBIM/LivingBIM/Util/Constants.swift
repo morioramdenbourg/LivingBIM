@@ -10,6 +10,28 @@ struct Keys {
     // Cell reuse identifier
     static let Cell = "captureCell"
     
+    // Constants for Settings
+    struct Settings {
+        static let Cell = "settingsCell"
+        static let NumSections = 3
+        static let MaxRows = 1000
+        
+        struct Box {
+            static let NumRows = 1
+            static let Title = "Box"
+        }
+        
+        struct Location {
+            static let NumRows = 1
+            static let Title = "Location"
+        }
+        
+        struct Profile {
+            static let NumRows = 1
+            static let Title = "Profile"
+        }
+    }
+    
     // Constants for UserDefaults
     struct UserDefaults {
         static let Username = "username"
@@ -18,7 +40,6 @@ struct Keys {
     
     // Constants for CoreData
     struct CoreData {
-        
         // Keys for capture entity
         struct Capture {
             static let Key = "Capture"

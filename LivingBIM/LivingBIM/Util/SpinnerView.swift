@@ -8,8 +8,6 @@
 
 import UIKit
 
-import UIKit
-
 @IBDesignable
 class SpinnerView : UIView {
     
