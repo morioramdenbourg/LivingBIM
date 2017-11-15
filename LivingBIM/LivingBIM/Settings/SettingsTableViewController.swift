@@ -72,8 +72,11 @@ class SettingsTableViewController: UITableViewController {
                     cell.setButton("Select room")
                 }
             case 1:
+                // Get coordinates and disable the button
                 cell.setTitle("Location")
-                
+                let location = UserDefaults.standard.string(forKey: Keys.UserDefaults.Location) ?? "N/A"
+                cell.setButton(location)
+                cell.detailsButton.isEnabled = false
             default: break
             }
             

@@ -7,24 +7,19 @@
 //
 
 import UIKit
-import CoreLocation
 import CoreData
 import BoxContentSDK
 
 fileprivate let cls = "HomeViewController"
 
-class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // Core Data
     private var appDelegate: AppDelegate?
     private var managedContext: NSManagedObjectContext?
     private var entity: NSEntityDescription?
     
-    // User Defaults
-    private var defaults: UserDefaults?
-    
     // Other variables
-    private var locationManager: CLLocationManager? // Location
     private var captures: [NSManagedObject]? // Store captures
     private var screenSize: CGRect? // Screen size
     private var spinner: SpinnerView? // Spinner
@@ -72,17 +67,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         
         entity = NSEntityDescription.entity(forEntityName: Keys.CoreData.Capture.Key, in: managedContext)
         log(moduleName: cls, "finished setting up Core Data")
-        
-        // Instance of user defaults
-        defaults = UserDefaults.standard
-        
-        // Get current location
-        if let location = defaults?.string(forKey: Keys.UserDefaults.Location) {
-            self.locationLabel.text = location
-        }
-        else {
-            getLocation()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -113,6 +97,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             }
         }
         
+        // Display location
+        locationLabel.text = appDelegate?.getLocation()
+        
         // Load the table
         guard let managedContext = self.managedContext else {
             return
@@ -139,25 +126,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
             buttonOutlet.isEnabled = true
         }
         tableView.reloadData()
-    }
-    
-    private func getLocation() {
-        log(moduleName: cls, "getting location")
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self;
-        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager?.requestAlwaysAuthorization()
-        locationManager?.startUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        let formattedLoc = formatLocation(locValue)
-        self.locationLabel.text = formattedLoc
-        self.defaults?.set(formattedLoc, forKey: Keys.UserDefaults.Location)
-//        locationManager?.stopUpdatingLocation()
-//        log(moduleName: cls, "stopped getting location")
-        log(moduleName: cls, "LOC:", formattedLoc)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

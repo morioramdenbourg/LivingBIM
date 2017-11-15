@@ -9,17 +9,23 @@
 import UIKit
 import CoreData
 import BoxContentSDK
+import CoreLocation
+
+fileprivate let cls = "AppDelegate"
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
-
+    var locationManager: CLLocationManager? // Location
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         BOXContentClient.setClientID("k6mthafuwzjc5q1xa7izq03qguccu9hn", clientSecret: "Capk6Zfo8z1gbKP6RFxMbyncuGI6r3C1")
+        
+        // Start location manager
+        setLocationManager()
         
         return true
     }
@@ -86,6 +92,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    func setLocationManager() {
+        log(moduleName: cls, "getting location")
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager?.requestAlwaysAuthorization()
+        locationManager?.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        let formattedLoc = formatLocation(locValue)
+        UserDefaults.standard.set(locValue.latitude, forKey: Keys.UserDefaults.Latitude)
+        UserDefaults.standard.set(locValue.longitude, forKey: Keys.UserDefaults.Longitude)
+        UserDefaults.standard.set(formattedLoc, forKey: Keys.UserDefaults.Location)
+        log(moduleName: cls, "LOC:", formattedLoc)
+    }
+    
+    func getLocation() -> String? {
+        return UserDefaults.standard.string(forKey: Keys.UserDefaults.Location)
+    }
+    
+    func getLatitude() -> CLLocationDegrees? {
+        return UserDefaults.standard.object(forKey: Keys.UserDefaults.Latitude) as? CLLocationDegrees
+    }
+    
+    func getLongitude() -> CLLocationDegrees? {
+        return UserDefaults.standard.object(forKey: Keys.UserDefaults.Longitude) as? CLLocationDegrees
     }
 }
 

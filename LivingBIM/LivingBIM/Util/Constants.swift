@@ -36,6 +36,8 @@ struct Keys {
     struct UserDefaults {
         static let Username = "username"
         static let Location = "location"
+        static let Longitude = "longitude"
+        static let Latitude = "latitude"
         static let BuildingAbbr = "buildingAbbr"
         static let BuildingName = "buildingName"
         static let RoomNumber = "roomNumber"
