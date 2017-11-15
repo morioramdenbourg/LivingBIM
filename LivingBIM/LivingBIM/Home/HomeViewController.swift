@@ -26,8 +26,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Constants
     private let cellHeight: CGFloat = 200
-    private let folderName: String = "capture"
-    private let rootFolderName: String = "captures"
+    private let folderName: String = "scan"
+    private let rootFolderName: String = "scans"
     private let cls = String(describing: HomeViewController.self) // Class name
 
     // Outlets
@@ -255,9 +255,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let depthData = capture.value(forKeyPath: Keys.CoreData.Capture.DepthFrame) as? Data ?? Data()
             
             // Create the folder to hold the data
-            let format = "yyy-MM-dd_HH-mm-ss"
+            let format = "yyy-MM-dd_HH:mm:ss"
             let dateString = date.toString(dateFormat: format)
-            let folderName = self.folderName + "-" + "frame" + "--" + dateString;
+            let folderName = self.folderName + "_" + dateString;
             let folderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: folderName, parentFolderID: id)
             
             folderRequest.perform(completion: { (folder: BOXFolder?, error: Error?) in
@@ -265,69 +265,112 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let folder = folder!
                     log(moduleName: self.cls, "created folder:", folder.name)
                     
-                    // Create metadata file
-                    var capture = ""
-                    capture += "Capture Details:\n"
-                    capture += "--------------------------------\n"
-                    capture += "Username: " + username + "\n"
-                    capture += "Date: " + dateString + "\n"
-                    capture += "Location: " + location + "\n"
-                    capture += "Description: " + text
+                    // Create frames folder
+                    // No 3D reconstruction
+                    let framesFolderName = "Frames"
+                    let framesFolderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: framesFolderName, parentFolderID: folder.modelID)
                     
-                    log(moduleName: self.cls, "uploading data to folder:", folder.name)
-                    // Completion handler for file upload
-                    let uploadCheck = { (file: BOXFile?, error: Error?) in
-                        if (error == nil && file != nil) {
-//                            log(moduleName: self.cls, "completed upload to", (folder.name)!)
-                        }
-                        else {
-                            log(moduleName: self.cls, "error while uploading to", (folder.name)!)
-                            log(moduleName: self.cls, error!)
-                        }
-                    }
+                    // ToDo: Upload metadata here
                     
-                    // Add the rgb photo
-                    contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: rgbData, fileName: "color-image.png").perform(progress: nil, completion: uploadCheck)
-                    
-                    // Add depth photo
-                    contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: depthData, fileName: "depth-image.png").perform(progress: nil, completion: uploadCheck)
-                    
-                    // Add capture data file
-                    if let captureData = capture.data(using: .utf8) {
-                        contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: captureData, fileName: "capture.txt").perform(progress: nil, completion: uploadCheck)
-                    }
-                    
-                    // If last element has been uploaded, then remove all
-                    if (index == captures.count - 1) {
-                        log(moduleName: self.cls, "Deleting the captures")
-                        
-                        // Get managed object
-                        guard let managedContext = self.managedContext else {
-                            return
-                        }
-                        
-                        // Perform delete
-                        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Keys.CoreData.Capture.Key)
-                        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-                        do {
-                            try managedContext.execute(deleteRequest)
+                    framesFolderRequest.perform(completion: { (framesFolder: BOXFolder?, framesError: Error?) in
+                        if (framesError == nil) {
+                            let framesFolder = framesFolder!
                             
-                            // Delete the in-memory array and reload table
-                            self.captures?.removeAll()
-                            self.reloadCheck()
-                        } catch let error as NSError {
-                            // Handle error
-                            log(moduleName: self.cls, "Error while deleting objects")
-                            log(moduleName: self.cls, error)
+                            // Create folder for each individual frame and its metadata
+                            // Iterate through all the frames
+                            let frameFolderName = "Frame" + "1"
+                            let frameFolderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: frameFolderName, parentFolderID: framesFolder.modelID)
+                            
+                            frameFolderRequest.perform(completion: { (frameFolder: BOXFolder?, frameError: Error?) in
+                                if (frameError == nil) {
+                                    let frameFolder = frameFolder!
+                                    
+                                    // Create metadata file
+                                    var capture = ""
+                                    capture += "Scan Details:\n"
+                                    capture += "--------------------------------\n"
+                                    capture += "Username: " + username + "\n"
+                                    capture += "Time Captured: " + dateString + "\n"
+                                    capture += "Location Captured: " + location + "\n"
+                                    capture += "Description: " + text
+                                    
+                                    log(moduleName: self.cls, "uploading data to folder:", folder.name)
+                                    
+                                    // Completion handler for file upload
+                                    let uploadCheck = { (file: BOXFile?, error: Error?) in
+                                        if (error == nil && file != nil) {
+                                            // log(moduleName: self.cls, "completed upload to", (folder.name)!)
+                                        }
+                                        else {
+                                            log(moduleName: self.cls, "error while uploading to", (folder.name)!)
+                                            log(moduleName: self.cls, error!)
+                                        }
+                                    }
+                                    
+                                    // Add the rgb photo
+                                    contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgbData, fileName: "color-image.png").perform(progress: nil, completion: uploadCheck)
+                                    
+                                    // Add depth photo
+                                    contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: depthData, fileName: "depth-image.png").perform(progress: nil, completion: uploadCheck)
+                                    
+//                                    // Add capture metadata file
+//                                    if let captureData = capture.data(using: .utf8) {
+//                                        contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: captureData, fileName: "metadata.txt").perform(progress: nil, completion: uploadCheck)
+//                                    }
+                                    
+                                    // Upload metadata for the frame
+                                    let metadataFolderName = ".metadata"
+                                    let metadataFolderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: metadataFolderName, parentFolderID: frameFolder.modelID)
+                                    
+                                    // Perform request
+                                    metadataFolderRequest.perform(completion: { (metaFolder: BOXFolder?, metaError: Error?) in
+                                        if (metaError == nil) {
+                                            // Upload each metadata
+                                            
+                                            // Upload
+//                                            if let captureData = capture.data(using: .utf8) {
+//                                                contentClient.fileUploadRequestToFolder(withID: <#T##String!#>, from: <#T##Data!#>, fileName: <#T##String!#>)
+//                                            }
+                                            
+                                            // Upload
+                                        }
+                                    })
+                                }
+                            })
                         }
-                        
-                        // Remove spinner
-                        self.spinner?.removeFromSuperview()
-                    }
+                    })
                 }
                 else {
                     log(moduleName: self.cls, "error creating folder:", folderName)
                     log(moduleName: self.cls, error!)
+                }
+                
+                // If last element has been uploaded, then remove all
+                if (index == captures.count - 1) {
+                    log(moduleName: self.cls, "Deleting the captures")
+                    
+                    // Get managed object
+                    guard let managedContext = self.managedContext else {
+                        return
+                    }
+                    
+                    // Perform delete
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Keys.CoreData.Capture.Key)
+                    let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+                    do {
+                        try managedContext.execute(deleteRequest)
+                        
+                        // Delete the in-memory array and reload table
+                        self.captures?.removeAll()
+                        self.reloadCheck()
+                    } catch let error as NSError {
+                        // Handle error
+                        log(moduleName: self.cls, "Error while deleting objects")
+                        log(moduleName: self.cls, error)
+                    }
+                    
+                    // Remove spinner
+                    self.spinner?.removeFromSuperview()
                 }
             })
         }
