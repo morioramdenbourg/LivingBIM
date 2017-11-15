@@ -93,6 +93,26 @@ func askUsername(viewController vc: UIViewController, completion: @escaping (Str
     vc.present(actionSheetController, animated: true, completion: nil)
 }
 
-func getBuildingInfo() -> String? {
-    return UserDefaults.standard
+func getBuildingAbbr() -> String? {
+    return UserDefaults.standard.string(forKey: Keys.UserDefaults.BuildingAbbr)
+}
+
+func getBuildingName() -> String? {
+    return UserDefaults.standard.string(forKey: Keys.UserDefaults.BuildingName)
+}
+
+func getRoomNumber() -> String? {
+    return UserDefaults.standard.string(forKey: Keys.UserDefaults.RoomNumber)
+}
+
+func askBuildingInfo(viewController vc: UIViewController, completion: @escaping (String, String, String) -> Void) {
+    log(moduleName: settingsModule, "asking for building information")
+    
+    // Create picker
+    let sb = UIStoryboard(name: "Main", bundle: nil)
+    let picker = sb.instantiateViewController(withIdentifier: "buildingPicker") as! BuildingPickerViewController
+    picker.completion = completion
+    
+    // Present picker
+    vc.present(picker, animated: true, completion: nil)
 }

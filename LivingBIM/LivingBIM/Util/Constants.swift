@@ -22,7 +22,7 @@ struct Keys {
         }
         
         struct Location {
-            static let NumRows = 1
+            static let NumRows = 2
             static let Title = "Location"
         }
         
@@ -36,6 +36,9 @@ struct Keys {
     struct UserDefaults {
         static let Username = "username"
         static let Location = "location"
+        static let BuildingAbbr = "buildingAbbr"
+        static let BuildingName = "buildingName"
+        static let RoomNumber = "roomNumber"
     }
     
     // Constants for CoreData

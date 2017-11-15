@@ -64,6 +64,16 @@ class SettingsTableViewController: UITableViewController {
             switch indexPath.row {
             case 0:
                 cell.setTitle("Building Information")
+                if let name = getBuildingName(), let abbr = getBuildingAbbr(), let room = getRoomNumber() {
+                    let btn = name + " (" + abbr + ") " + " - " + room
+                    cell.setButton(btn)
+                }
+                else {
+                    cell.setButton("Select room")
+                }
+            case 1:
+                cell.setTitle("Location")
+                
             default: break
             }
             

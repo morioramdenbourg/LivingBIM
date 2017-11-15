@@ -20,6 +20,7 @@
 		6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1709AA1F6A6AD000570746 /* Structure.framework */; };
 		6D30438F1FA102C300154EA3 /* measurementTape.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D30438E1FA102C300154EA3 /* measurementTape.png */; };
 		6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */; };
+		6D39ED771FBAE1FE004AF52A /* BuildingPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D39ED761FBAE1FE004AF52A /* BuildingPickerViewController.swift */; };
 		6D6761E91FB2E9CE00BEF3CE /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6761E81FB2E9CE00BEF3CE /* SettingsTableViewController.swift */; };
 		6D6761EB1FB2EA9900BEF3CE /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6761EA1FB2EA9900BEF3CE /* Settings.swift */; };
 		6D6761ED1FB2EB9C00BEF3CE /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6761EC1FB2EB9C00BEF3CE /* SettingsTableViewCell.swift */; };
@@ -79,6 +80,7 @@
 		6D1709AC1F6A6B2700570746 /* LivingBIM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LivingBIM-Bridging-Header.h"; sourceTree = "<group>"; };
 		6D30438E1FA102C300154EA3 /* measurementTape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = measurementTape.png; sourceTree = "<group>"; };
 		6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		6D39ED761FBAE1FE004AF52A /* BuildingPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingPickerViewController.swift; sourceTree = "<group>"; };
 		6D6761E81FB2E9CE00BEF3CE /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		6D6761EA1FB2EA9900BEF3CE /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		6D6761EC1FB2EB9C00BEF3CE /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				6D6761E81FB2E9CE00BEF3CE /* SettingsTableViewController.swift */,
 				6D6761EA1FB2EA9900BEF3CE /* Settings.swift */,
 				6D6761EC1FB2EB9C00BEF3CE /* SettingsTableViewCell.swift */,
+				6D39ED761FBAE1FE004AF52A /* BuildingPickerViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				6D6761E91FB2E9CE00BEF3CE /* SettingsTableViewController.swift in Sources */,
 				6DA2BAC91F8357E5004DEE36 /* LivingBIM.xcdatamodeld in Sources */,
 				6D7005B21F9AB2BE00C7410E /* CustomUIKitStyles.mm in Sources */,
+				6D39ED771FBAE1FE004AF52A /* BuildingPickerViewController.swift in Sources */,
 				6D7005961F9AB2BE00C7410E /* ViewController+SLAM.mm in Sources */,
 				6D7005AB1F9AB2BE00C7410E /* ViewController+Sensor.mm in Sources */,
 				6D7005B31F9AB2BE00C7410E /* EAGLView.mm in Sources */,

@@ -8,5 +8,7 @@ target 'LivingBIM' do
   # Pods for LivingBIM
   # pod 'box-ios-sdk', :git => 'git@github.com:box/box-ios-sdk.git'
   pod 'box-ios-sdk'
+  pod 'Alamofire', '~> 4.0'
+  pod 'Kanna', '~> 2.0.0'
 
 end

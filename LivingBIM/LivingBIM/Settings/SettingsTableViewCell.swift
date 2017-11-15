@@ -67,7 +67,13 @@ class SettingsTableViewCell: UITableViewCell {
             
             switch row {
             case 0:
-                
+                // Allow change building
+                if let vc = vc {
+                    askBuildingInfo(viewController: vc) { buildingAbbr, buildingName, roomNumber -> Void in
+                        let btn = buildingName + " (" + buildingAbbr + ") " + " - " + roomNumber
+                        self.setButton(btn)
+                    }
+                }
             default: break
             }
             
@@ -75,9 +81,8 @@ class SettingsTableViewCell: UITableViewCell {
             
             switch row {
             case 0:
-                // If there is already username, then allow the option to change
-                if getUsername() != nil, let vc = vc {
-                    // Allow to change username
+                // Allow the option to change username
+                if let vc = vc {
                     askUsername(viewController: vc) { username -> Void in
                         self.setButton(username) // Change text to new username
                     }
