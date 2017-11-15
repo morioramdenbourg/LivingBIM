@@ -40,6 +40,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var buildingLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +98,18 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UITableVi
         else {
             askUsername(viewController: self) { (text: String) in
                 self.usernameLabel.text = text
+            }
+        }
+        
+        // Ask for building information if not already there
+        if let abbr = getBuildingAbbr(), let name = getBuildingName(), let room = getRoomNumber() {
+            let lbl = name + " (" + abbr + ") " + " - " + room
+            buildingLabel.text = lbl
+        }
+        else {
+            askBuildingInfo(viewController: self) { (abbr, name, room) in
+                let lbl = name + " (" + abbr + ") " + " - " + room
+                self.buildingLabel.text = lbl
             }
         }
         
