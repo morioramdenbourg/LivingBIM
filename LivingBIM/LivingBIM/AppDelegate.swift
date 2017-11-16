@@ -18,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     var window: UIWindow?
     var locationManager: CLLocationManager? // Location
-
+    var motionManager: CMMotionManager! // Motion
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -26,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         // Start location manager
         setLocationManager()
+        
+        // Start motion manager
+        setMotionManager()
         
         return true
     }
@@ -94,15 +98,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
     }
     
+    func setMotionManager() {
+        log(moduleName: cls, "setting up motion manager")
+        motionManager = CMMotionManager()
+        
+        // Magnetometer
+        motionManager.startMagnetometerUpdates()
+        
+        //
+    }
+    
     func setLocationManager() {
-        log(moduleName: cls, "getting location")
+        log(moduleName: cls, "setting up location")
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.requestAlwaysAuthorization()
         locationManager?.startUpdatingLocation()
         locationManager?.startUpdatingHeading()
-        print("HEADING:", locationManager?.heading)
+        let orientation = UIApplication.shared.statusBarOrientation
+        var text = ""
+        switch orientation {
+        case .portrait:
+            text = "Portrait"
+        case .portraitUpsideDown:
+            text="PortraitUpsideDown"
+        case .landscapeLeft:
+            text="LandscapeLeft"
+            locationManager?.headingOrientation = CLDeviceOrientation.landscapeLeft
+        case .landscapeRight:
+            text="LandscapeRight"
+            locationManager?.headingOrientation = CLDeviceOrientation.landscapeRight
+        default:
+            text="Another"
+        }
+        log(moduleName: cls, "chose orientation:", text)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
@@ -120,7 +150,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         UserDefaults.standard.set(locValue.longitude, forKey: Keys.UserDefaults.Longitude)
         UserDefaults.standard.set(formattedLoc, forKey: Keys.UserDefaults.Location)
         log(moduleName: cls, "LOC:", formattedLoc)
-        print(CLLocationManager.headingAvailable())
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
