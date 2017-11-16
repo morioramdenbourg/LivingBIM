@@ -10,5 +10,6 @@ target 'LivingBIM' do
   pod 'box-ios-sdk'
   pod 'Alamofire', '~> 4.0'
   pod 'Kanna', '~> 2.0.0'
-
+  pod 'SwiftyJSON'
+  
 end

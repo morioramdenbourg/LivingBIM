@@ -101,8 +101,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.requestAlwaysAuthorization()
         locationManager?.startUpdatingLocation()
+        locationManager?.startUpdatingHeading()
+        print("HEADING:", locationManager?.heading)
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        let trueAngle = newHeading.trueHeading
+        let magAngle = newHeading.magneticHeading
+        log(moduleName: cls, "TRUE HEADING:", trueAngle)
+        log(moduleName: cls, "MAG HEADING:", magAngle)
+    }
+    
+    // Current location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         let formattedLoc = formatLocation(locValue)
@@ -110,6 +120,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         UserDefaults.standard.set(locValue.longitude, forKey: Keys.UserDefaults.Longitude)
         UserDefaults.standard.set(formattedLoc, forKey: Keys.UserDefaults.Location)
         log(moduleName: cls, "LOC:", formattedLoc)
+        print(CLLocationManager.headingAvailable())
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        log(moduleName: cls, "error:", error)
     }
     
     func getLocation() -> String? {

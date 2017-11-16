@@ -7,17 +7,20 @@ PODS:
   - box-ios-sdk/no-arc (1.0.14):
     - box-ios-sdk/logger
   - Kanna (2.0.0)
+  - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
   - box-ios-sdk
   - Kanna (~> 2.0.0)
+  - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   box-ios-sdk: 8034a7b0fcac562105725afa744011c81da99398
   Kanna: 9a6637f72f5c77fe9c045b1efb2a5bb074754af8
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 609c671284649418fd9cd7af631447c283f80be5
+PODFILE CHECKSUM: 74b6b70ea0a796a82981cef6ce5a4833cff8bf9b
 
 COCOAPODS: 1.2.0

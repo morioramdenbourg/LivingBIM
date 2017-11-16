@@ -165,6 +165,9 @@
                                         <rect key="frame" x="0.0" y="420" width="134" height="140"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="set_location_transparent"/>
+                                        <connections>
+                                            <action selector="setLocationAction:" destination="5bC-PB-Pom" eventType="touchUpInside" id="X1w-Pa-7vh"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0vs-F5-Wzq">
                                         <rect key="frame" x="0.0" y="560" width="134" height="144"/>

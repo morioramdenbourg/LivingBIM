@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import BoxContentSDK
+import SwiftyJSON
 
 fileprivate let cls = "HomeViewController"
 
@@ -36,6 +37,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var buildingLabel: UILabel!
+    
+    @IBAction func setLocationAction(_ sender: Any) {
+        askBuildingInfo(viewController: self) { (abbr, name, room) in
+            let lbl = name + " (" + abbr + ") " + " - " + room
+            self.buildingLabel.text = lbl
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -238,6 +246,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return;
         }
         
+        // Completion handler for file upload
+        let uploadCheck = { (file: BOXFile?, error: Error?) in
+            if (error == nil && file != nil) {
+                // log(moduleName: self.cls, "completed upload to", (folder.name)!)
+            }
+            else {
+                log(moduleName: self.cls, "error while uploading", (file?.name)!)
+                log(moduleName: self.cls, error!)
+            }
+        }
+        
         // Iterate through the captures
         for (index, capture) in captures.enumerated() {
             
@@ -265,19 +284,33 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let folder = folder!
                     log(moduleName: self.cls, "created folder:", folder.name)
                     
+                    // Upload metadata as a json file
+                    var metadata = JSON()
+                    metadata["username"].string = username
+                    metadata["location"].string = location // TODO :add more information for location (long/lat)
+                    metadata["description"].string = text
+                    metadata["timeCaptured"].string = dateString
+                                        
+                    do {
+                        let raw = try metadata.rawData()
+                        print("RAW:", raw)
+                        contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: raw, fileName: ".metadata.json").perform(progress: nil, completion: uploadCheck)
+                    }
+                    catch _ {
+                        log(moduleName: self.cls, "unable to upload metadata file to:", folder.name)
+                    }
+                    
                     // Create frames folder
                     // No 3D reconstruction
                     let framesFolderName = "Frames"
                     let framesFolderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: framesFolderName, parentFolderID: folder.modelID)
-                    
-                    // ToDo: Upload metadata here
                     
                     framesFolderRequest.perform(completion: { (framesFolder: BOXFolder?, framesError: Error?) in
                         if (framesError == nil) {
                             let framesFolder = framesFolder!
                             
                             // Create folder for each individual frame and its metadata
-                            // Iterate through all the frames
+                            // TODO: Iterate through all the frames
                             let frameFolderName = "Frame" + "1"
                             let frameFolderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: frameFolderName, parentFolderID: framesFolder.modelID)
                             
@@ -285,27 +318,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 if (frameError == nil) {
                                     let frameFolder = frameFolder!
                                     
-                                    // Create metadata file
-                                    var capture = ""
-                                    capture += "Scan Details:\n"
-                                    capture += "--------------------------------\n"
-                                    capture += "Username: " + username + "\n"
-                                    capture += "Time Captured: " + dateString + "\n"
-                                    capture += "Location Captured: " + location + "\n"
-                                    capture += "Description: " + text
-                                    
                                     log(moduleName: self.cls, "uploading data to folder:", folder.name)
-                                    
-                                    // Completion handler for file upload
-                                    let uploadCheck = { (file: BOXFile?, error: Error?) in
-                                        if (error == nil && file != nil) {
-                                            // log(moduleName: self.cls, "completed upload to", (folder.name)!)
-                                        }
-                                        else {
-                                            log(moduleName: self.cls, "error while uploading to", (folder.name)!)
-                                            log(moduleName: self.cls, error!)
-                                        }
-                                    }
                                     
                                     // Add the rgb photo
                                     contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgbData, fileName: "color-image.png").perform(progress: nil, completion: uploadCheck)
@@ -313,28 +326,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                     // Add depth photo
                                     contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: depthData, fileName: "depth-image.png").perform(progress: nil, completion: uploadCheck)
                                     
-//                                    // Add capture metadata file
-//                                    if let captureData = capture.data(using: .utf8) {
-//                                        contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: captureData, fileName: "metadata.txt").perform(progress: nil, completion: uploadCheck)
-//                                    }
-                                    
-                                    // Upload metadata for the frame
-                                    let metadataFolderName = ".metadata"
-                                    let metadataFolderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: metadataFolderName, parentFolderID: frameFolder.modelID)
-                                    
-                                    // Perform request
-                                    metadataFolderRequest.perform(completion: { (metaFolder: BOXFolder?, metaError: Error?) in
-                                        if (metaError == nil) {
-                                            // Upload each metadata
-                                            
-                                            // Upload
-//                                            if let captureData = capture.data(using: .utf8) {
-//                                                contentClient.fileUploadRequestToFolder(withID: <#T##String!#>, from: <#T##Data!#>, fileName: <#T##String!#>)
-//                                            }
-                                            
-                                            // Upload
-                                        }
-                                    })
+                                    // TODO:: upload frame metadata
                                 }
                             })
                         }
@@ -372,7 +364,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     // Remove spinner
                     self.spinner?.removeFromSuperview()
                 }
-            })
+                } as! BOXFolderBlock as! BOXFolderBlock)
         }
     }
     
