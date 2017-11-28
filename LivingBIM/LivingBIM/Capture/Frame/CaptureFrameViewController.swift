@@ -293,7 +293,9 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         
         // Create and add the Discard action
         let cancelAction: UIAlertAction = UIAlertAction(title: "Discard", style: .cancel) { action -> Void in
-            // TODO: Restart the camera
+            if STSensorController.shared().isConnected() {
+                self.tryStartStreaming()
+            }
         }
         actionController.addAction(cancelAction)
         
