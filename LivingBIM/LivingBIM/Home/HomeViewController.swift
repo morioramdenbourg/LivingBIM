@@ -271,13 +271,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             // Grab from core data
             let username = capture.value(forKeyPath: Constants.CoreData.Capture.Username) as? String ?? "<invalid_name>"
             let description = capture.value(forKeyPath: Constants.CoreData.Capture.Description) as? String ?? ""
-//            let rgbData = capture.value(forKeyPath: Constants.CoreData.Capture.RGBFrame) as? Data ?? Data()
-//            let depthData = capture.value(forKeyPath: Constants.CoreData.Capture.DepthFrame) as? Data ?? Data()
-            let date = capture.value(forKeyPath: Constants.CoreData.Capture.CaptureTime) as? Date ?? Date()
+            let captureTime = capture.value(forKeyPath: Constants.CoreData.Capture.CaptureTime) as? Date ?? Date()
+            let frames = capture.value(forKeyPath: Constants.CoreData.Keys.CaptureToFrame) as? NSOrderedSet
             
             // Create the folder to hold the data
             let format = "yyy-MM-dd_HH:mm:ss"
-            let dateString = date.toString(dateFormat: format)
+            let dateString = captureTime.toString(dateFormat: format)
             let folderName = self.folderName + "_" + dateString;
             let folderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: folderName, parentFolderID: id)
             
@@ -290,11 +289,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     var metadata = JSON()
                     metadata["username"].string = username
                     metadata["description"].string = description
-                    metadata["timeCaptured"].string = dateString
+                    metadata["captureTime"].string = dateString
                                         
                     do {
                         let raw = try metadata.rawData()
-                        print("RAW:", raw)
                         contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: raw, fileName: ".metadata.json").perform(progress: nil, completion: uploadCheck)
                     }
                     catch _ {
@@ -311,25 +309,42 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                             let framesFolder = framesFolder!
                             
                             // Create folder for each individual frame and its metadata
-                            // TODO: Iterate through all the frames
-                            let frameFolderName = "Frame" + "1"
-                            let frameFolderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: frameFolderName, parentFolderID: framesFolder.modelID)
-                            
-                            frameFolderRequest.perform(completion: { (frameFolder: BOXFolder?, frameError: Error?) in
-                                if (frameError == nil) {
-                                    let frameFolder = frameFolder!
-                                    
-                                    log(name: module, "uploading data to folder:", folder.name)
-                                    
-                                    // Add the rgb photo
-//                                    contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgbData, fileName: "color-image.png").perform(progress: nil, completion: uploadCheck)
-                                    
-                                    // Add depth photo
-//                                    contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: depthData, fileName: "depth-image.png").perform(progress: nil, completion: uploadCheck)
-                                    
-                                    // TODO:: upload frame metadata
-                                }
-                            })
+                            let framesArr = frames?.array as! [NSManagedObject]
+                            for (index, frame) in framesArr.enumerated() {
+                                let frameFolderName = "Frame" + String(index)
+                                let frameFolderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: frameFolderName, parentFolderID: framesFolder.modelID)
+                                
+                                frameFolderRequest.perform(completion: { (frameFolder: BOXFolder?, frameError: Error?) in
+                                    if (frameError == nil) {
+                                        let frameFolder = frameFolder!
+                                        
+                                        log(name: module, "uploading data to folder:", folder.name)
+                                        
+                                        // Add the rgb photo
+                                        let rgb = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Color) as? Data
+                                        contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgb, fileName: "color.png").perform(progress: nil, completion: uploadCheck)
+                                        
+                                        // Add depth photo
+                                        let depth = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Depth) as? Data
+                                        contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: depth, fileName: "depth.png").perform(progress: nil, completion: uploadCheck)
+                                        
+                                        // Get metadata for frame
+                                        let time = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Time) as? Date
+                                        
+                                        // Upload metadata as a json file
+                                        var frameMetadata = JSON()
+                                        frameMetadata["time"].string = time?.toString(dateFormat: format)
+                                        
+                                        do {
+                                            let raw = try frameMetadata.rawData()
+                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: raw, fileName: ".metadata.json").perform(progress: nil, completion: uploadCheck)
+                                        }
+                                        catch _ {
+                                            log(name: module, "unable to upload metadata file to:", folder.name)
+                                        }
+                                    }
+                                })
+                            }
                         }
                     })
                 }
