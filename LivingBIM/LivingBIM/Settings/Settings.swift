@@ -9,11 +9,11 @@
 import Foundation
 import BoxContentSDK
 
-fileprivate let settingsModule = "Settings"
+fileprivate let module = "Settings"
 
 func getBoxCredentials() -> BOXUserMini? {
     guard let contentClient = BOXContentClient.default() else {
-        log(moduleName: settingsModule, "error creating Box Client")
+        log(name: module, "error creating Box Client")
         return nil
     }
     return contentClient.user
@@ -21,38 +21,38 @@ func getBoxCredentials() -> BOXUserMini? {
 
 func loginBox(completion: @escaping (BOXUser?, Error?) -> Void) {
     guard let contentClient = BOXContentClient.default() else {
-        log(moduleName: settingsModule, "error creating Box Client")
+        log(name: module, "error creating Box Client")
         return
     }
     
     // Authenticate box, then call the completion handler
     contentClient.authenticate(completionBlock: { (user: BOXUser?, error: Error?) -> Void in
-        log(moduleName: settingsModule, "successfully logged into box")
+        log(name: module, "successfully logged into box")
         completion(user, error)
     })
 }
 
 func logoutBox(completion: () -> Void) {
     guard let contentClient = BOXContentClient.default() else {
-        log(moduleName: settingsModule, "error creating Box Client")
+        log(name: module, "error creating Box Client")
         return
     }
     
     // Log out of box
     contentClient.logOut()
     
-    log(moduleName: settingsModule, "successfully logged out of box")
+    log(name: module, "successfully logged out of box")
     
     // Completion after Box logout
     completion()
 }
 
 func getUsername() -> String? {
-    return UserDefaults.standard.string(forKey: Keys.UserDefaults.Username)
+    return UserDefaults.standard.string(forKey: Constants.UserDefaults.Username)
 }
 
 func askUsername(viewController vc: UIViewController, completion: @escaping (String) -> Void) {
-    log(moduleName: settingsModule, "getting username")
+    log(name: module, "getting username")
     
     // Create text field
     var inputTextField: UITextField?
@@ -69,7 +69,7 @@ func askUsername(viewController vc: UIViewController, completion: @escaping (Str
         completion(text)
         
         // Save the new username to user defaults
-        UserDefaults.standard.set(text, forKey: Keys.UserDefaults.Username)
+        UserDefaults.standard.set(text, forKey: Constants.UserDefaults.Username)
     }
     actionSheetController.addAction(saveAction)
     
@@ -94,19 +94,19 @@ func askUsername(viewController vc: UIViewController, completion: @escaping (Str
 }
 
 func getBuildingAbbr() -> String? {
-    return UserDefaults.standard.string(forKey: Keys.UserDefaults.BuildingAbbr)
+    return UserDefaults.standard.string(forKey: Constants.UserDefaults.Building.Abbr)
 }
 
 func getBuildingName() -> String? {
-    return UserDefaults.standard.string(forKey: Keys.UserDefaults.BuildingName)
+    return UserDefaults.standard.string(forKey: Constants.UserDefaults.Building.Name)
 }
 
 func getRoomNumber() -> String? {
-    return UserDefaults.standard.string(forKey: Keys.UserDefaults.RoomNumber)
+    return UserDefaults.standard.string(forKey: Constants.UserDefaults.Building.RoomNumber)
 }
 
 func askBuildingInfo(viewController vc: UIViewController, completion: @escaping (String, String, String) -> Void) {
-    log(moduleName: settingsModule, "asking for building information")
+    log(name: module, "asking for building information")
     
     // Create picker
     let sb = UIStoryboard(name: "Main", bundle: nil)

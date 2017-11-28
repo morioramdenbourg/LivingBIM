@@ -9,13 +9,8 @@
 import Foundation
 import CoreLocation
 
-// Format location string
-func formatLocation(_ location: CLLocationCoordinate2D) -> String {
-    return String(format: "%.4f", location.latitude) + ", " + String(format: "%.4f", location.longitude)
-}
-
-// Convert date to string
 extension Date {
+    // Convert date to string
     func toString(dateFormat format: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
@@ -23,9 +18,16 @@ extension Date {
     }
 }
 
-// Log to the console for a module
-func log(moduleName mName: String, _ items: Any...) {
-    print("[" + mName + "]", terminator: " ")
+extension CLLocationCoordinate2D {
+    // Pretty print coordinate
+    func pretty() -> String {
+        return String(format: "%.4f", self.latitude) + ", " + String(format: "%.4f", self.longitude)
+    }
+}
+
+// Pretty Log to the console for a module
+func log(name n: String, _ items: Any...) {
+    print("[" + n + "]", terminator: " ")
     for item in items {
         print(item, terminator: " ")
     }

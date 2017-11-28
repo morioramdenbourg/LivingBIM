@@ -11,7 +11,7 @@ import CoreData
 import BoxContentSDK
 import SwiftyJSON
 
-fileprivate let cls = "HomeViewController"
+fileprivate let module = "HomeViewController"
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -29,7 +29,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     private let cellHeight: CGFloat = 200
     private let folderName: String = "scan"
     private let rootFolderName: String = "scans"
-    private let cls = String(describing: HomeViewController.self) // Class name
 
     // Outlets
     @IBOutlet weak var buttonOutlet: UIButton!
@@ -52,7 +51,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         screenSize = UIScreen.main.bounds
         spinner = SpinnerView(frame: CGRect(x: (screenSize?.width)! / 2, y: (screenSize?.height)! / 2, width: 100, height: 100))
         
-        log(moduleName: cls, "viewDidLoad")
+        log(name: module, "viewDidLoad")
         
         // Remove the lines on an empty table
         self.tableView.tableFooterView = UIView(frame: .zero)
@@ -62,7 +61,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.dataSource = self
         
         // Core Data
-        log(moduleName: cls, "setting up Core Data")
+        log(name: module, "setting up Core Data")
         appDelegate = UIApplication.shared.delegate as? AppDelegate
         guard let appDelegate = self.appDelegate else {
             return
@@ -73,12 +72,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return
         }
         
-        entity = NSEntityDescription.entity(forEntityName: Keys.CoreData.Capture.Key, in: managedContext)
-        log(moduleName: cls, "finished setting up Core Data")
+        entity = NSEntityDescription.entity(forEntityName: Constants.CoreData.Keys.Capture, in: managedContext)
+        log(name: module, "finished setting up Core Data")
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        log(moduleName: cls, "viewWillAppear")
+        log(name: module, "viewWillAppear")
         
         // Show navigation bar
         self.navigationController?.navigationBar.isHidden = false
@@ -106,7 +105,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         // Display location
-        locationLabel.text = appDelegate?.getLocation()
+        locationLabel.text = appDelegate?.getCoordinate()?.pretty()
         
         // Load the table
         guard let managedContext = self.managedContext else {
@@ -114,14 +113,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         // Fetching from core data
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Keys.CoreData.Capture.Key)
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Constants.CoreData.Keys.Capture)
         fetchRequest.returnsObjectsAsFaults = false // TODO: remove for debug
         do {
             captures = try managedContext.fetch(fetchRequest)
             reloadCheck()
         } catch let error as NSError {
-            log(moduleName: cls, "ERROR:", "Could not fetch from Core Data")
-            log(moduleName: cls, error)
+            log(name: module, "ERROR:", "Could not fetch from Core Data")
+            log(name: module, error)
         }
     }
     
@@ -141,29 +140,31 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: HomeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: Keys.Cell) as! HomeTableViewCell
+        let cell: HomeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: Constants.CellIdentifier) as! HomeTableViewCell
         
         guard let capture = captures?[indexPath.row] else {
             return cell
         }
         
         // Grab data
-        let username = capture.value(forKeyPath: Keys.CoreData.Capture.Username) as? String
-        let location = capture.value(forKeyPath: Keys.CoreData.Capture.Location) as? String
-        let date = capture.value(forKeyPath: Keys.CoreData.Capture.Date) as? Date
+        let username = capture.value(forKeyPath: Constants.CoreData.Capture.Username) as? String
+        let timeCaptured = capture.value(forKeyPath: Constants.CoreData.Capture.CaptureTime) as? Date
+        let frames = capture.value(forKeyPath: Constants.CoreData.Keys.CaptureToFrame) as? NSOrderedSet
+        let first = frames?.firstObject as? NSManagedObject // Get first frame
+        let rgb = first?.value(forKey: Constants.CoreData.Capture.Frame.Color) as? Data
         
-        // Put on cell
+        // Put data and first frame on the cell
         cell.usernameLabel.text = username
-        cell.locationLabel.text = location
-        cell.dateLabel.text = date?.toString(dateFormat: "yyy-MM-dd HH:mm:ss")
+        cell.dateLabel.text = timeCaptured?.toString(dateFormat: "yyy-MM-dd HH:mm:ss")
         
         // Hack - set to nil for async operations and add tag
         cell.imgView.image = nil
         cell.tag = indexPath.row
         
+        // Display the first frame
         DispatchQueue.main.async { _ in
             if cell.tag == indexPath.row {
-                if let data = capture.value(forKeyPath: Keys.CoreData.Capture.RGBFrame) as? Data {
+                if let data = rgb {
                     cell.imgView.image = UIImage(data: data)
                 }
             }
@@ -178,12 +179,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        log(moduleName: cls, "tapped cell at:", indexPath.row)
+        log(name: module, "tapped cell at:", indexPath.row)
     }
     
     // Upload to Box
     @IBAction func uploadButton(_ sender: Any) {
-        log(moduleName: cls, "uploading to box")
+        log(name: module, "uploading to box")
         
         // Disable the button
         buttonOutlet.isEnabled = false
@@ -192,15 +193,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.view.addSubview(spinner!)
         
         guard let contentClient = BOXContentClient.default() else {
-            log(moduleName: cls, "error while uploading")
+            log(name: module, "error while uploading")
             return
         }
                 
         // Authenticate box
         contentClient.authenticate(completionBlock: { (user: BOXUser?, error: Error?) -> Void in
             if (error == nil) {
-                log(moduleName: self.cls, "login successful")
-                log(moduleName: self.cls, "logged in as:", (user?.login!)! as String)
+                log(name: module, "login successful")
+                log(name: module, "logged in as:", (user?.login!)! as String)
                 
                 // Add all to the "rootFolderName" folder, create if it doesn't exist
                 let folderItemsRequest: BOXFolderItemsRequest = contentClient.folderItemsRequest(withID: BOXAPIFolderIDRoot)
@@ -236,42 +237,43 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 return
             }
+            else {
+                // Remove spinner
+                self.spinner?.removeFromSuperview()
+                
+                // Enable back the button
+                self.buttonOutlet.isEnabled = true
+            }
         })
     }
     
     private func performUpload(_ contentClient: BOXContentClient, modelID id: String) {
         // Get the captures
         guard let captures = self.captures else {
-            log(moduleName: self.cls, "captures empty")
+            log(name: module, "captures empty")
             return;
         }
         
         // Completion handler for file upload
         let uploadCheck = { (file: BOXFile?, error: Error?) in
             if (error == nil && file != nil) {
-                // log(moduleName: self.cls, "completed upload to", (folder.name)!)
+                // log(name: self.module, "completed upload to", (folder.name)!)
             }
             else {
-                log(moduleName: self.cls, "error while uploading", (file?.name)!)
-                log(moduleName: self.cls, error!)
+                log(name: module, "error while uploading", (file?.name)!)
+                log(name: module, error!)
             }
         }
         
         // Iterate through the captures
         for (index, capture) in captures.enumerated() {
             
-            // Grab from Core Data
-            guard let date = capture.value(forKeyPath: Keys.CoreData.Capture.Date) as? Date else {
-                log(moduleName: self.cls, "no date for the capture ... skipping")
-                continue;
-            }
-            
-            // Grab all the fields
-            let username = capture.value(forKeyPath: Keys.CoreData.Capture.Username) as? String ?? "<invalid_name>"
-            let location = capture.value(forKeyPath: Keys.CoreData.Capture.Location) as? String ?? "<invalid_location>"
-            let text = capture.value(forKeyPath: Keys.CoreData.Capture.Text) as? String ?? ""
-            let rgbData = capture.value(forKeyPath: Keys.CoreData.Capture.RGBFrame) as? Data ?? Data()
-            let depthData = capture.value(forKeyPath: Keys.CoreData.Capture.DepthFrame) as? Data ?? Data()
+            // Grab from core data
+            let username = capture.value(forKeyPath: Constants.CoreData.Capture.Username) as? String ?? "<invalid_name>"
+            let description = capture.value(forKeyPath: Constants.CoreData.Capture.Description) as? String ?? ""
+//            let rgbData = capture.value(forKeyPath: Constants.CoreData.Capture.RGBFrame) as? Data ?? Data()
+//            let depthData = capture.value(forKeyPath: Constants.CoreData.Capture.DepthFrame) as? Data ?? Data()
+            let date = capture.value(forKeyPath: Constants.CoreData.Capture.CaptureTime) as? Date ?? Date()
             
             // Create the folder to hold the data
             let format = "yyy-MM-dd_HH:mm:ss"
@@ -282,13 +284,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             folderRequest.perform(completion: { (folder: BOXFolder?, error: Error?) in
                 if (error == nil) {
                     let folder = folder!
-                    log(moduleName: self.cls, "created folder:", folder.name)
+                    log(name: module, "created folder:", folder.name)
                     
                     // Upload metadata as a json file
                     var metadata = JSON()
                     metadata["username"].string = username
-                    metadata["location"].string = location // TODO :add more information for location (long/lat)
-                    metadata["description"].string = text
+                    metadata["description"].string = description
                     metadata["timeCaptured"].string = dateString
                                         
                     do {
@@ -297,7 +298,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: raw, fileName: ".metadata.json").perform(progress: nil, completion: uploadCheck)
                     }
                     catch _ {
-                        log(moduleName: self.cls, "unable to upload metadata file to:", folder.name)
+                        log(name: module, "unable to upload metadata file to:", folder.name)
                     }
                     
                     // Create frames folder
@@ -318,13 +319,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 if (frameError == nil) {
                                     let frameFolder = frameFolder!
                                     
-                                    log(moduleName: self.cls, "uploading data to folder:", folder.name)
+                                    log(name: module, "uploading data to folder:", folder.name)
                                     
                                     // Add the rgb photo
-                                    contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgbData, fileName: "color-image.png").perform(progress: nil, completion: uploadCheck)
+//                                    contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgbData, fileName: "color-image.png").perform(progress: nil, completion: uploadCheck)
                                     
                                     // Add depth photo
-                                    contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: depthData, fileName: "depth-image.png").perform(progress: nil, completion: uploadCheck)
+//                                    contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: depthData, fileName: "depth-image.png").perform(progress: nil, completion: uploadCheck)
                                     
                                     // TODO:: upload frame metadata
                                 }
@@ -333,13 +334,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     })
                 }
                 else {
-                    log(moduleName: self.cls, "error creating folder:", folderName)
-                    log(moduleName: self.cls, error!)
+                    log(name: module, "error creating folder:", folderName)
+                    log(name: module, error!)
                 }
                 
                 // If last element has been uploaded, then remove all
                 if (index == captures.count - 1) {
-                    log(moduleName: self.cls, "Deleting the captures")
+                    log(name: module, "Deleting the captures")
                     
                     // Get managed object
                     guard let managedContext = self.managedContext else {
@@ -347,7 +348,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                     
                     // Perform delete
-                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Keys.CoreData.Capture.Key)
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.CoreData.Keys.Capture)
                     let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
                     do {
                         try managedContext.execute(deleteRequest)
@@ -357,19 +358,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.reloadCheck()
                     } catch let error as NSError {
                         // Handle error
-                        log(moduleName: self.cls, "Error while deleting objects")
-                        log(moduleName: self.cls, error)
+                        log(name: module, "Error while deleting objects")
+                        log(name: module, error)
                     }
                     
                     // Remove spinner
                     self.spinner?.removeFromSuperview()
                 }
-                } as! BOXFolderBlock as! BOXFolderBlock)
+            })
         }
     }
     
     @IBAction func modelButton(_ sender: Any) {
-        log(moduleName: cls, "going to model view")
+        log(name: module, "going to model view")
         let w: SwiftWrapper = SwiftWrapper()
         let vc = w.getVC()
         self.present(vc as! UIViewController, animated: true, completion: nil)

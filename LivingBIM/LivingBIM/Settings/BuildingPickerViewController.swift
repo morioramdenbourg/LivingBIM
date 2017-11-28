@@ -10,10 +10,10 @@ import UIKit
 import Alamofire
 import Kanna
 
+fileprivate let module = "BuildingPickerViewController"
+fileprivate let site = "https://facilitiesservices.utexas.edu/buildings/"
+
 class BuildingPickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    fileprivate let cls = "BuildingPickerViewController"
-    fileprivate let site = "https://facilitiesservices.utexas.edu/buildings/"
     
     var completion: ((String, String, String) -> Void)?
     var buildings: [(abbreviation: String, name: String)] = []
@@ -21,10 +21,10 @@ class BuildingPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var roomNumberField: UITextField!
-    
     @IBOutlet weak var submitAction: UIButton!
+    
     @IBAction func submitPress(_ sender: Any) {
-        log(moduleName: cls, "pressed submit")
+        log(name: module, "pressed submit")
         
         // Get selected row
         let row = picker.selectedRow(inComponent: 0)
@@ -33,12 +33,12 @@ class BuildingPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
         // Get room number
         let roomNumber = roomNumberField.text ?? ""
         
-        log(moduleName: cls, "adding to defaults:", data.abbreviation, data.name, roomNumber)
+        log(name: module, "adding to defaults:", data.abbreviation, data.name, roomNumber)
         
         // Add to user defaults
-        UserDefaults.standard.set(data.abbreviation, forKey: Keys.UserDefaults.BuildingAbbr)
-        UserDefaults.standard.set(data.name, forKey: Keys.UserDefaults.BuildingName)
-        UserDefaults.standard.set(roomNumber, forKey: Keys.UserDefaults.RoomNumber)
+        UserDefaults.standard.set(data.abbreviation, forKey: Constants.UserDefaults.Building.Abbr)
+        UserDefaults.standard.set(data.name, forKey: Constants.UserDefaults.Building.Name)
+        UserDefaults.standard.set(roomNumber, forKey: Constants.UserDefaults.Building.RoomNumber)
         
         // Perform completion handler
         self.completion?(data.abbreviation, data.name, roomNumber)
@@ -54,7 +54,7 @@ class BuildingPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
         let frame = picker.frame
         spinner = SpinnerView(frame: CGRect(x: frame.origin.x + picker.frame.width / 2, y: frame.origin.y + picker.frame.height / 2, width: 50, height: 50))
         
-        log(moduleName: cls, "viewDidLoad")
+        log(name: module, "viewDidLoad")
         
         // Set delegate and datasource
         picker.delegate = self
@@ -74,7 +74,7 @@ class BuildingPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     fileprivate func scrapeSite() {
         self.view.addSubview(spinner!)
         Alamofire.request(site).responseString { response in
-            log(moduleName: self.cls, "connected to", self.site, ":", response.result.isSuccess)
+            log(name: module, "connected to", site, ":", response.result.isSuccess)
             if let html = response.result.value {
                 self.parseHTML(html: html)
             }
@@ -119,7 +119,7 @@ class BuildingPickerViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     // Selected row
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        log(moduleName: cls, "selected row:", row)
+        log(name: module, "selected row:", row)
     }
 
     override func didReceiveMemoryWarning() {

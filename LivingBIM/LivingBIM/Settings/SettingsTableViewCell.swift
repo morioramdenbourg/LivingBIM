@@ -9,6 +9,8 @@
 import UIKit
 import BoxContentSDK
 
+fileprivate let module = "SettingsTableViewCell"
+
 class SettingsTableViewCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var detailsButton: UIButton!
@@ -16,7 +18,6 @@ class SettingsTableViewCell: UITableViewCell {
     // Constants
     let loggedOutMsg = "Log in"
     let noUsernameMsg = "(No username)"
-    fileprivate let cls = "SettingsTableViewCell"
     
     // VC
     var vc: SettingsTableViewController?
@@ -24,8 +25,8 @@ class SettingsTableViewCell: UITableViewCell {
     // Define the action that the button will have
     @IBAction func detailsAction(_ sender: Any) {
         // Get row and section
-        let row = self.tag % Keys.Settings.MaxRows
-        let section = self.tag / Keys.Settings.MaxRows
+        let row = self.tag % Constants.Settings.MaxRows
+        let section = self.tag / Constants.Settings.MaxRows
                 
         switch section {
         case 0: // Box Section

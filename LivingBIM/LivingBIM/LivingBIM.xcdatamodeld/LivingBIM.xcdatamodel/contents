@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13240" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="17B48" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Capture" representedClassName="Capture" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="depthFrame" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="rgbFrame" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="captureDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="captureTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="frames" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Frame" inverseName="capture" inverseEntity="Frame" syncable="YES"/>
+    </entity>
+    <entity name="Frame" representedClassName="Frame" syncable="YES" codeGenerationType="class">
+        <attribute name="color" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="depth" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="capture" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Capture" inverseName="frames" inverseEntity="Capture" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Capture" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="Capture" positionX="135" positionY="-9" width="128" height="103"/>
+        <element name="Frame" positionX="-63" positionY="9" width="128" height="103"/>
     </elements>
 </model>

@@ -11,14 +11,14 @@ import CoreData
 import BoxContentSDK
 import CoreLocation
 
-fileprivate let cls = "AppDelegate"
+fileprivate let module = "AppDelegate"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
-    var locationManager: CLLocationManager? // Location
-    var motionManager: CMMotionManager! // Motion
+    var locationManager: CLLocationManager? // Location Manager
+    var motionManager: CMMotionManager! // Motion Manager
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -98,74 +98,86 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
     }
     
+    // Get current AppDelegate anywhere in the app
+    class var delegate: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
+    // Set up the motion manager
     func setMotionManager() {
-        log(moduleName: cls, "setting up motion manager")
+        // Set up motion manager
+        log(name: module, "setting up motion manager")
         motionManager = CMMotionManager()
         
         // Magnetometer
         motionManager.startMagnetometerUpdates()
-        
-        //
     }
     
+    // Set up the location manager
     func setLocationManager() {
-        log(moduleName: cls, "setting up location")
+        log(name: module, "setting up location")
+        
+        // Start location manager
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.requestAlwaysAuthorization()
+        
+        // Start location updates
         locationManager?.startUpdatingLocation()
+        
+        // Heading and orientation
         locationManager?.startUpdatingHeading()
-        let orientation = UIApplication.shared.statusBarOrientation
-        var text = ""
-        switch orientation {
+        var orientation = ""
+        switch UIApplication.shared.statusBarOrientation {
         case .portrait:
-            text = "Portrait"
+            orientation = "Portrait"
         case .portraitUpsideDown:
-            text="PortraitUpsideDown"
+            orientation = "PortraitUpsideDown"
         case .landscapeLeft:
-            text="LandscapeLeft"
+            orientation = "LandscapeLeft"
             locationManager?.headingOrientation = CLDeviceOrientation.landscapeLeft
         case .landscapeRight:
-            text="LandscapeRight"
+            orientation = "LandscapeRight"
             locationManager?.headingOrientation = CLDeviceOrientation.landscapeRight
         default:
-            text="Another"
+            orientation = "Other"
         }
-        log(moduleName: cls, "chose orientation:", text)
+        log(name: module, "chose orientation:", orientation)
     }
     
+    // Heading update
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        let trueAngle = newHeading.trueHeading
-        let magAngle = newHeading.magneticHeading
-        log(moduleName: cls, "TRUE HEADING:", trueAngle)
-        log(moduleName: cls, "MAG HEADING:", magAngle)
+        log(name: module, "true heading:", newHeading.trueHeading)
     }
     
-    // Current location
+    // Location update
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        let formattedLoc = formatLocation(locValue)
-        UserDefaults.standard.set(locValue.latitude, forKey: Keys.UserDefaults.Latitude)
-        UserDefaults.standard.set(locValue.longitude, forKey: Keys.UserDefaults.Longitude)
-        UserDefaults.standard.set(formattedLoc, forKey: Keys.UserDefaults.Location)
-        log(moduleName: cls, "LOC:", formattedLoc)
+        log(name: module, "location:", manager.location!.coordinate.pretty())
     }
     
+    // Error
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        log(moduleName: cls, "error:", error)
+        log(name: module, "error:", error)
     }
     
-    func getLocation() -> String? {
-        return UserDefaults.standard.string(forKey: Keys.UserDefaults.Location)
+    // Get current coordinate
+    func getCoordinate() -> CLLocationCoordinate2D? {
+        return locationManager?.location?.coordinate
     }
     
-    func getLatitude() -> CLLocationDegrees? {
-        return UserDefaults.standard.object(forKey: Keys.UserDefaults.Latitude) as? CLLocationDegrees
+    // Get current acceleration
+    func getAcceleration() -> CMAcceleration? {
+        return motionManager?.accelerometerData?.acceleration
     }
     
-    func getLongitude() -> CLLocationDegrees? {
-        return UserDefaults.standard.object(forKey: Keys.UserDefaults.Longitude) as? CLLocationDegrees
+    // Get current gyroscope reading
+    func getGyroscope() -> CMRotationRate? {
+        return motionManager?.gyroData?.rotationRate
+    }
+    
+    // Get current magnetometer reading
+    func getMagnetometer() -> CMMagneticField? {
+        return motionManager?.magnetometerData?.magneticField
     }
 }
-

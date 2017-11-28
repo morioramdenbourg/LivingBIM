@@ -9,19 +9,19 @@
 import UIKit
 import AVFoundation
 import CoreData
+import CoreLocation
+
+fileprivate let module = String(describing: CaptureFrameViewController.self)
 
 class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     // Core data
-    private var appDelegate: AppDelegate?
-    private var managedContext: NSManagedObjectContext?
-    private var entity: NSEntityDescription?
+    private var managedContext: NSManagedObjectContext!
+    private var entity: NSEntityDescription!
+    private var frameEntity: NSEntityDescription!
     
     // User Defaults
-    private var defaults: UserDefaults?
-    
-    // Class name
-    private let cls = String(describing: CaptureFrameViewController.self)
+    private var defaults: UserDefaults!
     
     // Camera
     private let position = AVCaptureDevicePosition.back
@@ -38,32 +38,23 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     private var controller : STSensorController?
     private var toRGBA : STDepthToRgba?
     private var captureNext = false
+    private var captureTime: Date?
+    private var captureLocation: CLLocationCoordinate2D?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        log(moduleName: cls, "viewDidLoad")
+        log(name: module, "viewDidLoad")
         
         // Set up core data
-        log(moduleName: cls, "setting up Core Data")
-        
-        appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let appDelegate = self.appDelegate else {
-            return
-        }
-        
+        log(name: module, "setting up Core Data")
+        let appDelegate = AppDelegate.delegate
         managedContext = appDelegate.persistentContainer.viewContext
-        guard let managedContext = self.managedContext else {
-            return
-        }
-        
-        entity = NSEntityDescription.entity(forEntityName: Keys.CoreData.Capture.Key, in: managedContext)
-        log(moduleName: cls, "finished setting up Core Data")
+        entity = NSEntityDescription.entity(forEntityName: Constants.CoreData.Keys.Capture, in: managedContext)
+        frameEntity = NSEntityDescription.entity(forEntityName: Constants.CoreData.Keys.Frame, in: managedContext)
         
         // Set up user defaults
-        log(moduleName: cls, "setting up User Defaults")
         defaults = UserDefaults.standard
-        log(moduleName: cls, "finished setting up User Defaults")
         
         // Disable navigation bar
         self.navigationController?.navigationBar.isHidden = true
@@ -141,7 +132,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        log(moduleName: cls, "viewWillAppear")
+        log(name: module, "viewWillAppear")
         if tryInitializeSensor() && STSensorController.shared().isConnected() {
             tryStartStreaming()
         }
@@ -156,14 +147,14 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     func appDidBecomeActive() {
-        log(moduleName: cls, "appDidBecomeActive")
+        log(name: module, "appDidBecomeActive")
         if STSensorController.shared().isConnected() {
             tryStartStreaming()
         }
     }
     
     func tryInitializeSensor() -> Bool {
-        log(moduleName: cls, "Initializing Sensor")
+        log(name: module, "Initializing Sensor")
         let result = STSensorController.shared().initializeSensorConnection()
         if result == .alreadyInitialized || result == .success {
             return true
@@ -173,7 +164,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     
     @discardableResult
     func tryStartStreaming() -> Bool {
-        log(moduleName: cls, "tryStartStreaming")
+        log(name: module, "tryStartStreaming")
         if tryInitializeSensor() {
             let options: [AnyHashable: Any] = [
                 kSTStreamConfigKey: NSNumber(value: STStreamConfig.depth640x480.rawValue as Int),
@@ -183,21 +174,21 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
             do {
                 try STSensorController.shared().startStreaming(options: options as [AnyHashable: Any])
                 statusLabel.text = "Streaming"
-                log(moduleName: cls, "started streaming")
+                log(name: module, "started streaming")
                 let toRGBAOptions : [AnyHashable: Any] = [
                     kSTDepthToRgbaStrategyKey : NSNumber(value: STDepthToRgbaStrategy.redToBlueGradient.rawValue as Int)
                 ]
                 toRGBA = STDepthToRgba(options: toRGBAOptions)
                 return true
             } catch let error as NSError {
-                log(moduleName: cls, error)
+                log(name: module, error)
             }
         }
         return false
     }
 
     func sensorDidConnect() {
-        log(moduleName: cls, "sensorDidConnect")
+        log(name: module, "sensorDidConnect")
         if tryStartStreaming() {
             statusLabel.text = "Streaming"
         }
@@ -207,21 +198,21 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     func sensorDidDisconnect() {
-        log(moduleName: cls, "sensorDidDisconnect")
+        log(name: module, "sensorDidDisconnect")
         statusLabel.text = "Disconnected"
     }
     
     func sensorDidStopStreaming(_ reason: STSensorControllerDidStopStreamingReason) {
-        log(moduleName: cls, "sensorDidStopStreaming")
+        log(name: module, "sensorDidStopStreaming")
         statusLabel.text = "Stopped Streaming"
     }
     
     func sensorDidLeaveLowPowerMode() {
-        log(moduleName: cls, "sensorDidLeaveLowPowerMode")
+        log(name: module, "sensorDidLeaveLowPowerMode")
     }
     
     func sensorBatteryNeedsCharging() {
-        log(moduleName: cls, "sensorBatteryNeedsCharging")
+        log(name: module, "sensorBatteryNeedsCharging")
         statusLabel.text = "Low Battery"
     }
     
@@ -238,14 +229,14 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
             
             if (captureNext) {
                 stopStreaming()
-                save(depthImage: depthImage, colorImage: uiImage)
                 captureNext = false
+                save(depthImage: depthImage, colorImage: uiImage)
             }
         }
     }
     
     func stopStreaming() {
-        log(moduleName: cls, "Stopped streaming")
+        log(name: module, "Stopped streaming")
         STSensorController.shared().stopStreaming()
         statusLabel.text = "Stopped"
     }
@@ -286,7 +277,10 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     private func save(depthImage dImage: UIImage, colorImage cImage: UIImage) {
-        log(moduleName: cls, "Saving image")
+        log(name: module, "Saving image")
+        
+        // Set capture time and location
+        captureTime = Date()
         
         // Alert to ask save/discard capture
         let actionController: UIAlertController = UIAlertController(title: "Capture", message: "Save or Discard?", preferredStyle: .alert)
@@ -308,7 +302,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     private func describeCapture(depthImage dImage: UIImage, colorImage cImage: UIImage) {
-        log(moduleName: cls, "displaying describe capture popup")
+        log(name: module, "displaying describe capture popup")
         
         // Create text field
         var inputTextField: UITextField?
@@ -318,40 +312,42 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         
         // Create and an option action
         let saveAction: UIAlertAction = UIAlertAction(title: "Save", style: .default) { action -> Void in
-            // Get text
-            let text: String = inputTextField?.text ?? ""
+            // Get description
+            let description: String = inputTextField?.text ?? ""
             
-            // Save to core Data
-            guard let entity = self.entity, let managedContext = self.managedContext else {
-                return
-            }
-            
-            let capture = NSManagedObject(entity: entity, insertInto: managedContext)
-            let username = self.defaults?.string(forKey: Keys.UserDefaults.Username)
-            let timestamp = Date()
-            let location = self.defaults?.string(forKey: Keys.UserDefaults.Location)
-            
+            // Fill in core data values
+            let username = self.defaults.string(forKey: Constants.UserDefaults.Username)
             let rgbData = UIImagePNGRepresentation(cImage)
             let depthData = UIImagePNGRepresentation(dImage)
             
-            capture.setValue(username, forKeyPath: Keys.CoreData.Capture.Username)
-            capture.setValue(timestamp, forKeyPath: Keys.CoreData.Capture.Date)
-            capture.setValue(text, forKeyPath: Keys.CoreData.Capture.Text)
-            capture.setValue(location, forKeyPath: Keys.CoreData.Capture.Location)
-            capture.setValue(rgbData, forKeyPath: Keys.CoreData.Capture.RGBFrame)
-            capture.setValue(depthData, forKeyPath: Keys.CoreData.Capture.DepthFrame)
+            // Create capture
+            let capture = NSManagedObject(entity: self.entity, insertInto: self.managedContext)
+            capture.setValue(username, forKeyPath: Constants.CoreData.Capture.Username)
+            capture.setValue(self.captureTime, forKeyPath: Constants.CoreData.Capture.CaptureTime)
+            capture.setValue(description, forKeyPath: Constants.CoreData.Capture.Description)
+            
+            // Create frame
+            let frame = NSManagedObject(entity: self.frameEntity, insertInto: self.managedContext)
+            frame.setValue(self.captureTime, forKeyPath: Constants.CoreData.Capture.Frame.Time)
+            frame.setValue(rgbData, forKeyPath: Constants.CoreData.Capture.Frame.Color)
+            frame.setValue(depthData, forKeyPath: Constants.CoreData.Capture.Frame.Depth)
+
+            // Add frame to capture
+            let set = NSMutableOrderedSet()
+            set.add(frame)
+            capture.setValue(set.copy() as? NSOrderedSet, forKey: Constants.CoreData.Keys.CaptureToFrame)
     
+            // Save to core data
             do {
-                try managedContext.save()
+                try self.managedContext.save()
             } catch let error as NSError {
-                log(moduleName: self.cls, "ERROR:", "Could not save to Core Data.")
-                log(moduleName: self.cls, "ERROR:", error)
+                log(name: module, "ERROR:", "Could not save to Core Data.")
+                log(name: module, "ERROR:", error)
             }
     
-            log(moduleName: self.cls, "Saved image")
+            log(name: module, "Saved image")
     
             self.navigationController?.popViewController(animated: true)
-            
         }
         actionSheetController.addAction(saveAction)
         
@@ -366,7 +362,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     }
     
     @IBAction func captureButton(_ sender: Any) {
-        log(moduleName: cls, "Capturing image...");
+        log(name: module, "Capturing image...");
         captureNext = true
         
         // test save
