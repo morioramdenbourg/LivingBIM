@@ -98,20 +98,20 @@
 		6D7005011F9AB12100C7410E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6D7005021F9AB12700C7410E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6D7005031F9AB12B00C7410E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		6D70055F1F9AB2BB00C7410E /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = "../../../../Structure SDK/Samples/RoomCapture/EAGLView.h"; sourceTree = "<group>"; };
-		6D7005601F9AB2BB00C7410E /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Joystick.h; path = "../../../../Structure SDK/Samples/RoomCapture/Joystick.h"; sourceTree = "<group>"; };
-		6D7005621F9AB2BB00C7410E /* ViewController+SLAM.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "ViewController+SLAM.mm"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+SLAM.mm"; sourceTree = "<group>"; };
-		6D7005631F9AB2BB00C7410E /* CalibrationOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalibrationOverlay.h; path = "../../../../Structure SDK/Samples/RoomCapture/CalibrationOverlay.h"; sourceTree = "<group>"; };
-		6D7005641F9AB2BB00C7410E /* GraphicsRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GraphicsRenderer.mm; path = "../../../../Structure SDK/Samples/RoomCapture/GraphicsRenderer.mm"; sourceTree = "<group>"; };
-		6D7005651F9AB2BB00C7410E /* ViewController+Sensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ViewController+Sensor.h"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+Sensor.h"; sourceTree = "<group>"; };
-		6D7005661F9AB2BB00C7410E /* ViewController+Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ViewController+Camera.h"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+Camera.h"; sourceTree = "<group>"; };
-		6D7005671F9AB2BB00C7410E /* ViewpointController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ViewpointController.mm; path = "../../../../Structure SDK/Samples/RoomCapture/ViewpointController.mm"; sourceTree = "<group>"; };
-		6D7005681F9AB2BB00C7410E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "../../../../Structure SDK/Samples/RoomCapture/AppDelegate.h"; sourceTree = "<group>"; };
-		6D7005691F9AB2BB00C7410E /* CalibrationOverlay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CalibrationOverlay.mm; path = "../../../../Structure SDK/Samples/RoomCapture/CalibrationOverlay.mm"; sourceTree = "<group>"; };
-		6D70056A1F9AB2BB00C7410E /* measurementTape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = measurementTape.png; path = "../../../../Structure SDK/Samples/RoomCapture/measurementTape.png"; sourceTree = "<group>"; };
-		6D70056B1F9AB2BB00C7410E /* MeshRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MeshRenderer.mm; path = "../../../../Structure SDK/Samples/RoomCapture/MeshRenderer.mm"; sourceTree = "<group>"; };
-		6D70056C1F9AB2BB00C7410E /* MeshViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshViewController.h; path = "../../../../Structure SDK/Samples/RoomCapture/MeshViewController.h"; sourceTree = "<group>"; };
-		6D70056D1F9AB2BB00C7410E /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = "../../../../Structure SDK/Samples/RoomCapture/AppDelegate.mm"; sourceTree = "<group>"; };
+		6D70055F1F9AB2BB00C7410E /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
+		6D7005601F9AB2BB00C7410E /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
+		6D7005621F9AB2BB00C7410E /* ViewController+SLAM.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "ViewController+SLAM.mm"; sourceTree = "<group>"; };
+		6D7005631F9AB2BB00C7410E /* CalibrationOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalibrationOverlay.h; sourceTree = "<group>"; };
+		6D7005641F9AB2BB00C7410E /* GraphicsRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GraphicsRenderer.mm; sourceTree = "<group>"; };
+		6D7005651F9AB2BB00C7410E /* ViewController+Sensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+Sensor.h"; sourceTree = "<group>"; };
+		6D7005661F9AB2BB00C7410E /* ViewController+Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+Camera.h"; sourceTree = "<group>"; };
+		6D7005671F9AB2BB00C7410E /* ViewpointController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewpointController.mm; sourceTree = "<group>"; };
+		6D7005681F9AB2BB00C7410E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		6D7005691F9AB2BB00C7410E /* CalibrationOverlay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CalibrationOverlay.mm; sourceTree = "<group>"; };
+		6D70056A1F9AB2BB00C7410E /* measurementTape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = measurementTape.png; sourceTree = "<group>"; };
+		6D70056B1F9AB2BB00C7410E /* MeshRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshRenderer.mm; sourceTree = "<group>"; };
+		6D70056C1F9AB2BB00C7410E /* MeshViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshViewController.h; sourceTree = "<group>"; };
+		6D70056D1F9AB2BB00C7410E /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		6D70056F1F9AB2BB00C7410E /* calibration.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calibration.png; sourceTree = "<group>"; };
 		6D7005701F9AB2BB00C7410E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		6D7005711F9AB2BB00C7410E /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
@@ -123,26 +123,26 @@
 		6D7005781F9AB2BB00C7410E /* resetScanButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resetScanButton@2x.png"; sourceTree = "<group>"; };
 		6D7005791F9AB2BB00C7410E /* Splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Splash.png; sourceTree = "<group>"; };
 		6D70057A1F9AB2BB00C7410E /* startScanButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "startScanButton@2x.png"; sourceTree = "<group>"; };
-		6D70057B1F9AB2BC00C7410E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController.h"; sourceTree = "<group>"; };
-		6D70057C1F9AB2BC00C7410E /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ViewController.mm; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController.mm"; sourceTree = "<group>"; };
-		6D70057D1F9AB2BC00C7410E /* ViewController+OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ViewController+OpenGL.h"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+OpenGL.h"; sourceTree = "<group>"; };
-		6D70057E1F9AB2BC00C7410E /* ViewController+OpenGL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "ViewController+OpenGL.mm"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+OpenGL.mm"; sourceTree = "<group>"; };
-		6D70057F1F9AB2BC00C7410E /* ViewController+Sensor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "ViewController+Sensor.mm"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+Sensor.mm"; sourceTree = "<group>"; };
-		6D7005811F9AB2BC00C7410E /* CustomShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomShaders.h; path = "../../../../Structure SDK/Samples/RoomCapture/CustomShaders.h"; sourceTree = "<group>"; };
-		6D7005821F9AB2BC00C7410E /* ViewController+Camera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "ViewController+Camera.mm"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+Camera.mm"; sourceTree = "<group>"; };
-		6D7005831F9AB2BC00C7410E /* MeshViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MeshViewController.mm; path = "../../../../Structure SDK/Samples/RoomCapture/MeshViewController.mm"; sourceTree = "<group>"; };
-		6D7005851F9AB2BD00C7410E /* RoomCapture-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RoomCapture-Prefix.pch"; path = "../../../../Structure SDK/Samples/RoomCapture/RoomCapture-Prefix.pch"; sourceTree = "<group>"; };
-		6D7005861F9AB2BD00C7410E /* MeshView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MeshView.xib; path = "../../../../Structure SDK/Samples/RoomCapture/MeshView.xib"; sourceTree = "<group>"; };
-		6D7005871F9AB2BD00C7410E /* CustomShaders.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CustomShaders.mm; path = "../../../../Structure SDK/Samples/RoomCapture/CustomShaders.mm"; sourceTree = "<group>"; };
-		6D7005881F9AB2BD00C7410E /* CustomUIKitStyles.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CustomUIKitStyles.mm; path = "../../../../Structure SDK/Samples/RoomCapture/CustomUIKitStyles.mm"; sourceTree = "<group>"; };
-		6D7005891F9AB2BD00C7410E /* CustomUIKitStyles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomUIKitStyles.h; path = "../../../../Structure SDK/Samples/RoomCapture/CustomUIKitStyles.h"; sourceTree = "<group>"; };
-		6D70058A1F9AB2BD00C7410E /* MeshRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshRenderer.h; path = "../../../../Structure SDK/Samples/RoomCapture/MeshRenderer.h"; sourceTree = "<group>"; };
-		6D70058B1F9AB2BD00C7410E /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = EAGLView.mm; path = "../../../../Structure SDK/Samples/RoomCapture/EAGLView.mm"; sourceTree = "<group>"; };
+		6D70057B1F9AB2BC00C7410E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		6D70057C1F9AB2BC00C7410E /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		6D70057D1F9AB2BC00C7410E /* ViewController+OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+OpenGL.h"; sourceTree = "<group>"; };
+		6D70057E1F9AB2BC00C7410E /* ViewController+OpenGL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "ViewController+OpenGL.mm"; sourceTree = "<group>"; };
+		6D70057F1F9AB2BC00C7410E /* ViewController+Sensor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "ViewController+Sensor.mm"; sourceTree = "<group>"; };
+		6D7005811F9AB2BC00C7410E /* CustomShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomShaders.h; sourceTree = "<group>"; };
+		6D7005821F9AB2BC00C7410E /* ViewController+Camera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "ViewController+Camera.mm"; sourceTree = "<group>"; };
+		6D7005831F9AB2BC00C7410E /* MeshViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshViewController.mm; sourceTree = "<group>"; };
+		6D7005851F9AB2BD00C7410E /* RoomCapture-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RoomCapture-Prefix.pch"; sourceTree = "<group>"; };
+		6D7005861F9AB2BD00C7410E /* MeshView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeshView.xib; sourceTree = "<group>"; };
+		6D7005871F9AB2BD00C7410E /* CustomShaders.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomShaders.mm; sourceTree = "<group>"; };
+		6D7005881F9AB2BD00C7410E /* CustomUIKitStyles.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomUIKitStyles.mm; sourceTree = "<group>"; };
+		6D7005891F9AB2BD00C7410E /* CustomUIKitStyles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomUIKitStyles.h; sourceTree = "<group>"; };
+		6D70058A1F9AB2BD00C7410E /* MeshRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshRenderer.h; sourceTree = "<group>"; };
+		6D70058B1F9AB2BD00C7410E /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
 		6D7005901F9AB2BD00C7410E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ViewController_iPad.xib; sourceTree = "<group>"; };
-		6D7005911F9AB2BE00C7410E /* GraphicsRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GraphicsRenderer.h; path = "../../../../Structure SDK/Samples/RoomCapture/GraphicsRenderer.h"; sourceTree = "<group>"; };
-		6D7005921F9AB2BE00C7410E /* Joystick.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Joystick.mm; path = "../../../../Structure SDK/Samples/RoomCapture/Joystick.mm"; sourceTree = "<group>"; };
-		6D7005931F9AB2BE00C7410E /* ViewController+SLAM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ViewController+SLAM.h"; path = "../../../../Structure SDK/Samples/RoomCapture/ViewController+SLAM.h"; sourceTree = "<group>"; };
-		6D7005941F9AB2BE00C7410E /* ViewpointController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewpointController.h; path = "../../../../Structure SDK/Samples/RoomCapture/ViewpointController.h"; sourceTree = "<group>"; };
+		6D7005911F9AB2BE00C7410E /* GraphicsRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicsRenderer.h; sourceTree = "<group>"; };
+		6D7005921F9AB2BE00C7410E /* Joystick.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Joystick.mm; sourceTree = "<group>"; };
+		6D7005931F9AB2BE00C7410E /* ViewController+SLAM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+SLAM.h"; sourceTree = "<group>"; };
+		6D7005941F9AB2BE00C7410E /* ViewpointController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewpointController.h; sourceTree = "<group>"; };
 		6D7005B81FA0EDDA00C7410E /* Wrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wrapper.h; sourceTree = "<group>"; };
 		6D7005B91FA0EE2A00C7410E /* Wrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Wrapper.mm; sourceTree = "<group>"; };
 		6DA2BAC41F822BBF004DEE36 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -297,8 +297,9 @@
 				6D7005941F9AB2BE00C7410E /* ViewpointController.h */,
 				6D7005671F9AB2BB00C7410E /* ViewpointController.mm */,
 			);
-			path = Model;
-			sourceTree = "<group>";
+			name = Model;
+			path = "../Structure SDK/Samples/RoomCapture";
+			sourceTree = SOURCE_ROOT;
 		};
 		6D7005061F9AB16E00C7410E /* Frame */ = {
 			isa = PBXGroup;
@@ -324,8 +325,7 @@
 				6D7005791F9AB2BB00C7410E /* Splash.png */,
 				6D70057A1F9AB2BB00C7410E /* startScanButton@2x.png */,
 			);
-			name = Graphics;
-			path = "../../../../Structure SDK/Samples/RoomCapture/Graphics";
+			path = Graphics;
 			sourceTree = "<group>";
 		};
 		6D70058C1F9AB2BD00C7410E /* en.lproj */ = {
@@ -333,8 +333,7 @@
 			children = (
 				6D70058F1F9AB2BD00C7410E /* ViewController_iPad.xib */,
 			);
-			name = en.lproj;
-			path = "../../../../Structure SDK/Samples/RoomCapture/en.lproj";
+			path = en.lproj;
 			sourceTree = "<group>";
 		};
 		6DCE0A9E1F6FBA3D008EA942 /* Capture */ = {
