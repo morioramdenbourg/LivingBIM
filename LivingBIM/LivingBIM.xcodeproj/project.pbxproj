@@ -59,6 +59,8 @@
 		6DA2BACB1F837320004DEE36 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BACA1F837320004DEE36 /* Util.swift */; };
 		6DA2BACD1F837DED004DEE36 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BACC1F837DED004DEE36 /* HomeTableViewCell.swift */; };
 		6DAEC0A21FBF9C3A00BEADE6 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DAEC0A11FBF9C3A00BEADE6 /* Building.swift */; };
+		6DFE4A3D1FCED7F700CC0633 /* CaptureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFE4A3C1FCED7F700CC0633 /* CaptureCollectionViewCell.swift */; };
+		6DFE4A3F1FCED80200CC0633 /* CaptureCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFE4A3E1FCED80200CC0633 /* CaptureCollectionViewController.swift */; };
 		8F78E655890CCAEC4BAAABA8 /* Pods_LivingBIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CD143DCABF9F31645418B0E /* Pods_LivingBIM.framework */; };
 /* End PBXBuildFile section */
 
@@ -149,6 +151,8 @@
 		6DA2BACA1F837320004DEE36 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		6DA2BACC1F837DED004DEE36 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		6DAEC0A11FBF9C3A00BEADE6 /* Building.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
+		6DFE4A3C1FCED7F700CC0633 /* CaptureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureCollectionViewCell.swift; sourceTree = "<group>"; };
+		6DFE4A3E1FCED80200CC0633 /* CaptureCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureCollectionViewController.swift; sourceTree = "<group>"; };
 		74A8FD7DD900B0003922583E /* Pods-LivingBIM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LivingBIM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LivingBIM/Pods-LivingBIM.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -237,6 +241,8 @@
 			children = (
 				6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */,
 				6DA2BACC1F837DED004DEE36 /* HomeTableViewCell.swift */,
+				6DFE4A3C1FCED7F700CC0633 /* CaptureCollectionViewCell.swift */,
+				6DFE4A3E1FCED80200CC0633 /* CaptureCollectionViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -503,6 +509,8 @@
 				6D7005981F9AB2BE00C7410E /* ViewpointController.mm in Sources */,
 				6D7005AE1F9AB2BE00C7410E /* MeshViewController.mm in Sources */,
 				6D6761ED1FB2EB9C00BEF3CE /* SettingsTableViewCell.swift in Sources */,
+				6DFE4A3F1FCED80200CC0633 /* CaptureCollectionViewController.swift in Sources */,
+				6DFE4A3D1FCED7F700CC0633 /* CaptureCollectionViewCell.swift in Sources */,
 				6D6761EB1FB2EA9900BEF3CE /* Settings.swift in Sources */,
 				6D70059C1F9AB2BE00C7410E /* AppDelegate.mm in Sources */,
 				6D13726D1F9A89AE0052B3E9 /* SpinnerView.swift in Sources */,

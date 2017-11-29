@@ -406,4 +406,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "collectionSegue" {
+            if let destination = segue.destination as? CaptureCollectionViewController, let index = tableView.indexPathForSelectedRow?.row {
+                destination.capture = captures?[index]
+            }
+        }
+    }
 }

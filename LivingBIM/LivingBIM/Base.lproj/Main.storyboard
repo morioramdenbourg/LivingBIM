@@ -121,6 +121,50 @@
             </objects>
             <point key="canvasLocation" x="920" y="-172"/>
         </scene>
+        <!--Capture Collection View Controller-->
+        <scene sceneID="oKX-1p-kYB">
+            <objects>
+                <collectionViewController id="cpc-zZ-zeb" customClass="CaptureCollectionViewController" customModule="LivingBIM" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="igw-dc-upz">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="r08-3F-JTq">
+                            <size key="itemSize" width="211" height="157"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="scanCollection" id="rXX-Xy-jPU" customClass="CaptureCollectionViewCell" customModule="LivingBIM" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gb7-L6-ZXm">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <size key="customSize" width="200" height="200"/>
+                                <connections>
+                                    <outlet property="imageView" destination="gb7-L6-ZXm" id="3jp-Ks-Nna"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="cpc-zZ-zeb" id="md3-g5-Jtc"/>
+                            <outlet property="delegate" destination="cpc-zZ-zeb" id="nn8-bG-VGo"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wc7-MQ-LoY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1654.6875" y="-923.4375"/>
+        </scene>
         <!--Home View Controller-->
         <scene sceneID="Siv-j9-cTo">
             <objects>
@@ -215,6 +259,7 @@
                                             <outlet property="dateLabel" destination="akP-lY-j53" id="Sfc-U9-hBD"/>
                                             <outlet property="imgView" destination="yS8-Tl-Sw3" id="mBi-Yi-8Yv"/>
                                             <outlet property="usernameLabel" destination="hu6-xj-dxK" id="ZFf-hq-Up1"/>
+                                            <segue destination="cpc-zZ-zeb" kind="show" identifier="collectionSegue" id="48Z-SY-M8Y"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
