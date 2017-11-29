@@ -386,9 +386,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func modelButton(_ sender: Any) {
         log(name: module, "going to model view")
-        let w: SwiftWrapper = SwiftWrapper()
+        let w: ModelWrapper = ModelWrapper()
         let vc = w.getVC()
-        self.present(vc as! UIViewController, animated: true, completion: nil)
+        self.present(vc as! UIViewController, animated: true, completion: {
+            print("Presenting")
+        })
     }
     
     override func didReceiveMemoryWarning() {

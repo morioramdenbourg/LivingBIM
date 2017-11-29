@@ -14,6 +14,7 @@
 
 #include <vector>
 
+#import "Wrapper.h"
 
 struct Options
 {
@@ -214,6 +215,8 @@ struct DisplayData
     STBackgroundTask* _colorizeTask;
     
     CalibrationOverlay* _calibrationOverlay;
+    
+    @public ModelWrapper* wrapper;
 }
 
 @property (nonatomic, retain) AVCaptureSession *avCaptureSession;

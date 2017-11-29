@@ -148,12 +148,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     // Heading update
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        log(name: module, "true heading:", newHeading.trueHeading)
+//        log(name: module, "true heading:", newHeading.trueHeading)
     }
     
     // Location update
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        log(name: module, "location:", manager.location!.coordinate.pretty())
+//        log(name: module, "location:", manager.location!.coordinate.pretty())
     }
     
     // Error

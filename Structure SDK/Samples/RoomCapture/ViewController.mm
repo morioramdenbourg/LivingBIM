@@ -47,11 +47,20 @@
     
     [self setupStructureSensor];
     
-    // Make sure we get notified when the app becomes active to start/restore the sensor state if necessary.
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(appDidBecomeActive)
-                                                 name:UIApplicationDidBecomeActiveNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserverForName: UIApplicationDidBecomeActiveNotification
+                                                        object: nil
+                                                         queue: [NSOperationQueue mainQueue]
+                                                    usingBlock:^(NSNotification * note) {
+                                                        [self appDidBecomeActive];
+                                                    }];
+    
+//    // Make sure we get notified when the app becomes active to start/restore the sensor state if necessary.
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(appDidBecomeActive)
+//                                                 name:UIApplicationDidBecomeActiveNotification
+//                                               object:nil];
+//
+    NSLog(@"Completed view did load");
     
 }
 
@@ -64,7 +73,10 @@
     
     [self setupGLViewport];
     
+    NSLog(@"View did appear");
+    
     // We will connect to the sensor when we receive appDidBecomeActive.
+    [self appDidBecomeActive];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -74,6 +86,8 @@
 
 - (void)appDidBecomeActive
 {
+    NSLog(@"appDidBecomeActive");
+    
     // Try to connect to the Structure Sensor and stream if necessary.
     if ([self currentStateNeedsSensor])
         [self connectToStructureSensorAndStartStreaming];
@@ -128,6 +142,8 @@
     // The mesh viewer will be used after scanning.
     _meshViewController = [[MeshViewController alloc] initWithNibName:@"MeshView" bundle:nil];
     _meshViewController.delegate = self;
+    NSLog(@"Adding wrapper to meshviewcontroller");
+    _meshViewController->wrapper = wrapper;
     _meshViewNavigationController = [[UINavigationController alloc] initWithRootViewController:_meshViewController];
 }
 

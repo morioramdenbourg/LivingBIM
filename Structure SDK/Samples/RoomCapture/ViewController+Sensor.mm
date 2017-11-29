@@ -210,6 +210,12 @@
 {
     if (_slamState.initialized)
     {
+        NSLog(@"COLOR:%@", colorFrame);
+        NSLog(@"DEPTH:%@", depthFrame);
+        
+//        [wrapper addColor:colorFrame];
+//        [wrapper addDepth:depthFrame];
+        
         [self processDepthFrame:depthFrame colorFrame:colorFrame];
         // Scene rendering is triggered by new frames to avoid rendering the same view several times.
         [self renderSceneWithDepthFrame:depthFrame colorFrame:colorFrame];

@@ -368,10 +368,10 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         captureNext = true
         
         // test save
-        let testrgb = UIImage(named: "testRGB")
-        let testDepth = UIImage(named: "testDepth")
+//        let testrgb = UIImage(named: "testRGB")
+//        let testDepth = UIImage(named: "testDepth")
         
-        save(depthImage: testDepth!, colorImage: testrgb!)
+//        save(depthImage: testDepth!, colorImage: testrgb!)
     }
 }
 

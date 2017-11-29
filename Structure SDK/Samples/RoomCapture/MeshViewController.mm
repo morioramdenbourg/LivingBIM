@@ -117,7 +117,7 @@ enum MeasurementState {
         
         self.navigationItem.leftBarButtonItem = backButton;
         
-        UIBarButtonItem *emailButton = [[UIBarButtonItem alloc] initWithTitle:@"Email"
+        UIBarButtonItem *emailButton = [[UIBarButtonItem alloc] initWithTitle:@"Save"
                                                                         style:UIBarButtonItemStylePlain
                                                                        target:self
                                                                        action:@selector(emailMesh)];
@@ -416,27 +416,27 @@ enum MeasurementState {
 
 - (void)emailMesh
 {
-    self.mailViewController = [[MFMailComposeViewController alloc] init];
+//    self.mailViewController = [[MFMailComposeViewController alloc] init];
+//
+//    if (!self.mailViewController)
+//    {
+//        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"The email could not be sent."
+//            message:@"Please make sure an email account is properly setup on this device."
+//            preferredStyle:UIAlertControllerStyleAlert];
+//
+//        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
+//            style:UIAlertActionStyleDefault
+//            handler:^(UIAlertAction * action) { }];
+//
+//        [alert addAction:defaultAction];
+//        [self presentViewController:alert animated:YES completion:nil];
+//
+//        return;
+//    }
     
-    if (!self.mailViewController)
-    {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"The email could not be sent."
-            message:@"Please make sure an email account is properly setup on this device."
-            preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
-            style:UIAlertActionStyleDefault
-            handler:^(UIAlertAction * action) { }];
-        
-        [alert addAction:defaultAction];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-        return;
-    }
+//    self.mailViewController.mailComposeDelegate = self;
     
-    self.mailViewController.mailComposeDelegate = self;
-    
-    self.mailViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+//    self.mailViewController.modalPresentationStyle = UIModalPresentationFormSheet;
 
     // Setup names and paths.
     NSString* attachmentDirectory = [NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES ) objectAtIndex:0];
@@ -457,23 +457,23 @@ enum MeasurementState {
                                              } mutableCopy];
     
     
-    [self.mailViewController setSubject:@"3D Model"];
+//    [self.mailViewController setSubject:@"3D Model"];
 
-    NSString *messageBody =
-        @"This model was captured with the open source Room Capture sample app in the Structure SDK.\n\n"
-        "Check it out!\n\n"
-        "More info about the Structure SDK: http://structure.io/developers";
+//    NSString *messageBody =
+//        @"This model was captured with the open source Room Capture sample app in the Structure SDK.\n\n"
+//        "Check it out!\n\n"
+//        "More info about the Structure SDK: http://structure.io/developers";
     
-    [self.mailViewController setMessageBody:messageBody isHTML:NO];
+//    [self.mailViewController setMessageBody:messageBody isHTML:NO];
 
     // Generate the OBJ file in a background queue to avoid blocking.
-    [self showMeshViewerMessage:self.meshViewerMessageLabel msg:@"Preparing Email..."];
+    [self showMeshViewerMessage:self.meshViewerMessageLabel msg:@"Preparing Mesh..."];
     
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
        
-        [self.mailViewController addAttachmentData:[NSData dataWithContentsOfFile:screenShotTemporaryFilePath]
-                                          mimeType:@"image/jpeg"
-                                          fileName:screenShotFilename];
+//        [self.mailViewController addAttachmentData:[NSData dataWithContentsOfFile:screenShotTemporaryFilePath]
+//                                          mimeType:@"image/jpeg"
+//                                          fileName:screenShotFilename];
         
         // We want a ZIP with OBJ, MTL and JPG inside.
         NSDictionary* fileWriteOptions = @{kSTMeshWriteOptionFileFormatKey: @(STMeshWriteOptionFileFormatObjFileZip) };
@@ -500,6 +500,8 @@ enum MeasurementState {
         
         dispatch_async(dispatch_get_main_queue() , ^(){
             
+            NSLog (@"Successfully saved file");
+            
             NSDictionary* attachmentsInfo = @{
                                               @"zipTemporaryFilePath": zipTemporaryFilePath,
                                               @"zipFilename": zipFilename,
@@ -515,14 +517,32 @@ enum MeasurementState {
 {
     [self hideMeshViewerMessage:self.meshViewerMessageLabel];
     
+    NSLog (@"didFinishSavingMeshWithAttachmentInfo");
+    
     // We know the zip was saved there.
     NSString* zipFilePath = attachmentsInfo[@"zipTemporaryFilePath"];
     NSString* zipFilename = attachmentsInfo[@"zipFilename"];
     
-    [self.mailViewController addAttachmentData:[NSData dataWithContentsOfFile:zipFilePath]
-                                      mimeType:@"application/zip" fileName:zipFilename];
+//    [self.mailViewController addAttachmentData:[NSData dataWithContentsOfFile:zipFilePath]
+//                                      mimeType:@"application/zip" fileName:zipFilename];
     
-    [self presentViewController:self.mailViewController animated:YES completion:^(){}];
+//    [self presentViewController:self.mailViewController animated:YES completion:^(){}];
+    
+    // Upload all the data in the wrapper to core data
+    NSLog (@"%@", wrapper.getColors);
+    NSLog (@"%@", wrapper.getDepths);
+    NSLog (@"%@", wrapper);
+    NSData* zipData = [NSData dataWithContentsOfFile:zipFilePath];
+    NSLog (@"ZIP DATA: %@", zipData);
+    
+    // Dismiss to the home view controller
+    MeshViewController *mvc = self;
+    while (mvc.presentingViewController) {
+        mvc = mvc.presentingViewController;
+    }
+    [mvc dismissViewControllerAnimated:YES completion:^{
+        NSLog (@"Dismissed to home successfully.");
+    }];
 }
 
 #pragma mark - Rendering

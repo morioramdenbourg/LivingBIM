@@ -10,11 +10,18 @@
 #define Wrapper_h
 
 #import <Foundation/Foundation.h>
+#import <Structure/Structure.h>
+#import <Structure/StructureSLAM.h>
 
-@interface SwiftWrapper: NSObject
+@interface ModelWrapper: NSObject
 
 -(id)init;
 -(NSObject*)getVC;
+-(NSMutableOrderedSet*)getColors;
+-(NSMutableOrderedSet*)getDepths;
+-(void)addColor: (STColorFrame *) colorFrame;
+-(void)addDepth: (STDepthFrame *) depthFrame;
+-(int)getTest;
 
 @end
 

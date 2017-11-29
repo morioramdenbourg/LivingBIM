@@ -9,6 +9,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <Structure/StructureSLAM.h>
 #import "EAGLView.h"
+#import "Wrapper.h"
 
 @protocol MeshViewDelegate <NSObject>
 - (void)meshViewWillDismiss;
@@ -18,6 +19,9 @@
 @end
 
 @interface MeshViewController : UIViewController <UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
+{
+    @public ModelWrapper* wrapper;
+}
 
 @property (nonatomic, assign) id<MeshViewDelegate> delegate;
 
