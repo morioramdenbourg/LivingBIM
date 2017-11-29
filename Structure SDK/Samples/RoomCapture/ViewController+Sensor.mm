@@ -213,7 +213,7 @@
         if (self->isScanning) {
             NSLog(@"%@", wrapper);
             // Add data to the wrapper
-            [wrapper addFrame:colorFrame];
+            [wrapper addFrame:[[NSDate alloc] init] colorFrame:colorFrame depthFrame:depthFrame];
         }
     
         [self processDepthFrame:depthFrame colorFrame:colorFrame];

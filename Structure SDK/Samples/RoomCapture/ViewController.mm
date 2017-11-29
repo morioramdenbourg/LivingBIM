@@ -197,6 +197,8 @@
 
 - (void)enterFinalizingState
 {
+    [wrapper setCaptureTime:[[NSDate alloc] init]];
+    
     // Cannot be lost if not scanning anymore.
     [self hideTrackingErrorMessage];
     

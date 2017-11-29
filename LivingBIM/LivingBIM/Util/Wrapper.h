@@ -14,13 +14,12 @@
 #import <Structure/StructureSLAM.h>
 
 @interface ModelWrapper: NSObject
-- (void)showMeshViewerMessage:(UILabel*)label msg:(NSString *)msg;
-
 
 -(id)init;
 -(NSObject*)getVC;
--(void)save: (NSDate* )captureTime :(NSData *)zipData;
--(void)addFrame: (STColorFrame *) colorFrame;
+-(void)setCaptureTime: (NSDate *) newTime;
+-(void)save: (NSData *)zipData;
+-(void)addFrame: (NSDate*) time colorFrame: (STColorFrame *) colorFrame depthFrame: (STDepthFrame *) depthFrame;
 
 @end
 

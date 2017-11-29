@@ -15,12 +15,12 @@
 @implementation ModelWrapper
 {
     ViewController * vc;
-    
     NSManagedObjectContext * managedContext;
     NSEntityDescription * entity;
     NSEntityDescription * frameEntity;
     NSManagedObject * capture;
     NSMutableSet * frames;
+    NSDate * captureTime;
 }
 
 -(id)init
@@ -39,11 +39,18 @@
     return self;
 }
 
--(void)save: (NSDate *)captureTime :(NSData *)zipData
+-(void)setCaptureTime: (NSDate *) newTime
+{
+    captureTime = newTime;
+}
+
+-(void)save: (NSData *) zipData
 {
     // Set values
     [capture setValue:captureTime forKey:@"captureTime"];
-    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    [capture setValue: [defaults valueForKey:@"usernameUD"] forKey:@"username"];
+    [capture setValue: zipData forKey:@"mesh"];
     
     [capture.managedObjectContext save: nil];
 }
@@ -53,33 +60,28 @@
     return vc;
 }
 
--(void)addFrame: (STColorFrame *) colorFrame
+-(void)addFrame: (NSDate*) time colorFrame: (STColorFrame *) colorFrame depthFrame: (STDepthFrame *) depthFrame
 {
-    NSLog(@"ADDING COLOR: %@", colorFrame);
-    
     NSManagedObject * frame = [NSEntityDescription insertNewObjectForEntityForName: @"Frame" inManagedObjectContext: managedContext];
     
-//    CMSampleBufferRef buffer = colorFrame.sampleBuffer;
-//    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(buffer);
-//    CVPixelBufferLockBaseAddress(imageBuffer,0);
-//    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
-//    size_t width = CVPixelBufferGetWidth(imageBuffer);
-//    size_t height = CVPixelBufferGetHeight(imageBuffer);
-//    void *src_buff = CVPixelBufferGetBaseAddress(imageBuffer);
-//    NSData *data = [NSData dataWithBytes:src_buff length:bytesPerRow * height];
-//    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-    CMSampleBufferRef buffer = colorFrame.sampleBuffer;
+    NSData *colorData = [ self convertToData: [colorFrame sampleBuffer]];
+//    NSData *frameData = [ self convertToData: [depthFrame ]
+    
+    [ frame setValue: colorData forKey:@"color" ];
+    [ frame setValue: time forKey:@"time" ];
+    
+    [ frames addObject:frame ];
+}
+
+-(NSData *)convertToData: (CMSampleBufferRef) buffer
+{
     CVPixelBufferRef pixelBuffer = (CVPixelBufferRef)CMSampleBufferGetImageBuffer(buffer);
     CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
     CIContext *context = [CIContext contextWithOptions: nil];
     CGImageRef myImage = [context createCGImage:ciImage fromRect:CGRectMake(0, 0, CVPixelBufferGetWidth(pixelBuffer), CVPixelBufferGetHeight(pixelBuffer))];
     UIImage *uiImage = [UIImage imageWithCGImage:myImage];
     NSData * data = UIImagePNGRepresentation(uiImage);
-    
-    
-    [ frame setValue: data forKey:@"color" ];
-    
-    [ frames addObject:frame ];
+    return data;
 }
 @end
 

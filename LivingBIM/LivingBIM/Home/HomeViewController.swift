@@ -277,6 +277,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let username = capture.value(forKeyPath: Constants.CoreData.Capture.Username) as? String ?? "<invalid_name>"
             let description = capture.value(forKeyPath: Constants.CoreData.Capture.Description) as? String ?? ""
             let captureTime = capture.value(forKeyPath: Constants.CoreData.Capture.CaptureTime) as? Date ?? Date()
+            let meshZip = capture.value(forKeyPath: Constants.CoreData.Capture.Mesh) as? Data
             let frames = capture.value(forKeyPath: Constants.CoreData.Keys.CaptureToFrame) as? NSOrderedSet
             
             // Create the folder to hold the data
@@ -289,6 +290,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if (error == nil) {
                     let folder = folder!
                     log(name: module, "created folder:", folder.name)
+                    
+                    // Upload zip file for reconstruction
+                    contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: meshZip, fileName: "mesh.zip").perform(progress: nil, completion: uploadCheck)
                     
                     // Upload metadata as a json file
                     var metadata = JSON()
@@ -333,20 +337,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //                                        let depth = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Depth) as? Data
 //                                        contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: depth, fileName: "depth.png").perform(progress: nil, completion: uploadCheck)
 //
-//                                        // Get metadata for frame
-//                                        let time = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Time) as? Date
-//
-//                                        // Upload metadata as a json file
-//                                        var frameMetadata = JSON()
-//                                        frameMetadata["time"].string = time?.toString(dateFormat: format)
-//
-//                                        do {
-//                                            let raw = try frameMetadata.rawData()
-//                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: raw, fileName: ".metadata.json").perform(progress: nil, completion: uploadCheck)
-//                                        }
-//                                        catch _ {
-//                                            log(name: module, "unable to upload metadata file to:", folder.name)
-//                                        }
+                                        // Get metadata for frame
+                                        let time = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Time) as? Date
+
+                                        // Upload metadata as a json file
+                                        var frameMetadata = JSON()
+                                        frameMetadata["time"].string = time?.toString(dateFormat: format)
+
+                                        do {
+                                            let raw = try frameMetadata.rawData()
+                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: raw, fileName: ".metadata.json").perform(progress: nil, completion: uploadCheck)
+                                        }
+                                        catch _ {
+                                            log(name: module, "unable to upload metadata file to:", folder.name)
+                                        }
                                     }
                                 })
                             }

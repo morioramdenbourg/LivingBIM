@@ -530,7 +530,8 @@ enum MeasurementState {
     
     // Upload all the data in the wrapper to core data
     NSData* zipData = [NSData dataWithContentsOfFile:zipFilePath];
-    [wrapper save:[[NSDate alloc] init] :zipData];
+    // TODO: change to the time the button is pressed
+    [wrapper save:zipData];
     
     // Dismiss to the home view controller
     MeshViewController *mvc = self;

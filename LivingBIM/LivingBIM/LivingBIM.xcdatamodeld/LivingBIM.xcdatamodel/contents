@@ -3,6 +3,7 @@
     <entity name="Capture" representedClassName="Capture" syncable="YES" codeGenerationType="class">
         <attribute name="captureDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="captureTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="mesh" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="frames" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Frame" inverseName="capture" inverseEntity="Frame" syncable="YES"/>
     </entity>
@@ -13,7 +14,7 @@
         <relationship name="capture" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Capture" inverseName="frames" inverseEntity="Capture" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Capture" positionX="135" positionY="-9" width="128" height="103"/>
+        <element name="Capture" positionX="135" positionY="-9" width="128" height="120"/>
         <element name="Frame" positionX="-63" positionY="9" width="128" height="103"/>
     </elements>
 </model>

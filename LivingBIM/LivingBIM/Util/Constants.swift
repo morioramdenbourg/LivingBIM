@@ -58,6 +58,7 @@ struct Constants {
             static let Username = "username"
             static let CaptureTime = "captureTime"
             static let Description = "captureDescription"
+            static let Mesh = "mesh"
             
             // Frame-specific
             struct Frame {
