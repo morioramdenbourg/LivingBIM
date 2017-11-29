@@ -370,7 +370,6 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         // test save
 //        let testrgb = UIImage(named: "testRGB")
 //        let testDepth = UIImage(named: "testDepth")
-        
 //        save(depthImage: testDepth!, colorImage: testrgb!)
     }
 }

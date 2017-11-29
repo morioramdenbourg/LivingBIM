@@ -529,11 +529,8 @@ enum MeasurementState {
 //    [self presentViewController:self.mailViewController animated:YES completion:^(){}];
     
     // Upload all the data in the wrapper to core data
-    NSLog (@"%@", wrapper.getColors);
-    NSLog (@"%@", wrapper.getDepths);
-    NSLog (@"%@", wrapper);
     NSData* zipData = [NSData dataWithContentsOfFile:zipFilePath];
-    NSLog (@"ZIP DATA: %@", zipData);
+    [wrapper save:[[NSDate alloc] init] :zipData];
     
     // Dismiss to the home view controller
     MeshViewController *mvc = self;

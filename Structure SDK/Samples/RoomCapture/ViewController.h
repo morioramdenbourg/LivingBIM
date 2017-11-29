@@ -217,6 +217,7 @@ struct DisplayData
     CalibrationOverlay* _calibrationOverlay;
     
     @public ModelWrapper* wrapper;
+    @public BOOL isScanning;
 }
 
 @property (nonatomic, retain) AVCaptureSession *avCaptureSession;

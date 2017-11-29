@@ -59,7 +59,6 @@
 		6DA2BACB1F837320004DEE36 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BACA1F837320004DEE36 /* Util.swift */; };
 		6DA2BACD1F837DED004DEE36 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BACC1F837DED004DEE36 /* HomeTableViewCell.swift */; };
 		6DAEC0A21FBF9C3A00BEADE6 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DAEC0A11FBF9C3A00BEADE6 /* Building.swift */; };
-		6DD607011FCD627000A97717 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD607001FCD627000A97717 /* Frame.swift */; };
 		8F78E655890CCAEC4BAAABA8 /* Pods_LivingBIM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CD143DCABF9F31645418B0E /* Pods_LivingBIM.framework */; };
 /* End PBXBuildFile section */
 
@@ -150,7 +149,6 @@
 		6DA2BACA1F837320004DEE36 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		6DA2BACC1F837DED004DEE36 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		6DAEC0A11FBF9C3A00BEADE6 /* Building.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
-		6DD607001FCD627000A97717 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		74A8FD7DD900B0003922583E /* Pods-LivingBIM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LivingBIM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LivingBIM/Pods-LivingBIM.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,8 +222,6 @@
 				6DCE0A9E1F6FBA3D008EA942 /* Capture */,
 				6DCE0A9F1F70E46D008EA942 /* Util */,
 				2BEDC3541F69EF1B00C27C36 /* AppDelegate.swift */,
-				6D7005B81FA0EDDA00C7410E /* Wrapper.h */,
-				6D7005B91FA0EE2A00C7410E /* Wrapper.mm */,
 				6DA2BAC61F8357A8004DEE36 /* LivingBIM.xcdatamodeld */,
 				2BEDC3581F69EF1B00C27C36 /* Main.storyboard */,
 				2BEDC35B1F69EF1B00C27C36 /* Assets.xcassets */,
@@ -253,7 +249,6 @@
 				6D6761EC1FB2EB9C00BEF3CE /* SettingsTableViewCell.swift */,
 				6D39ED761FBAE1FE004AF52A /* BuildingPickerViewController.swift */,
 				6DAEC0A11FBF9C3A00BEADE6 /* Building.swift */,
-				6DD607001FCD627000A97717 /* Frame.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -348,6 +343,8 @@
 		6DCE0A9F1F70E46D008EA942 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				6D7005B81FA0EDDA00C7410E /* Wrapper.h */,
+				6D7005B91FA0EE2A00C7410E /* Wrapper.mm */,
 				6DA2BAC41F822BBF004DEE36 /* Constants.swift */,
 				6DA2BACA1F837320004DEE36 /* Util.swift */,
 				6D13726C1F9A89AE0052B3E9 /* SpinnerView.swift */,
@@ -512,7 +509,6 @@
 				6D7005A91F9AB2BE00C7410E /* ViewController.mm in Sources */,
 				6D7005971F9AB2BE00C7410E /* GraphicsRenderer.mm in Sources */,
 				6D7005BA1FA0EE2A00C7410E /* Wrapper.mm in Sources */,
-				6DD607011FCD627000A97717 /* Frame.swift in Sources */,
 				6D70059B1F9AB2BE00C7410E /* MeshRenderer.mm in Sources */,
 				6DA2BAC51F822BBF004DEE36 /* Constants.swift in Sources */,
 				6D7005B61F9AB2BE00C7410E /* Joystick.mm in Sources */,

@@ -62,6 +62,8 @@
 //
     NSLog(@"Completed view did load");
     
+    self->isScanning = NO;
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -170,6 +172,8 @@
 
 - (void)enterScanningState
 {
+    self->isScanning = YES;
+
     // Switch to the Done button.
     self.scanButton.hidden = YES;
     self.doneButton.hidden = NO;
