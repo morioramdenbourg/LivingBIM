@@ -343,10 +343,57 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                         
                                         // Get metadata for frame
                                         let time = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Time) as? Date
+                                        let heading = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Heading) as? Double
+                                        let latitude = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Coordinate.Latitude) as? Double
+                                        let longitude = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Coordinate.Longitude) as? Double
+                                        let accelerationX = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Acceleration.X) as? Double
+                                        let accelerationY = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Acceleration.Y) as? Double
+                                        let accelerationZ = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Acceleration.Z) as? Double
+                                        let gyroscopeX = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Gyroscope.X) as? Double
+                                        let gyroscopeY = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Gyroscope.Y) as? Double
+                                        let gyroscopeZ = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Gyroscope.Z) as? Double
+                                        let magnetometerX = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Magnetometer.X) as? Double
+                                        let magnetometerY = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Magnetometer.Y) as? Double
+                                        let magnetometerZ = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Magnetometer.Z) as? Double
+                                        
 
                                         // Upload metadata as a json file
                                         var frameMetadata = JSON()
+                                        
+                                        // Time
                                         frameMetadata["time"].string = time?.toString(dateFormat: format)
+                                        
+                                        // Heading
+                                        frameMetadata["heading"].double = heading
+                                        
+                                        // Coordinate
+                                        var coordinate = JSON()
+                                        coordinate["latitude"].double = latitude
+                                        coordinate["longitude"].double = longitude
+                                        frameMetadata["coordinate"] = coordinate
+                                        
+                                        // Acceleration
+                                        var acceleration = JSON()
+                                        acceleration["X"].double = accelerationX
+                                        acceleration["Y"].double = accelerationY
+                                        acceleration["Z"].double = accelerationZ
+                                        frameMetadata["acceleration"] = acceleration
+                                        
+                                        // Gyroscope
+                                        var gyroscope = JSON()
+                                        gyroscope["X"].double = gyroscopeX
+                                        gyroscope["Y"].double = gyroscopeY
+                                        gyroscope["Z"].double = gyroscopeZ
+                                        frameMetadata["gyroscope"] = gyroscope
+                                        
+                                        // Magnetometer
+                                        var magnetometer = JSON()
+                                        magnetometer["X"].double = magnetometerX
+                                        magnetometer["Y"].double = magnetometerY
+                                        magnetometer["Z"].double = magnetometerZ
+                                        frameMetadata["magnetometer"] = magnetometer
+                                        
+//                                        print(frameMetadata)
 
                                         do {
                                             let raw = try frameMetadata.rawData()

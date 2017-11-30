@@ -794,7 +794,7 @@ enum MeasurementState {
     
     GLKMatrix4 currentModelView = _viewpointController->currentGLModelViewMatrix();
     GLKVector3 ptTransformed = GLKMatrix4MultiplyVector3WithTranslation(currentModelView, pt);
-    
+        
     GLKMatrix4 currentProjection = _viewpointController->currentGLProjectionMatrix();
     
     float width = self.view.frame.size.width;

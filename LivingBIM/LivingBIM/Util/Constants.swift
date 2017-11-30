@@ -65,6 +65,26 @@ struct Constants {
                 static let Time = "time"
                 static let Color = "color"
                 static let Depth = "depth"
+                static let Heading = "heading"
+                struct Coordinate {
+                    static let Latitude = "latitude"
+                    static let Longitude = "longitude"
+                }
+                struct Acceleration {
+                    static let X = "accelerationX"
+                    static let Y = "accelerationY"
+                    static let Z = "accelerationZ"
+                }
+                struct Gyroscope {
+                    static let X = "gyroscopeX"
+                    static let Y = "gyroscopeY"
+                    static let Z = "gyroscopeZ"
+                }
+                struct Magnetometer {
+                    static let X = "magnetometerX"
+                    static let Y = "magnetometerY"
+                    static let Z = "magnetometerZ"
+                }
             }
         }
     }

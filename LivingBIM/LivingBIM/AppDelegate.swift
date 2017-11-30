@@ -111,6 +111,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         // Magnetometer
         motionManager.startMagnetometerUpdates()
+        
+        // Accelorometer
+        motionManager.startAccelerometerUpdates()
+        
+        // Gyroscope
+        motionManager.startGyroUpdates()
     }
     
     // Set up the location manager
@@ -159,6 +165,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     // Error
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         log(name: module, "error:", error)
+    }
+    
+    // Get current heading
+    func getHeading() -> CLLocationDirection? {
+        return locationManager?.heading?.trueHeading
     }
     
     // Get current coordinate

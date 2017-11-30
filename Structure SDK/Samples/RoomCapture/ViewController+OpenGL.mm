@@ -166,6 +166,7 @@
 
 - (void)renderSceneWithDepthFrame:(STDepthFrame*)depthFrame colorFrame:(STColorFrame*)colorFrame
 {
+    
     // Activate our view framebuffer.
     [(EAGLView *)self.view setFramebuffer];
     
@@ -195,6 +196,10 @@
             
             GLKMatrix4 depthCameraPose = [_slamState.tracker lastFrameCameraPose];
             GLKMatrix4 cameraGLProjection = _display.colorCameraGLProjectionMatrix;
+            
+            for (int i = 0; i < 16; i++) {
+                NSLog(@"%f", cameraGLProjection.m[i]);
+            }
             
             // In case we are not using registered depth.
             GLKMatrix4 colorCameraPoseInDepthCoordinateSpace;

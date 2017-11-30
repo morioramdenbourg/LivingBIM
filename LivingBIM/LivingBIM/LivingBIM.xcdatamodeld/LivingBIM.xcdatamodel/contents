@@ -8,13 +8,25 @@
         <relationship name="frames" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Frame" inverseName="capture" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="Frame" representedClassName="Frame" syncable="YES" codeGenerationType="class">
+        <attribute name="accelerationX" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="accelerationY" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="accelerationZ" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="color" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="depth" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="gyroscopeX" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="gyroscopeY" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="gyroscopeZ" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="heading" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="magnetometerX" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="magnetometerY" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="magnetometerZ" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="capture" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Capture" inverseName="frames" inverseEntity="Capture" syncable="YES"/>
     </entity>
     <elements>
         <element name="Capture" positionX="135" positionY="-9" width="128" height="120"/>
-        <element name="Frame" positionX="-63" positionY="9" width="128" height="103"/>
+        <element name="Frame" positionX="-63" positionY="9" width="128" height="30"/>
     </elements>
 </model>

@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import CoreData
 
 extension Date {
     // Convert date to string
@@ -25,6 +26,15 @@ extension CLLocationCoordinate2D {
     }
 }
 
+extension CLLocationDegrees {
+    func stringify() -> String {
+        return String(format: "%.4f", self)
+    }
+    func doubleify() -> Double {
+        return Double(self)
+    }
+}
+
 // Pretty Log to the console for a module
 func log(name n: String, _ items: Any...) {
     print("[" + n + "]", terminator: " ")
@@ -32,6 +42,35 @@ func log(name n: String, _ items: Any...) {
         print(item, terminator: " ")
     }
     print()
+}
+
+extension ModelWrapper {
+    static func addSensorData(managedObject: NSManagedObject) {
+        let delegate = AppDelegate.delegate
+        
+        // Grab sensor data and add to core data
+        let heading = delegate.getHeading() // Heading
+        managedObject.setValue(Double(heading!), forKey: Constants.CoreData.Capture.Frame.Heading) // Heading
+        
+        let coordinate = delegate.getCoordinate() // Coordinate
+        managedObject.setValue(coordinate?.latitude.doubleify(), forKey: Constants.CoreData.Capture.Frame.Coordinate.Latitude) // Coordinate latitude
+        managedObject.setValue(coordinate?.longitude.doubleify(), forKey: Constants.CoreData.Capture.Frame.Coordinate.Longitude) // Coordinate longitude
+        
+        let acceleration = delegate.getAcceleration() // Acceleration
+        managedObject.setValue(acceleration?.x, forKey: Constants.CoreData.Capture.Frame.Acceleration.X)
+        managedObject.setValue(acceleration?.y, forKey: Constants.CoreData.Capture.Frame.Acceleration.Y)
+        managedObject.setValue(acceleration?.z, forKey: Constants.CoreData.Capture.Frame.Acceleration.Z)
+        
+        let gyroscope = delegate.getGyroscope() // Gyroscope
+        managedObject.setValue(gyroscope?.x, forKey: Constants.CoreData.Capture.Frame.Gyroscope.X)
+        managedObject.setValue(gyroscope?.y, forKey: Constants.CoreData.Capture.Frame.Gyroscope.Y)
+        managedObject.setValue(gyroscope?.z, forKey: Constants.CoreData.Capture.Frame.Gyroscope.Z)
+        
+        let magnetometer = delegate.getMagnetometer() // Magnetometer
+        managedObject.setValue(magnetometer?.x, forKey: Constants.CoreData.Capture.Frame.Magnetometer.X)
+        managedObject.setValue(magnetometer?.y, forKey: Constants.CoreData.Capture.Frame.Magnetometer.Y)
+        managedObject.setValue(magnetometer?.z, forKey: Constants.CoreData.Capture.Frame.Magnetometer.Z)
+    }
 }
 
 extension UIImage {

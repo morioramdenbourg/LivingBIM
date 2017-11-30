@@ -72,9 +72,13 @@
     NSData *colorData = [ self convertToData: [colorFrame sampleBuffer]];
     NSData *frameData = [ self convertDepthToData: depthFrame ];
     
+    // Add frame information
     [ frame setValue: colorData forKey:@"color" ];
     [ frame setValue: frameData forKey:@"depth" ];
     [ frame setValue: time forKey:@"time" ];
+    
+    // Add sensor information
+    [ ModelWrapper addSensorDataWithManagedObject:frame ];
     
     [ frames addObject:frame ];
 }

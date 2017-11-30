@@ -108,7 +108,7 @@ GraphicsRenderer::~GraphicsRenderer()
 }
 
 void GraphicsRenderer::renderLine(const GLKVector3 pt1, const GLKVector3 pt2, const GLKMatrix4 &projectionMatrix, const GLKMatrix4 &modelViewMatrix, bool flipXY)
-{
+{    
     glActiveTexture(d->textureUnit);
     glBindTexture(GL_TEXTURE_2D, d->lineTexture);
     
