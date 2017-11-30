@@ -146,7 +146,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return cell
         }
         
-        print("ROW:", indexPath.row, ":", capture)
+//        print("ROW:", indexPath.row, ":", capture)
         
         // Grab data
         let username = capture.value(forKeyPath: Constants.CoreData.Capture.Username) as? String
@@ -155,8 +155,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let first = frames?.firstObject as? NSManagedObject // Get first frame
         let rgb = first?.value(forKey: Constants.CoreData.Capture.Frame.Color) as? Data
         
-        print("FIRST:", first);
-        print("FIRST RGB:", rgb)
+//        print("FIRST:", first);
+//        print("FIRST RGB:", rgb)
         
         // Put data and first frame on the cell
         cell.usernameLabel.text = username
@@ -262,7 +262,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Completion handler for file upload
         let uploadCheck = { (file: BOXFile?, error: Error?) in
             if (error == nil && file != nil) {
-                // log(name: self.module, "completed upload to", (folder.name)!)
+                 log(name: module, "completed upload to", (file?.name)!)
             }
             else {
                 log(name: module, "error while uploading", (file?.name)!)
@@ -292,7 +292,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     log(name: module, "created folder:", folder.name)
                     
                     // Upload zip file for reconstruction
-                    contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: meshZip, fileName: "mesh.zip").perform(progress: nil, completion: uploadCheck)
+                    if let meshZip = meshZip {
+                        contentClient.fileUploadRequestToFolder(withID: folder.modelID, from: meshZip, fileName: "mesh.zip").perform(progress: nil, completion: uploadCheck)
+                    }
                     
                     // Upload metadata as a json file
                     var metadata = JSON()
@@ -330,13 +332,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                         log(name: module, "uploading data to folder:", frameFolder.name!)
                                         
                                         // Add the rgb photo
-                                        let rgb = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Color) as? Data
-                                        contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgb, fileName: "color.png").perform(progress: nil, completion: uploadCheck)
+                                        if let rgb = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Color) as? Data {
+                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgb, fileName: "color.png").perform(progress: nil, completion: uploadCheck)
+                                        }
+                                    
+                                        // Add depth photo
+                                        if let depth = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Depth) as? Data {
+                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: depth, fileName: "depth.png").perform(progress: nil, completion: uploadCheck)
+                                        }
                                         
-//                                        // Add depth photo
-//                                        let depth = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Depth) as? Data
-//                                        contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: depth, fileName: "depth.png").perform(progress: nil, completion: uploadCheck)
-//
                                         // Get metadata for frame
                                         let time = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Time) as? Date
 

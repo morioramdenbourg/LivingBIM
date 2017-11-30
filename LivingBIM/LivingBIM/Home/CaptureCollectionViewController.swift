@@ -15,6 +15,7 @@ class CaptureCollectionViewController: UICollectionViewController {
     
     var capture: NSManagedObject?
     var frames: NSOrderedSet?
+    var colorDisplay: Bool!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,17 @@ class CaptureCollectionViewController: UICollectionViewController {
         if let capture = capture {
             frames = capture.value(forKeyPath: Constants.CoreData.Keys.CaptureToFrame) as? NSOrderedSet
         }
+        
+        // Initialize bar button
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Depth", style: .plain, target: self, action: #selector(tapped))
+        colorDisplay = true
+    }
+    
+    func tapped() {
+        let title = colorDisplay ? "Depth" : "Color"
+        navigationItem.rightBarButtonItem?.title = title
+        colorDisplay = !colorDisplay
+        self.collectionView?.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,13 +61,15 @@ class CaptureCollectionViewController: UICollectionViewController {
     
         // Configure the cell
         let frame = frames?.object(at: indexPath.row) as? NSManagedObject
-        let rgb = frame?.value(forKey: Constants.CoreData.Capture.Frame.Color) as? Data
+        
+        // Decide which type of frames to display
+        var data: Data?
+        let key = colorDisplay ? Constants.CoreData.Capture.Frame.Color : Constants.CoreData.Capture.Frame.Depth
+        data = frame?.value(forKey: key) as? Data
         
         // Display the first frame
-        DispatchQueue.main.async { _ in
-            if let rgb = rgb {
-                cell.imageView.image = UIImage(data: rgb)
-            }
+        if let data = data {
+            cell.imageView.image = UIImage(data: data)
         }
         
         return cell

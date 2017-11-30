@@ -21,6 +21,7 @@
     NSManagedObject * capture;
     NSMutableSet * frames;
     NSDate * captureTime;
+    STDepthToRgba * toRGBA;
 }
 
 -(id)init
@@ -35,6 +36,10 @@
     
     capture = [NSEntityDescription insertNewObjectForEntityForName: @"Capture" inManagedObjectContext: managedContext];
     frames = [capture mutableSetValueForKey:@"Frames"];
+    
+    NSNumber * value = [NSNumber numberWithInt: STDepthToRgbaStrategyRedToBlueGradient];
+    NSDictionary *options = [NSDictionary dictionaryWithObject:value forKey: kSTDepthToRgbaStrategyKey];
+    toRGBA = [[ STDepthToRgba alloc ] initWithOptions:options];
     
     return self;
 }
@@ -65,12 +70,21 @@
     NSManagedObject * frame = [NSEntityDescription insertNewObjectForEntityForName: @"Frame" inManagedObjectContext: managedContext];
     
     NSData *colorData = [ self convertToData: [colorFrame sampleBuffer]];
-//    NSData *frameData = [ self convertToData: [depthFrame ]
+    NSData *frameData = [ self convertDepthToData: depthFrame ];
     
     [ frame setValue: colorData forKey:@"color" ];
+    [ frame setValue: frameData forKey:@"depth" ];
     [ frame setValue: time forKey:@"time" ];
     
     [ frames addObject:frame ];
+}
+    
+-(NSData *)convertDepthToData: (STDepthFrame *) depthFrame
+{
+    uint8_t * pixels = [toRGBA convertDepthFrameToRgba: depthFrame];
+    UIImage *depthImage = [UIImage imageFromPixels:pixels width: toRGBA.width height: toRGBA.height];
+    NSData * data = UIImagePNGRepresentation(depthImage);
+    return data;
 }
 
 -(NSData *)convertToData: (CMSampleBufferRef) buffer

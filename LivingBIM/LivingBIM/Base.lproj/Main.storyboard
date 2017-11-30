@@ -20,12 +20,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WxX-s2-qBD">
-                                <rect key="frame" x="0.0" y="0.0" width="512" height="768"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IXv-A4-17k">
-                                <rect key="frame" x="512" y="0.0" width="512" height="768"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="&lt;Status&gt;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0v-uj-GWM">
@@ -48,13 +44,12 @@
                     </view>
                     <connections>
                         <outlet property="cameraView" destination="IXv-A4-17k" id="c5w-r3-qqu"/>
-                        <outlet property="depthView" destination="WxX-s2-qBD" id="4Dw-nm-42Q"/>
                         <outlet property="statusLabel" destination="W0v-uj-GWM" id="tID-oc-pPU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2431" y="-704"/>
+            <point key="canvasLocation" x="2430.46875" y="-704.6875"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Y5L-S2-hbz">
@@ -100,6 +95,7 @@
                             <outlet property="delegate" destination="F8q-QH-1yf" id="5UR-Xv-IHU"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="igN-XE-1Xy"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jbP-nY-Jcb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -121,7 +117,7 @@
             </objects>
             <point key="canvasLocation" x="920" y="-172"/>
         </scene>
-        <!--Capture Collection View Controller-->
+        <!--Frames-->
         <scene sceneID="oKX-1p-kYB">
             <objects>
                 <collectionViewController id="cpc-zZ-zeb" customClass="CaptureCollectionViewController" customModule="LivingBIM" customModuleProvider="target" sceneMemberID="viewController">
@@ -137,19 +133,19 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="scanCollection" id="rXX-Xy-jPU" customClass="CaptureCollectionViewCell" customModule="LivingBIM" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                <rect key="frame" x="0.0" y="0.0" width="221" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="221" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gb7-L6-ZXm">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="221" height="200"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
                                 </view>
-                                <size key="customSize" width="200" height="200"/>
+                                <size key="customSize" width="221" height="200"/>
                                 <connections>
                                     <outlet property="imageView" destination="gb7-L6-ZXm" id="3jp-Ks-Nna"/>
                                 </connections>
@@ -160,6 +156,7 @@
                             <outlet property="delegate" destination="cpc-zZ-zeb" id="nn8-bG-VGo"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" title="Frames" id="V0f-FX-BJY"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wc7-MQ-LoY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

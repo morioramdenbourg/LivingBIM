@@ -32,7 +32,6 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     private var permissionGranted = false
     
     @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var depthView: UIImageView!
     @IBOutlet weak var cameraView: UIImageView!
     
     private var controller : STSensorController?
@@ -220,11 +219,10 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         if let renderer = toRGBA, let uiImage = imageFromSampleBuffer(colorFrame.sampleBuffer) {
             // Render depth view
             let pixels = renderer.convertDepthFrame(toRgba: depthFrame)
-            let depthImage = imageFromPixels(pixels!, width: Int(renderer.width), height: Int(renderer.height))!
+            let depthImage = UIImage.imageFromPixels(pixels!, width: Int(renderer.width), height: Int(renderer.height))!
             
             DispatchQueue.main.async { [unowned self] in
                 self.cameraView.image = uiImage;
-                self.depthView.image = depthImage
             }
             
             if (captureNext) {
@@ -251,29 +249,6 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
             return image
         }
         return nil
-    }
-    
-    func imageFromPixels(_ pixels : UnsafeMutablePointer<UInt8>, width: Int, height: Int) -> UIImage? {
-        let colorSpace = CGColorSpaceCreateDeviceRGB();
-        let bitmapInfo = CGBitmapInfo.byteOrder32Big.union(CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipLast.rawValue))
-        
-        // Source of data for bitmap
-        let provider = CGDataProvider(data: Data(bytes: UnsafePointer<UInt8>(pixels), count: width*height*4) as CFData)
-        
-        let image = CGImage(
-            width: width,
-            height: height,
-            bitsPerComponent: 8,
-            bitsPerPixel: 8 * 4,
-            bytesPerRow: width * 4,
-            space: colorSpace,       //Quartz color space
-            bitmapInfo: bitmapInfo,
-            provider: provider!,
-            decode: nil,
-            shouldInterpolate: false,
-            intent: CGColorRenderingIntent.defaultIntent);
-        
-        return UIImage(cgImage: image!)
     }
     
     private func save(depthImage dImage: UIImage, colorImage cImage: UIImage) {
