@@ -416,6 +416,43 @@ enum MeasurementState {
 
 - (void)emailMesh
 {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Capture" message:@"Save or Discard?" preferredStyle: UIAlertControllerStyleAlert];
+    
+    UIAlertAction *save = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler: ^(UIAlertAction * action) {
+        [self describe];
+    }];
+    
+    UIAlertAction *discard = [UIAlertAction actionWithTitle:@"Discard" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    
+    [alert addAction: save];
+    [alert addAction: discard];
+    [self presentViewController: alert animated:YES completion: nil];
+}
+
+-(void)describe
+{
+    __block UITextField *field;
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Capture" message:@"Describe the capture" preferredStyle: UIAlertControllerStyleAlert];
+    
+    UIAlertAction *save = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler: ^(UIAlertAction * action) {
+        [self saveMesh: field.text];
+    }];
+    
+    [controller addAction: save];
+    
+    // Add text field
+    [controller addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        field = textField;
+        field.placeholder = @"Description";
+    }];
+    
+    // Present
+    [self presentViewController: controller animated:YES completion: nil];
+}
+
+- (void)saveMesh: (NSString *) description
+{
 //    self.mailViewController = [[MFMailComposeViewController alloc] init];
 //
 //    if (!self.mailViewController)
@@ -506,14 +543,14 @@ enum MeasurementState {
                                               @"zipTemporaryFilePath": zipTemporaryFilePath,
                                               @"zipFilename": zipFilename,
                                               };
-            [self didFinishSavingMeshWithAttachmentInfo:attachmentsInfo];
+            [self didFinishSavingMeshWithAttachmentInfo:attachmentsInfo description: description];
             
         });
     });
     
 }
 
--(void) didFinishSavingMeshWithAttachmentInfo:(NSDictionary*)attachmentsInfo
+-(void) didFinishSavingMeshWithAttachmentInfo:(NSDictionary*)attachmentsInfo description :(NSString *) description
 {
     [self hideMeshViewerMessage:self.meshViewerMessageLabel];
     
@@ -531,7 +568,7 @@ enum MeasurementState {
     // Upload all the data in the wrapper to core data
     NSData* zipData = [NSData dataWithContentsOfFile:zipFilePath];
     // TODO: change to the time the button is pressed
-    [wrapper save:zipData];
+    [wrapper save:zipData description: description];
     
     // Dismiss to the home view controller
     MeshViewController *mvc = self;

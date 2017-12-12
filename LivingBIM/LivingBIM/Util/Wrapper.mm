@@ -41,9 +41,9 @@
     captureTime = newTime;
 }
 
--(void)save: (NSData *) zipData
+-(void)save: (NSData *)zipData description: (NSString *) description
 {
-    [ModelWrapper addCaptureDataWithManagedObject:capture captureTime:captureTime zipData:zipData description:nil];
+    [ModelWrapper addCaptureDataWithManagedObject:capture captureTime:captureTime zipData:zipData description:description];
     [capture.managedObjectContext save: nil];
 }
 

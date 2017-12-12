@@ -18,7 +18,7 @@
 -(id)init;
 -(NSObject*)getVC;
 -(void)setCaptureTime: (NSDate *) newTime;
--(void)save: (NSData *)zipData;
+-(void)save: (NSData *)zipData description: (NSString *) description;
 -(void)addFrame: (NSDate*) time depthFrame: (STDepthFrame *) depthFrame colorFrame: (STColorFrame *) colorFrame;
 -(void)setMatrix: (GLKMatrix4) cameraGLProjection cameraViewPoint: (GLKMatrix4) cameraViewPoint;
 
