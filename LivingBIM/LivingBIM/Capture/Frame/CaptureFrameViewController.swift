@@ -207,8 +207,8 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     
     func sensorDidOutputSynchronizedDepthFrame(_ depth: STDepthFrame!, colorFrame color: STColorFrame!) {
         // Half the resolution to allow for easy storage
-        let downsizeDepth = depth.halfResolution!
-        let downsizeColor = color.halfResolution!
+        let downsizeDepth = depth! // Removed downsample for now
+        let downsizeColor = color! // Removed downsample for now
         
         // Display the color frame onto the screen
         DispatchQueue.main.async { [unowned self] in

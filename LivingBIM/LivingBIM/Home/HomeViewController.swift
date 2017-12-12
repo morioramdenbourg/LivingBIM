@@ -182,6 +182,30 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         log(name: module, "tapped cell at:", indexPath.row)
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            // Delete from database
+            let capture = captures?[indexPath.row]
+            if let capture = capture {
+                managedContext?.delete(capture)
+            }
+            captures?.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+        }
+    }
+    
+    //[self.managedObjectContext deleteObject:yourManagedObject];
+
+    
+//    // Swipe to delete.
+//    - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//    {
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//    [_chats removeObjectAtIndex:indexPath.row];
+//    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    }
+//    }
+    
     // Upload to Box
     @IBAction func uploadButton(_ sender: Any) {
         log(name: module, "uploading to box")
@@ -336,10 +360,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                         
                                         // Add depth as an array
                                         if let depth = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Depth) as? Data {
+                                            var depthJSON = JSON()
                                             let unarchiveObject = NSKeyedUnarchiver.unarchiveObject(with: depth)
                                             if var depthArray = unarchiveObject as? [Float] {
-                                                depthArray = depthArray.filter{!$0.isNaN}
-                                                frameMetadata["depth"].arrayObject = depthArray
+                                                depthArray = depthArray.map{$0.isNaN ? 0: $0}
+                                                depthJSON["depth"].arrayObject = depthArray
+                                            }
+                                            do {
+                                                let rawDepth = try depthJSON.rawData()
+                                                contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rawDepth, fileName: "depth.json").perform(progress: nil, completion: uploadCheck)
+                                            }
+                                            catch let error as NSError {
+                                                log(name: module, "unable to upload metadata file to:", folder.name)
+                                                log(name: module, error)
                                             }
                                         }
                                         

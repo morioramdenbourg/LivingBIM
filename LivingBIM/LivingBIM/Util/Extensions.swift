@@ -134,10 +134,12 @@ extension ModelWrapper {
             managedObject.setValue(rgbData, forKey: Constants.CoreData.Capture.Frame.Color)
         }
         
-        // Depth
-        if let depth = depth {
-            let depthData = NSKeyedArchiver.archivedData(withRootObject: depth.converToDepthsArray() as Any)
-            managedObject.setValue(depthData, forKey: Constants.CoreData.Capture.Frame.Depth)
+        DispatchQueue.global(qos: .background).async {
+            // Depth
+            if let depth = depth {
+                let depthData = NSKeyedArchiver.archivedData(withRootObject: depth.converToDepthsArray() as Any)
+                managedObject.setValue(depthData, forKey: Constants.CoreData.Capture.Frame.Depth)
+            }
         }
         
         // Time
@@ -188,7 +190,7 @@ extension STDepthFrame {
             return nil
         }
         var depths = [Float]()
-        let length = self.height + self.width
+        let length = self.height * self.width
         for index in 0..<length {
             depths.append(depthsPointer[Int(index)])
         }
