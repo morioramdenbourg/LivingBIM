@@ -260,8 +260,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                  log(name: module, "completed upload to", (file?.name)!)
             }
             else {
-                log(name: module, "error while uploading", (file?.name)!)
-                log(name: module, error!)
+                log(name: module, "error while uploading")
+                log(name: module, error)
             }
         }
         
