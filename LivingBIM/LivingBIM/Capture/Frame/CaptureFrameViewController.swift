@@ -101,6 +101,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         captureSession.addInput(captureDeviceInput)
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "sample buffer"))
+        videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as AnyHashable: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange]
         guard captureSession.canAddOutput(videoOutput) else { return }
         captureSession.addOutput(videoOutput)
         guard let connection = videoOutput.connection(withMediaType: AVFoundation.AVMediaTypeVideo) else { return }
@@ -108,6 +109,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         guard connection.isVideoMirroringSupported else { return }
         connection.videoOrientation = .landscapeRight
         connection.isVideoMirrored = position == .front
+        
     }
     
     private func selectCaptureDevice() -> AVCaptureDevice? {
@@ -158,7 +160,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         log(name: module, "tryStartStreaming")
         if tryInitializeSensor() {
             let options: [AnyHashable: Any] = [
-                kSTStreamConfigKey: NSNumber(value: STStreamConfig.depth640x480.rawValue as Int),
+                kSTStreamConfigKey: NSNumber(value: STStreamConfig.depth320x240.rawValue as Int),
                 kSTFrameSyncConfigKey: NSNumber(value: STFrameSyncConfig.depthAndRgb.rawValue as Int),
                 kSTHoleFilterEnabledKey: true
             ]
@@ -205,8 +207,8 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     
     func sensorDidOutputSynchronizedDepthFrame(_ depth: STDepthFrame!, colorFrame color: STColorFrame!) {
         // Half the resolution to allow for easy storage
-        let downsizeDepth = depth!
-        let downsizeColor = color!
+        let downsizeDepth = depth.halfResolution!
+        let downsizeColor = color.halfResolution!
         
         // Display the color frame onto the screen
         DispatchQueue.main.async { [unowned self] in

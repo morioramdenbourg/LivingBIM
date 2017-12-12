@@ -63,11 +63,11 @@
     NSManagedObject * frame = [NSEntityDescription insertNewObjectForEntityForName: @"Frame" inManagedObjectContext: managedContext];
     
     // Downsize the frames
-    STColorFrame * downsizedColor = colorFrame;
-    STDepthFrame * downsizedDepth = depthFrame;
+    STColorFrame * downsizedColor = colorFrame.halfResolutionColorFrame;
+    STDepthFrame * downsizedDepth = depthFrame.halfResolutionDepthFrame;
     
     // Add frame information
-    [ ModelWrapper addFrameDataWithManagedObject:frame captureTime:time depthFrame:depthFrame colorFrame:colorFrame cameraGLProjection:projection.m cameraViewPoint: viewpoint.m];
+    [ ModelWrapper addFrameDataWithManagedObject:frame captureTime:time depthFrame:downsizedDepth colorFrame:downsizedColor cameraGLProjection:projection.m cameraViewPoint: viewpoint.m];
     [ frames addObject:frame ];
 }
 @end
