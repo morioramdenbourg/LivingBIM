@@ -16,12 +16,11 @@
 {
     ViewController * vc;
     NSManagedObjectContext * managedContext;
-    NSEntityDescription * entity;
-    NSEntityDescription * frameEntity;
     NSManagedObject * capture;
     NSMutableSet * frames;
     NSDate * captureTime;
-    STDepthToRgba * toRGBA;
+    GLKMatrix4 cameraGLProjection;
+    GLKMatrix4 cameraViewPoint;
 }
 
 -(id)init
@@ -31,15 +30,8 @@
     
     // Core data
     managedContext = AppDelegate.delegate.persistentContainer.viewContext;
-    entity = [NSEntityDescription entityForName: @"Capture" inManagedObjectContext: managedContext];
-    frameEntity = [NSEntityDescription entityForName: @"Frame" inManagedObjectContext: managedContext];
-    
     capture = [NSEntityDescription insertNewObjectForEntityForName: @"Capture" inManagedObjectContext: managedContext];
     frames = [capture mutableSetValueForKey:@"Frames"];
-    
-    NSNumber * value = [NSNumber numberWithInt: STDepthToRgbaStrategyRedToBlueGradient];
-    NSDictionary *options = [NSDictionary dictionaryWithObject:value forKey: kSTDepthToRgbaStrategyKey];
-    toRGBA = [[ STDepthToRgba alloc ] initWithOptions:options];
     
     return self;
 }
@@ -51,12 +43,7 @@
 
 -(void)save: (NSData *) zipData
 {
-    // Set values
-    [capture setValue:captureTime forKey:@"captureTime"];
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [capture setValue: [defaults valueForKey:@"usernameUD"] forKey:@"username"];
-    [capture setValue: zipData forKey:@"mesh"];
-    
+    [ModelWrapper addCaptureDataWithManagedObject:capture captureTime:captureTime zipData:zipData description:nil];
     [capture.managedObjectContext save: nil];
 }
 
@@ -65,41 +52,23 @@
     return vc;
 }
 
--(void)addFrame: (NSDate*) time colorFrame: (STColorFrame *) colorFrame depthFrame: (STDepthFrame *) depthFrame
+-(void)setMatrix: (GLKMatrix4) cameraGLProjection cameraViewPoint: (GLKMatrix4) cameraViewPoint
+{
+    cameraGLProjection = cameraGLProjection;
+    cameraViewPoint = cameraViewPoint;
+}
+
+-(void)addFrame: (NSDate*) time depthFrame: (STDepthFrame *) depthFrame colorFrame: (STColorFrame *) colorFrame
 {
     NSManagedObject * frame = [NSEntityDescription insertNewObjectForEntityForName: @"Frame" inManagedObjectContext: managedContext];
     
-    NSData *colorData = [ self convertToData: [colorFrame sampleBuffer]];
-    NSData *frameData = [ self convertDepthToData: depthFrame ];
+    // Downsize the frames
+    STColorFrame * downsizedColor = colorFrame;
+    STDepthFrame * downsizedDepth = depthFrame;
     
     // Add frame information
-    [ frame setValue: colorData forKey:@"color" ];
-    [ frame setValue: frameData forKey:@"depth" ];
-    [ frame setValue: time forKey:@"time" ];
-    
-    // Add sensor information
-    [ ModelWrapper addSensorDataWithManagedObject:frame ];
-    
+    [ ModelWrapper addFrameDataWithManagedObject:frame captureTime:time depthFrame:depthFrame colorFrame:colorFrame cameraGLProjection:cameraGLProjection.m cameraViewPoint: cameraViewPoint.m];
     [ frames addObject:frame ];
-}
-    
--(NSData *)convertDepthToData: (STDepthFrame *) depthFrame
-{
-    uint8_t * pixels = [toRGBA convertDepthFrameToRgba: depthFrame];
-    UIImage *depthImage = [UIImage imageFromPixels:pixels width: toRGBA.width height: toRGBA.height];
-    NSData * data = UIImagePNGRepresentation(depthImage);
-    return data;
-}
-
--(NSData *)convertToData: (CMSampleBufferRef) buffer
-{
-    CVPixelBufferRef pixelBuffer = (CVPixelBufferRef)CMSampleBufferGetImageBuffer(buffer);
-    CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
-    CIContext *context = [CIContext contextWithOptions: nil];
-    CGImageRef myImage = [context createCGImage:ciImage fromRect:CGRectMake(0, 0, CVPixelBufferGetWidth(pixelBuffer), CVPixelBufferGetHeight(pixelBuffer))];
-    UIImage *uiImage = [UIImage imageWithCGImage:myImage];
-    NSData * data = UIImagePNGRepresentation(uiImage);
-    return data;
 }
 @end
 

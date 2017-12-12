@@ -211,9 +211,9 @@
     if (_slamState.initialized)
     {
         if (self->isScanning) {
-            NSLog(@"%@", wrapper);
+//            NSLog(@"%@", wrapper);
             // Add data to the wrapper
-            [wrapper addFrame:[[NSDate alloc] init] colorFrame:colorFrame depthFrame:depthFrame];
+            [wrapper addFrame:[[NSDate alloc] init] depthFrame:depthFrame colorFrame:colorFrame ];
         }
     
         [self processDepthFrame:depthFrame colorFrame:colorFrame];

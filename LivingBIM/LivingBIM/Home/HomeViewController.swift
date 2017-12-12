@@ -89,18 +89,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         else {
             askUsername(viewController: self) { (text: String) in
                 self.usernameLabel.text = text
-            }
-        }
-        
-        // Ask for building information if not already there
-        if let abbr = getBuildingAbbr(), let name = getBuildingName(), let room = getRoomNumber() {
-            let lbl = name + " (" + abbr + ") " + " - " + room
-            buildingLabel.text = lbl
-        }
-        else {
-            askBuildingInfo(viewController: self) { (abbr, name, room) in
-                let lbl = name + " (" + abbr + ") " + " - " + room
-                self.buildingLabel.text = lbl
+                
+                // Ask for building information if not already there
+                if let abbr = getBuildingAbbr(), let name = getBuildingName(), let room = getRoomNumber() {
+                    let lbl = name + " (" + abbr + ") " + " - " + room
+                    self.buildingLabel.text = lbl
+                }
+                else {
+                    askBuildingInfo(viewController: self) { (abbr, name, room) in
+                        let lbl = name + " (" + abbr + ") " + " - " + room
+                        self.buildingLabel.text = lbl
+                    }
+                }
             }
         }
         
@@ -146,17 +146,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return cell
         }
         
-//        print("ROW:", indexPath.row, ":", capture)
-        
         // Grab data
         let username = capture.value(forKeyPath: Constants.CoreData.Capture.Username) as? String
         let timeCaptured = capture.value(forKeyPath: Constants.CoreData.Capture.CaptureTime) as? Date
         let frames = capture.value(forKeyPath: Constants.CoreData.Keys.CaptureToFrame) as? NSOrderedSet
         let first = frames?.firstObject as? NSManagedObject // Get first frame
         let rgb = first?.value(forKey: Constants.CoreData.Capture.Frame.Color) as? Data
-        
-//        print("FIRST:", first);
-//        print("FIRST RGB:", rgb)
         
         // Put data and first frame on the cell
         cell.usernameLabel.text = username
@@ -335,72 +330,105 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                         if let rgb = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Color) as? Data {
                                             contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgb, fileName: "color.png").perform(progress: nil, completion: uploadCheck)
                                         }
-                                    
-                                        // Add depth photo
-                                        if let depth = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Depth) as? Data {
-                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: depth, fileName: "depth.png").perform(progress: nil, completion: uploadCheck)
-                                        }
-                                        
-                                        // Get metadata for frame
-                                        let time = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Time) as? Date
-                                        let heading = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Heading) as? Double
-                                        let latitude = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Coordinate.Latitude) as? Double
-                                        let longitude = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Coordinate.Longitude) as? Double
-                                        let accelerationX = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Acceleration.X) as? Double
-                                        let accelerationY = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Acceleration.Y) as? Double
-                                        let accelerationZ = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Acceleration.Z) as? Double
-                                        let gyroscopeX = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Gyroscope.X) as? Double
-                                        let gyroscopeY = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Gyroscope.Y) as? Double
-                                        let gyroscopeZ = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Gyroscope.Z) as? Double
-                                        let magnetometerX = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Magnetometer.X) as? Double
-                                        let magnetometerY = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Magnetometer.Y) as? Double
-                                        let magnetometerZ = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Magnetometer.Z) as? Double
-                                        
 
                                         // Upload metadata as a json file
                                         var frameMetadata = JSON()
                                         
+                                        // Add depth as an array
+                                        if let depth = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Depth) as? Data {
+                                            let unarchiveObject = NSKeyedUnarchiver.unarchiveObject(with: depth)
+                                            if var depthArray = unarchiveObject as? [Float] {
+                                                depthArray = depthArray.filter{!$0.isNaN}
+                                                frameMetadata["depth"].arrayObject = depthArray
+                                            }
+                                        }
+                                        
+                                        // Add projection matrix
+                                        if let projection = frame.value(forKey: Constants.CoreData.Capture.Frame.CameraGLProjection) as? Data {
+                                            let unarchiveObject = NSKeyedUnarchiver.unarchiveObject(with: projection)
+                                            if let projArray = unarchiveObject as? [Float] {
+                                                frameMetadata["cameraGLProjection"].arrayObject = projArray
+                                            }
+                                        }
+                                        
+                                        // Add view point
+                                        if let viewPoint = frame.value(forKey: Constants.CoreData.Capture.Frame.CameraViewPoint) as? Data {
+                                            let unarchiveObject = NSKeyedUnarchiver.unarchiveObject(with: viewPoint)
+                                            if let viewPointArray = unarchiveObject as? [Float] {
+                                                frameMetadata["cameraViewPoint"].arrayObject = viewPointArray
+                                            }
+                                        }
+                                        
+                                        // Add building
+                                        if let buildingAbbr = frame.value(forKey: Constants.CoreData.Capture.Frame.Building.Abbr) as? String, let buildingName = frame.value(forKey: Constants.CoreData.Capture.Frame.Building.Name) as? String, let roomNumber = frame.value(forKey: Constants.CoreData.Capture.Frame.Building.RoomNumber) as? String {
+                                            var building = JSON()
+                                            building["abbreviation"].string = buildingAbbr
+                                            building["name"].string = buildingName
+                                            building["roomNumber"].string = roomNumber
+                                            frameMetadata["building"] = building
+                                        }
+                                        
                                         // Time
-                                        frameMetadata["time"].string = time?.toString(dateFormat: format)
+                                        if let time = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Time) as? Date {
+                                            frameMetadata["time"].string = time.toString(dateFormat: format)
+                                        }
                                         
                                         // Heading
-                                        frameMetadata["heading"].double = heading
+                                        if let heading = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Heading) as? Double {
+                                            frameMetadata["heading"].double = heading
+                                        }
                                         
                                         // Coordinate
-                                        var coordinate = JSON()
-                                        coordinate["latitude"].double = latitude
-                                        coordinate["longitude"].double = longitude
-                                        frameMetadata["coordinate"] = coordinate
+                                        if let latitude = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Coordinate.Latitude) as? Double,
+                                            let longitude = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Coordinate.Longitude) as? Double {
+                                            var coordinate = JSON()
+                                            coordinate["latitude"].double = latitude
+                                            coordinate["longitude"].double = longitude
+                                            frameMetadata["coordinate"] = coordinate
+                                        }
                                         
                                         // Acceleration
-                                        var acceleration = JSON()
-                                        acceleration["X"].double = accelerationX
-                                        acceleration["Y"].double = accelerationY
-                                        acceleration["Z"].double = accelerationZ
-                                        frameMetadata["acceleration"] = acceleration
+                                        if let accelerationX = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Acceleration.X) as? Double,
+                                            let accelerationY = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Acceleration.Y) as? Double,
+                                            let accelerationZ = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Acceleration.Z) as? Double {
+                                            var acceleration = JSON()
+                                            acceleration["X"].double = accelerationX
+                                            acceleration["Y"].double = accelerationY
+                                            acceleration["Z"].double = accelerationZ
+                                            frameMetadata["acceleration"] = acceleration
+                                        }
                                         
                                         // Gyroscope
-                                        var gyroscope = JSON()
-                                        gyroscope["X"].double = gyroscopeX
-                                        gyroscope["Y"].double = gyroscopeY
-                                        gyroscope["Z"].double = gyroscopeZ
-                                        frameMetadata["gyroscope"] = gyroscope
-                                        
+                                        if let gyroscopeX = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Gyroscope.X) as? Double,
+                                            let gyroscopeY = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Gyroscope.Y) as? Double,
+                                            let gyroscopeZ = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Gyroscope.Z) as? Double {
+                                            var gyroscope = JSON()
+                                            gyroscope["X"].double = gyroscopeX
+                                            gyroscope["Y"].double = gyroscopeY
+                                            gyroscope["Z"].double = gyroscopeZ
+                                            frameMetadata["gyroscope"] = gyroscope
+                                        }
+
                                         // Magnetometer
-                                        var magnetometer = JSON()
-                                        magnetometer["X"].double = magnetometerX
-                                        magnetometer["Y"].double = magnetometerY
-                                        magnetometer["Z"].double = magnetometerZ
-                                        frameMetadata["magnetometer"] = magnetometer
+                                        if let magnetometerX = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Magnetometer.X) as? Double,
+                                            let magnetometerY = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Magnetometer.Y) as? Double,
+                                            let magnetometerZ = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Magnetometer.Z) as? Double {
+                                            var magnetometer = JSON()
+                                            magnetometer["X"].double = magnetometerX
+                                            magnetometer["Y"].double = magnetometerY
+                                            magnetometer["Z"].double = magnetometerZ
+                                            frameMetadata["magnetometer"] = magnetometer
+                                        }
                                         
-//                                        print(frameMetadata)
+//                                        print("FRAME:", frameMetadata)
 
                                         do {
                                             let raw = try frameMetadata.rawData()
                                             contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: raw, fileName: ".metadata.json").perform(progress: nil, completion: uploadCheck)
                                         }
-                                        catch _ {
+                                        catch let error as NSError {
                                             log(name: module, "unable to upload metadata file to:", folder.name)
+                                            log(name: module, error)
                                         }
                                     }
                                 })
@@ -448,9 +476,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         log(name: module, "going to model view")
         let w: ModelWrapper = ModelWrapper()
         let vc = w.getVC()
-        self.present(vc as! UIViewController, animated: true, completion: {
-            print("Presenting")
-        })
+        self.present(vc as! UIViewController, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

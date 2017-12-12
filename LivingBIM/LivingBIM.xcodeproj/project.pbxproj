@@ -18,6 +18,7 @@
 		2BEDC35F1F69EF1B00C27C36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BEDC35D1F69EF1B00C27C36 /* LaunchScreen.storyboard */; };
 		6D13726D1F9A89AE0052B3E9 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D13726C1F9A89AE0052B3E9 /* SpinnerView.swift */; };
 		6D1709AB1F6A6AD000570746 /* Structure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1709AA1F6A6AD000570746 /* Structure.framework */; };
+		6D2681EC1FDF93E000E779F0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2681EB1FDF93E000E779F0 /* Logger.swift */; };
 		6D30438F1FA102C300154EA3 /* measurementTape.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D30438E1FA102C300154EA3 /* measurementTape.png */; };
 		6D36A6AA1F6FABD80033DCE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */; };
 		6D39ED771FBAE1FE004AF52A /* BuildingPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D39ED761FBAE1FE004AF52A /* BuildingPickerViewController.swift */; };
@@ -56,7 +57,7 @@
 		6D7005BA1FA0EE2A00C7410E /* Wrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D7005B91FA0EE2A00C7410E /* Wrapper.mm */; };
 		6DA2BAC51F822BBF004DEE36 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BAC41F822BBF004DEE36 /* Constants.swift */; };
 		6DA2BAC91F8357E5004DEE36 /* LivingBIM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BAC61F8357A8004DEE36 /* LivingBIM.xcdatamodeld */; };
-		6DA2BACB1F837320004DEE36 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BACA1F837320004DEE36 /* Util.swift */; };
+		6DA2BACB1F837320004DEE36 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BACA1F837320004DEE36 /* Extensions.swift */; };
 		6DA2BACD1F837DED004DEE36 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2BACC1F837DED004DEE36 /* HomeTableViewCell.swift */; };
 		6DAEC0A21FBF9C3A00BEADE6 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DAEC0A11FBF9C3A00BEADE6 /* Building.swift */; };
 		6DFE4A3D1FCED7F700CC0633 /* CaptureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFE4A3C1FCED7F700CC0633 /* CaptureCollectionViewCell.swift */; };
@@ -81,6 +82,7 @@
 		6D13726C1F9A89AE0052B3E9 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		6D1709AA1F6A6AD000570746 /* Structure.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Structure.framework; sourceTree = "<group>"; };
 		6D1709AC1F6A6B2700570746 /* LivingBIM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LivingBIM-Bridging-Header.h"; sourceTree = "<group>"; };
+		6D2681EB1FDF93E000E779F0 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6D30438E1FA102C300154EA3 /* measurementTape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = measurementTape.png; sourceTree = "<group>"; };
 		6D36A6A91F6FABD80033DCE4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6D39ED761FBAE1FE004AF52A /* BuildingPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingPickerViewController.swift; sourceTree = "<group>"; };
@@ -148,7 +150,7 @@
 		6D7005B91FA0EE2A00C7410E /* Wrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Wrapper.mm; sourceTree = "<group>"; };
 		6DA2BAC41F822BBF004DEE36 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		6DA2BAC71F8357A8004DEE36 /* LivingBIM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LivingBIM.xcdatamodel; sourceTree = "<group>"; };
-		6DA2BACA1F837320004DEE36 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		6DA2BACA1F837320004DEE36 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		6DA2BACC1F837DED004DEE36 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		6DAEC0A11FBF9C3A00BEADE6 /* Building.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
 		6DFE4A3C1FCED7F700CC0633 /* CaptureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -352,8 +354,9 @@
 				6D7005B81FA0EDDA00C7410E /* Wrapper.h */,
 				6D7005B91FA0EE2A00C7410E /* Wrapper.mm */,
 				6DA2BAC41F822BBF004DEE36 /* Constants.swift */,
-				6DA2BACA1F837320004DEE36 /* Util.swift */,
+				6DA2BACA1F837320004DEE36 /* Extensions.swift */,
 				6D13726C1F9A89AE0052B3E9 /* SpinnerView.swift */,
+				6D2681EB1FDF93E000E779F0 /* Logger.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				6DFE4A3D1FCED7F700CC0633 /* CaptureCollectionViewCell.swift in Sources */,
 				6D6761EB1FB2EA9900BEF3CE /* Settings.swift in Sources */,
 				6D70059C1F9AB2BE00C7410E /* AppDelegate.mm in Sources */,
+				6D2681EC1FDF93E000E779F0 /* Logger.swift in Sources */,
 				6D13726D1F9A89AE0052B3E9 /* SpinnerView.swift in Sources */,
 				6D7005A91F9AB2BE00C7410E /* ViewController.mm in Sources */,
 				6D7005971F9AB2BE00C7410E /* GraphicsRenderer.mm in Sources */,
@@ -529,7 +533,7 @@
 				6D7005961F9AB2BE00C7410E /* ViewController+SLAM.mm in Sources */,
 				6D7005AB1F9AB2BE00C7410E /* ViewController+Sensor.mm in Sources */,
 				6D7005B31F9AB2BE00C7410E /* EAGLView.mm in Sources */,
-				6DA2BACB1F837320004DEE36 /* Util.swift in Sources */,
+				6DA2BACB1F837320004DEE36 /* Extensions.swift in Sources */,
 				6D7005AA1F9AB2BE00C7410E /* ViewController+OpenGL.mm in Sources */,
 				2BEDC3551F69EF1B00C27C36 /* AppDelegate.swift in Sources */,
 				6D7005B11F9AB2BE00C7410E /* CustomShaders.mm in Sources */,

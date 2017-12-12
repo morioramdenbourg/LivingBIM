@@ -11,7 +11,7 @@ import AVFoundation
 import CoreData
 import CoreLocation
 
-fileprivate let module = String(describing: CaptureFrameViewController.self)
+fileprivate let module = "CaptureFrameViewController"
 
 class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
     
@@ -19,10 +19,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     private var managedContext: NSManagedObjectContext!
     private var entity: NSEntityDescription!
     private var frameEntity: NSEntityDescription!
-    
-    // User Defaults
-    private var defaults: UserDefaults!
-    
+
     // Camera
     private let position = AVCaptureDevicePosition.back
     private let quality = AVCaptureSessionPreset640x480
@@ -35,9 +32,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     @IBOutlet weak var cameraView: UIImageView!
     
     private var controller : STSensorController?
-    private var toRGBA : STDepthToRgba?
     private var captureNext = false
-    private var captureTime: Date?
     private var captureLocation: CLLocationCoordinate2D?
 
     override func viewDidLoad() {
@@ -51,9 +46,6 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         managedContext = appDelegate.persistentContainer.viewContext
         entity = NSEntityDescription.entity(forEntityName: Constants.CoreData.Keys.Capture, in: managedContext)
         frameEntity = NSEntityDescription.entity(forEntityName: Constants.CoreData.Keys.Frame, in: managedContext)
-        
-        // Set up user defaults
-        defaults = UserDefaults.standard
         
         // Disable navigation bar
         self.navigationController?.navigationBar.isHidden = true
@@ -174,10 +166,6 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
                 try STSensorController.shared().startStreaming(options: options as [AnyHashable: Any])
                 statusLabel.text = "Streaming"
                 log(name: module, "started streaming")
-                let toRGBAOptions : [AnyHashable: Any] = [
-                    kSTDepthToRgbaStrategyKey : NSNumber(value: STDepthToRgbaStrategy.redToBlueGradient.rawValue as Int)
-                ]
-                toRGBA = STDepthToRgba(options: toRGBAOptions)
                 return true
             } catch let error as NSError {
                 log(name: module, error)
@@ -215,21 +203,23 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         statusLabel.text = "Low Battery"
     }
     
-    func sensorDidOutputSynchronizedDepthFrame(_ depthFrame: STDepthFrame!, colorFrame: STColorFrame!) {
-        if let renderer = toRGBA, let uiImage = imageFromSampleBuffer(colorFrame.sampleBuffer) {
-            // Render depth view
-            let pixels = renderer.convertDepthFrame(toRgba: depthFrame)
-            let depthImage = UIImage.imageFromPixels(pixels!, width: Int(renderer.width), height: Int(renderer.height))!
-            
-            DispatchQueue.main.async { [unowned self] in
+    func sensorDidOutputSynchronizedDepthFrame(_ depth: STDepthFrame!, colorFrame color: STColorFrame!) {
+        // Half the resolution to allow for easy storage
+        let downsizeDepth = depth!
+        let downsizeColor = color!
+        
+        // Display the color frame onto the screen
+        DispatchQueue.main.async { [unowned self] in
+            if let uiImage = UIImage.imageFromSampleBuffer(downsizeColor.sampleBuffer) {
                 self.cameraView.image = uiImage;
             }
+        }
             
-            if (captureNext) {
-                stopStreaming()
-                captureNext = false
-                save(depthImage: depthImage, colorImage: uiImage)
-            }
+        // Save the capture
+        if (captureNext) {
+            stopStreaming()
+            captureNext = false
+            save(depthFrame: downsizeDepth, colorFrame: downsizeColor)
         }
     }
     
@@ -239,34 +229,20 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         statusLabel.text = "Stopped"
     }
     
-    func imageFromSampleBuffer(_ sampleBuffer : CMSampleBuffer) -> UIImage? {
-        if let cvPixels = CMSampleBufferGetImageBuffer(sampleBuffer) {
-            let coreImage = CIImage(cvPixelBuffer: cvPixels)
-            let context = CIContext()
-            let rect = CGRect(x: 0, y: 0, width: CGFloat(CVPixelBufferGetWidth(cvPixels)), height: CGFloat(CVPixelBufferGetHeight(cvPixels)))
-            let cgImage = context.createCGImage(coreImage, from: rect)
-            let image = UIImage(cgImage: cgImage!)
-            return image
-        }
-        return nil
-    }
-    
-    private func save(depthImage dImage: UIImage, colorImage cImage: UIImage) {
+    private func save(depthFrame depth: STDepthFrame, colorFrame color: STColorFrame) {
+        
         log(name: module, "Saving image")
         
-        // Set capture time and location
-        captureTime = Date()
-        
-        // Alert to ask save/discard capture
+        // Ask to save/discard
         let actionController: UIAlertController = UIAlertController(title: "Capture", message: "Save or Discard?", preferredStyle: .alert)
 
-        // Create and add Save action
+        // Save
         let saveAction: UIAlertAction = UIAlertAction(title: "Save", style: .default) { action -> Void in
-            self.describeCapture(depthImage: dImage, colorImage: cImage)
+            self.describeCapture(depthFrame: depth, colorFrame: color)
         }
         actionController.addAction(saveAction)
         
-        // Create and add the Discard action
+        // Discard
         let cancelAction: UIAlertAction = UIAlertAction(title: "Discard", style: .cancel) { action -> Void in
             if STSensorController.shared().isConnected() {
                 self.tryStartStreaming()
@@ -274,11 +250,11 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         }
         actionController.addAction(cancelAction)
         
-        // Present alert
+        // Present
         self.present(actionController, animated: true, completion: nil)
     }
     
-    private func describeCapture(depthImage dImage: UIImage, colorImage cImage: UIImage) {
+    private func describeCapture(depthFrame depth: STDepthFrame, colorFrame color: STColorFrame) {
         log(name: module, "displaying describe capture popup")
         
         // Create text field
@@ -289,25 +265,16 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
         
         // Create and an option action
         let saveAction: UIAlertAction = UIAlertAction(title: "Save", style: .default) { action -> Void in
-            // Get description
-            let description: String = inputTextField?.text ?? ""
-            
-            // Fill in core data values
-            let username = self.defaults.string(forKey: Constants.UserDefaults.Username)
-            let rgbData = UIImagePNGRepresentation(cImage)
-            let depthData = UIImagePNGRepresentation(dImage)
+            let description = inputTextField?.text
+            let time = Date()
             
             // Create capture
             let capture = NSManagedObject(entity: self.entity, insertInto: self.managedContext)
-            capture.setValue(username, forKeyPath: Constants.CoreData.Capture.Username)
-            capture.setValue(self.captureTime, forKeyPath: Constants.CoreData.Capture.CaptureTime)
-            capture.setValue(description, forKeyPath: Constants.CoreData.Capture.Description)
+            ModelWrapper.addCaptureData(managedObject: capture, captureTime: time, zipData: nil, description: description)
             
-            // Create frame
+            // Add frame information
             let frame = NSManagedObject(entity: self.frameEntity, insertInto: self.managedContext)
-            frame.setValue(self.captureTime, forKeyPath: Constants.CoreData.Capture.Frame.Time)
-            frame.setValue(rgbData, forKeyPath: Constants.CoreData.Capture.Frame.Color)
-            frame.setValue(depthData, forKeyPath: Constants.CoreData.Capture.Frame.Depth)
+            ModelWrapper.addFrameData(managedObject: frame, captureTime: time, depthFrame: depth, colorFrame: color, cameraGLProjection: nil, cameraViewPoint: nil)
 
             // Add frame to capture
             let set = NSMutableOrderedSet()
@@ -341,11 +308,6 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     @IBAction func captureButton(_ sender: Any) {
         log(name: module, "Capturing image...");
         captureNext = true
-        
-        // test save
-//        let testrgb = UIImage(named: "testRGB")
-//        let testDepth = UIImage(named: "testDepth")
-//        save(depthImage: testDepth!, colorImage: testrgb!)
     }
 }
 

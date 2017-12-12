@@ -66,6 +66,8 @@ struct Constants {
                 static let Color = "color"
                 static let Depth = "depth"
                 static let Heading = "heading"
+                static let CameraGLProjection = "cameraGLProjection"
+                static let CameraViewPoint = "cameraViewPoint"
                 struct Coordinate {
                     static let Latitude = "latitude"
                     static let Longitude = "longitude"
@@ -84,6 +86,11 @@ struct Constants {
                     static let X = "magnetometerX"
                     static let Y = "magnetometerY"
                     static let Z = "magnetometerZ"
+                }
+                struct Building {
+                    static let Abbr = "buildingAbbr"
+                    static let Name = "buildingName"
+                    static let RoomNumber = "roomNumber"
                 }
             }
         }

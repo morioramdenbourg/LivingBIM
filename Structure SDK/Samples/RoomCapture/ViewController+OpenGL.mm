@@ -197,10 +197,6 @@
             GLKMatrix4 depthCameraPose = [_slamState.tracker lastFrameCameraPose];
             GLKMatrix4 cameraGLProjection = _display.colorCameraGLProjectionMatrix;
             
-            for (int i = 0; i < 16; i++) {
-                NSLog(@"%f", cameraGLProjection.m[i]);
-            }
-            
             // In case we are not using registered depth.
             GLKMatrix4 colorCameraPoseInDepthCoordinateSpace;
             [depthFrame colorCameraPoseInDepthCoordinateFrame:colorCameraPoseInDepthCoordinateSpace.m];
@@ -214,6 +210,9 @@
                                                 alpha:1.0
                              highlightOutOfRangeDepth:false
                                             wireframe:true];
+            
+            // Add projection matrix
+            [wrapper setMatrix:cameraGLProjection cameraViewPoint:cameraViewpoint];
             
             break;
         }
