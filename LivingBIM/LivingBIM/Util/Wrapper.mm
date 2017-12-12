@@ -19,8 +19,8 @@
     NSManagedObject * capture;
     NSMutableSet * frames;
     NSDate * captureTime;
-    GLKMatrix4 cameraGLProjection;
-    GLKMatrix4 cameraViewPoint;
+    GLKMatrix4 projection;
+    GLKMatrix4 viewpoint;
 }
 
 -(id)init
@@ -54,8 +54,8 @@
 
 -(void)setMatrix: (GLKMatrix4) cameraGLProjection cameraViewPoint: (GLKMatrix4) cameraViewPoint
 {
-    cameraGLProjection = cameraGLProjection;
-    cameraViewPoint = cameraViewPoint;
+    projection = cameraGLProjection;
+    viewpoint = cameraViewPoint;
 }
 
 -(void)addFrame: (NSDate*) time depthFrame: (STDepthFrame *) depthFrame colorFrame: (STColorFrame *) colorFrame
@@ -67,7 +67,7 @@
     STDepthFrame * downsizedDepth = depthFrame;
     
     // Add frame information
-    [ ModelWrapper addFrameDataWithManagedObject:frame captureTime:time depthFrame:depthFrame colorFrame:colorFrame cameraGLProjection:cameraGLProjection.m cameraViewPoint: cameraViewPoint.m];
+    [ ModelWrapper addFrameDataWithManagedObject:frame captureTime:time depthFrame:depthFrame colorFrame:colorFrame cameraGLProjection:projection.m cameraViewPoint: viewpoint.m];
     [ frames addObject:frame ];
 }
 @end
