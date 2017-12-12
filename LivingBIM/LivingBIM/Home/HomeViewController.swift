@@ -89,18 +89,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         else {
             askUsername(viewController: self) { (text: String) in
                 self.usernameLabel.text = text
-                
-                // Ask for building information if not already there
-                if let abbr = getBuildingAbbr(), let name = getBuildingName(), let room = getRoomNumber() {
-                    let lbl = name + " (" + abbr + ") " + " - " + room
-                    self.buildingLabel.text = lbl
-                }
-                else {
-                    askBuildingInfo(viewController: self) { (abbr, name, room) in
-                        let lbl = name + " (" + abbr + ") " + " - " + room
-                        self.buildingLabel.text = lbl
-                    }
-                }
+            }
+        }
+        
+        // Ask for building information if not already there
+        if let abbr = getBuildingAbbr(), let name = getBuildingName(), let room = getRoomNumber() {
+            let lbl = name + " (" + abbr + ") " + " - " + room
+            self.buildingLabel.text = lbl
+        }
+        else {
+            askBuildingInfo(viewController: self) { (abbr, name, room) in
+                let lbl = name + " (" + abbr + ") " + " - " + room
+                self.buildingLabel.text = lbl
             }
         }
         
