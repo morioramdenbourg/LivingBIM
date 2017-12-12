@@ -34,6 +34,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
     private var controller : STSensorController?
     private var captureNext = false
     private var captureLocation: CLLocationCoordinate2D?
+    private var toRGBA : STDepthToRgba?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,6 +169,10 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
                 try STSensorController.shared().startStreaming(options: options as [AnyHashable: Any])
                 statusLabel.text = "Streaming"
                 log(name: module, "started streaming")
+                let toRGBAOptions : [AnyHashable: Any] = [
+                    kSTDepthToRgbaStrategyKey : NSNumber(value: STDepthToRgbaStrategy.redToBlueGradient.rawValue as Int)
+                ]
+                toRGBA = STDepthToRgba(options: toRGBAOptions)
                 return true
             } catch let error as NSError {
                 log(name: module, error)
@@ -219,6 +224,16 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
             
         // Save the capture
         if (captureNext) {
+            
+//            if let renderer = toRGBA {
+//                let pixels = renderer.convertDepthFrame(toRgba: depth)
+//                //            pixels.
+////                print(pixels)
+//                for i in 0..<(depth.height * depth.width) {
+//                    print(pixels![Int(i)])
+//                }
+//            }
+            
             stopStreaming()
             captureNext = false
             save(depthFrame: downsizeDepth, colorFrame: downsizeColor)

@@ -134,17 +134,38 @@ extension ModelWrapper {
             managedObject.setValue(rgbData, forKey: Constants.CoreData.Capture.Frame.Color)
         }
         
-        DispatchQueue.global(qos: .background).async {
-            // Depth
+//        DispatchQueue.global(qos: .background).async {
+//            // Depth
+//            if let depth = depth {
+//                let depthData = NSKeyedArchiver.archivedData(withRootObject: depth.converToDepthsArray() as Any)
+//                managedObject.setValue(depthData, forKey: Constants.CoreData.Capture.Frame.Depth)
+//            }
+//        }
+        
+        let background: (() -> Void) = {
             if let depth = depth {
                 let depthData = NSKeyedArchiver.archivedData(withRootObject: depth.converToDepthsArray() as Any)
                 managedObject.setValue(depthData, forKey: Constants.CoreData.Capture.Frame.Depth)
             }
         }
+        DispatchQueue.background(delay: 0.0, background: background, completion: nil)
         
         // Time
         if let time = time {
             managedObject.setValue(time, forKey: Constants.CoreData.Capture.Frame.Time)
+        }
+    }
+}
+
+extension DispatchQueue {
+    static func background(delay: Double = 0.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
+        DispatchQueue.global(qos: .background).async {
+            background?()
+            if let completion = completion {
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+                    completion()
+                })
+            }
         }
     }
 }

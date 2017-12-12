@@ -568,16 +568,21 @@ enum MeasurementState {
     // Upload all the data in the wrapper to core data
     NSData* zipData = [NSData dataWithContentsOfFile:zipFilePath];
     // TODO: change to the time the button is pressed
-    [wrapper save:zipData description: description];
+    [_wrapper save:zipData description: description];
+    [_wrapper explicitDealloc];
+//    [_wrapper reset];
     
+    _wrapper = nil;
+    zipData = nil;
+        
     // Dismiss to the home view controller
     MeshViewController *mvc = self;
     while (mvc.presentingViewController) {
+        [mvc dismissViewControllerAnimated:YES completion:^{
+            NSLog (@"Dismissed to home successfully.");
+        }];
         mvc = mvc.presentingViewController;
     }
-    [mvc dismissViewControllerAnimated:YES completion:^{
-        NSLog (@"Dismissed to home successfully.");
-    }];
 }
 
 #pragma mark - Rendering

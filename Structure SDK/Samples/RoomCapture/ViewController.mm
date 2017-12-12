@@ -145,7 +145,7 @@
     _meshViewController = [[MeshViewController alloc] initWithNibName:@"MeshView" bundle:nil];
     _meshViewController.delegate = self;
     NSLog(@"Adding wrapper to meshviewcontroller");
-    _meshViewController->wrapper = wrapper;
+    _meshViewController.wrapper = wrapper;
     _meshViewNavigationController = [[UINavigationController alloc] initWithRootViewController:_meshViewController];
 }
 

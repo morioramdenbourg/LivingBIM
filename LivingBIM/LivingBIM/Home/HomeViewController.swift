@@ -115,6 +115,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Fetching from core data
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Constants.CoreData.Keys.Capture)
         fetchRequest.returnsObjectsAsFaults = false // TODO: remove for debug
+        fetchRequest.propertiesToFetch = [Constants.CoreData.Capture.Username, Constants.CoreData.Capture.CaptureTime]
         do {
             captures = try managedContext.fetch(fetchRequest)
             reloadCheck()
@@ -149,9 +150,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Grab data
         let username = capture.value(forKeyPath: Constants.CoreData.Capture.Username) as? String
         let timeCaptured = capture.value(forKeyPath: Constants.CoreData.Capture.CaptureTime) as? Date
-        let frames = capture.value(forKeyPath: Constants.CoreData.Keys.CaptureToFrame) as? NSOrderedSet
-        let first = frames?.firstObject as? NSManagedObject // Get first frame
-        let rgb = first?.value(forKey: Constants.CoreData.Capture.Frame.Color) as? Data
+    //    let frames = capture.value(forKeyPath: Constants.CoreData.Keys.CaptureToFrame) as? NSOrderedSet
+    //    let first = frames?.firstObject as? NSManagedObject // Get first frame
+    //    let rgb = first?.value(forKey: Constants.CoreData.Capture.Frame.Color) as? Data
         
         // Put data and first frame on the cell
         cell.usernameLabel.text = username
@@ -161,14 +162,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.imgView.image = nil
         cell.tag = indexPath.row
         
-        // Display the first frame
-        DispatchQueue.main.async { _ in
-            if cell.tag == indexPath.row {
-                if let data = rgb {
-                    cell.imgView.image = UIImage(data: data)
-                }
-            }
-        }
+//        // Display the first frame
+//        DispatchQueue.main.async { _ in
+//            if cell.tag == indexPath.row {
+//                if let data = rgb {
+//                    cell.imgView.image = UIImage(data: data)
+//                }
+//            }
+//        }
     
         return cell
         
@@ -185,26 +186,27 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             // Delete from database
-            let capture = captures?[indexPath.row]
-            if let capture = capture {
+            if let capture = captures?.remove(at: indexPath.row) {
+                // Display the spinner
+                self.view.addSubview(spinner!)
                 managedContext?.delete(capture)
+                do {
+                    try managedContext?.save()
+                } catch let error as NSError {
+                    print("failed to delete row")
+                    print(error)
+                }
+                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                spinner?.removeFromSuperview()
+                if (self.captures?.count == 0) {
+                    buttonOutlet.isEnabled = false
+                }
+                else {
+                    buttonOutlet.isEnabled = true
+                }
             }
-            captures?.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
         }
     }
-    
-    //[self.managedObjectContext deleteObject:yourManagedObject];
-
-    
-//    // Swipe to delete.
-//    - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//    {
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//    [_chats removeObjectAtIndex:indexPath.row];
-//    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-//    }
-//    }
     
     // Upload to Box
     @IBAction func uploadButton(_ sender: Any) {
@@ -487,10 +489,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.CoreData.Keys.Capture)
                     let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
                     do {
+                        self.captures?.removeAll()
                         try managedContext.execute(deleteRequest)
                         
                         // Delete the in-memory array and reload table
-                        self.captures?.removeAll()
                         self.reloadCheck()
                     } catch let error as NSError {
                         // Handle error
@@ -507,9 +509,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func modelButton(_ sender: Any) {
         log(name: module, "going to model view")
-        let w: ModelWrapper = ModelWrapper()
-        let vc = w.getVC()
-        self.present(vc as! UIViewController, animated: true, completion: nil)
+        var w: ModelWrapper? = ModelWrapper()
+        var vc = w?.getVC()
+        self.present(vc as! UIViewController, animated: true, completion: {
+            vc = nil
+            w = nil
+        })
     }
     
     override func didReceiveMemoryWarning() {

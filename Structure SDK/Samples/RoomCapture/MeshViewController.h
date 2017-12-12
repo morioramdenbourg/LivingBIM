@@ -20,8 +20,10 @@
 
 @interface MeshViewController : UIViewController <UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 {
-    @public ModelWrapper* wrapper;
+//    @public ModelWrapper* wrapper;
 }
+
+@property (weak, nonatomic) ModelWrapper *wrapper;
 
 @property (nonatomic, assign) id<MeshViewDelegate> delegate;
 
