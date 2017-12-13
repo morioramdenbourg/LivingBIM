@@ -227,7 +227,7 @@ class CaptureFrameViewController: UIViewController, STSensorControllerDelegate, 
             
 //            if let renderer = toRGBA {
 //                let pixels = renderer.convertDepthFrame(toRgba: depth)
-//                //            pixels.
+//
 ////                print(pixels)
 //                for i in 0..<(depth.height * depth.width) {
 //                    print(pixels![Int(i)])

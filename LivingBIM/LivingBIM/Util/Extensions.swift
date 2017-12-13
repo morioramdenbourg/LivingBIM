@@ -9,6 +9,7 @@
 import Foundation
 import CoreLocation
 import CoreData
+import SwiftyJSON
 
 // Date Extension
 extension Date {
@@ -129,7 +130,9 @@ extension ModelWrapper {
         
         // Color
         if let color = color {
-            let rgbData = UIImage.dataFromSampleBuffer(color.sampleBuffer)
+//            let rgbData = UIImage.dataFromSampleBuffer(color.sampleBuffer)
+            let rgbFrame = UIImage.imageFromSampleBuffer(color.sampleBuffer)
+            let rgbData = rgbFrame?.fromPNGToData()
             managedObject.setValue(rgbData, forKey: Constants.CoreData.Capture.Frame.Color)
         }
         
@@ -145,10 +148,12 @@ extension ModelWrapper {
 //            DispatchQueue.background(delay: 0.0, background: background)
 //        }
         
-//        if let depth = depth {
-//            let depthData = NSKeyedArchiver.archivedData(withRootObject: depth.convert() as Any)
-//            managedObject.setValue(depthData, forKey: Constants.CoreData.Capture.Frame.Depth)
-//        }
+        if let depth = depth {
+            let length = Int(depth.height * depth.width)
+            let depthData = Data(bytes: depth.depthInMillimeters, count: length)
+            managedObject.setValue(depthData, forKey: Constants.CoreData.Capture.Frame.Depth)
+            managedObject.setValue(length, forKey: "lengthDepth")
+        }
         
         // Time
         if let time = time {
@@ -159,7 +164,7 @@ extension ModelWrapper {
 
 extension DispatchQueue {
     static func background(delay: Double, background: (()->Void)?) {
-        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + delay) {
+        DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + delay) {
             background?()
         }
     }
@@ -219,6 +224,7 @@ extension STDepthFrame {
         }
         var depths = [Float]()
         let length = self.height * self.width
+        depths.reserveCapacity(Int(length))
         for index in 0..<length {
             depths.append(depthsPointer[Int(index)])
         }

@@ -30,6 +30,7 @@
     
     // Core data
     managedContext = AppDelegate.delegate.persistentContainer.viewContext;
+    [ managedContext setRetainsRegisteredObjects:YES];
     capture = [NSEntityDescription insertNewObjectForEntityForName: @"Capture" inManagedObjectContext: managedContext];
 //    frames = [capture mutableSetValueForKey:@"Frames"];
     
@@ -60,7 +61,8 @@
 
 -(void)explicitDealloc
 {
-    [ managedContext reset ];
+//    [ managedContext reset ];
+    managedContext = nil;
     NSLog(@"in explicit dealloc");
 }
 

@@ -115,7 +115,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Fetching from core data
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Constants.CoreData.Keys.Capture)
         fetchRequest.returnsObjectsAsFaults = false // TODO: remove for debug
-        fetchRequest.propertiesToFetch = [Constants.CoreData.Capture.Username, Constants.CoreData.Capture.CaptureTime]
         do {
             captures = try managedContext.fetch(fetchRequest)
             reloadCheck()
@@ -295,11 +294,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         for (index, capture) in captures.enumerated() {
             
             // Grab from core data
-            let username = capture.value(forKeyPath: Constants.CoreData.Capture.Username) as? String ?? "<invalid_name>"
-            let description = capture.value(forKeyPath: Constants.CoreData.Capture.Description) as? String ?? ""
-            let captureTime = capture.value(forKeyPath: Constants.CoreData.Capture.CaptureTime) as? Date ?? Date()
-            let meshZip = capture.value(forKeyPath: Constants.CoreData.Capture.Mesh) as? Data
-            let frames = capture.value(forKeyPath: Constants.CoreData.Keys.CaptureToFrame) as? NSOrderedSet
+            let username = capture.value(forKey: Constants.CoreData.Capture.Username) as? String ?? "<invalid_name>"
+            let description = capture.value(forKey: Constants.CoreData.Capture.Description) as? String ?? ""
+            let captureTime = capture.value(forKey: Constants.CoreData.Capture.CaptureTime) as? Date ?? Date()
+            let meshZip = capture.value(forKey: Constants.CoreData.Capture.Mesh) as? Data
+            let fs = capture.value(forKey: Constants.CoreData.Keys.CaptureToFrame) as? NSOrderedSet
+            
+            print(fs)
             
             // Create the folder to hold the data
             let format = "yyy-MM-dd_HH:mm:ss"
@@ -341,7 +342,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                             let framesFolder = framesFolder!
                             
                             // Create folder for each individual frame and its metadata
-                            let framesArr = frames?.array as! [NSManagedObject]
+                            let framesArr = fs?.array as! [NSManagedObject]
                             for (index, frame) in framesArr.enumerated() {
                                 let frameFolderName = "Frame" + String(index)
                                 let frameFolderRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: frameFolderName, parentFolderID: framesFolder.modelID)
@@ -350,7 +351,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                     if (frameError == nil) {
                                         let frameFolder = frameFolder!
                                         
-                                        log(name: module, "uploading data to folder:", frameFolder.name!)
+//                                        log(name: module, "uploading data to folder:", frameFolder.name!)
                                         
                                         // Add the rgb photo
                                         if let rgb = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Color) as? Data {
@@ -363,11 +364,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                         // Add depth as an array
                                         if let depth = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Depth) as? Data {
                                             var depthJSON = JSON()
-                                            let unarchiveObject = NSKeyedUnarchiver.unarchiveObject(with: depth)
-                                            if var depthArray = unarchiveObject as? [Float] {
-                                                depthArray = depthArray.map{$0.isNaN ? 0: $0}
-                                                depthJSON["depth"].arrayObject = depthArray
-                                            }
+                                         //   print("IN HERE:", depth)
+//                                            let value = data.withUnsafeBytes { (ptr: UnsafePointer<Double>) -> Double in
+//                                                return ptr.pointee
+//                                            }
+//                                            print(value) // 42.13
+                                            var d: [Float] = depth.toArray(type: Float.self)
+                                            d = d.map {$0.isNaN ? 0 : $0}
+                                            depthJSON["depth"].arrayObject = d
+//                                                    var arr: [Float] = [Float]()
+//                                                    arr.reserveCapacity(length)
+//                                                    print(length)
+//                                                    for i in 0..<length {
+//                                                        print("i:", i, "number:", ptr[i])
+//                                                        print("isnan:", ptr[i].isNaN)
+//                                                        arr.append(ptr[i].isNaN ? 0 : ptr[i])
+//                                                    }
+//                                                    depthJSON["depth"].arrayObject = arr
+//                                                })
+                                            
+                                        
                                             do {
                                                 let rawDepth = try depthJSON.rawData()
                                                 contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rawDepth, fileName: "depth.json").perform(progress: nil, completion: uploadCheck)
@@ -527,6 +543,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             if let destination = segue.destination as? CaptureCollectionViewController, let index = tableView.indexPathForSelectedRow?.row {
                 destination.capture = captures?[index]
             }
+        }
+    }
+}
+
+extension Data {
+    
+    init<T>(fromArray values: [T]) {
+        var values = values
+        self.init(buffer: UnsafeBufferPointer(start: &values, count: values.count))
+    }
+    
+    func toArray<T>(type: T.Type) -> [T] {
+        return self.withUnsafeBytes {
+            [T](UnsafeBufferPointer(start: $0, count: self.count/MemoryLayout<T>.stride))
         }
     }
 }
