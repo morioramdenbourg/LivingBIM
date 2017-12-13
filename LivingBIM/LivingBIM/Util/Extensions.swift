@@ -129,26 +129,26 @@ extension ModelWrapper {
         
         // Color
         if let color = color {
-            let rgbImg = UIImage.imageFromSampleBuffer(color.sampleBuffer)
-            let rgbData = rgbImg?.fromPNGToData()
+            let rgbData = UIImage.dataFromSampleBuffer(color.sampleBuffer)
             managedObject.setValue(rgbData, forKey: Constants.CoreData.Capture.Frame.Color)
         }
         
-//        DispatchQueue.global(qos: .background).async {
-//            // Depth
+//        // Depth
+//        let background = {
 //            if let depth = depth {
 //                let depthData = NSKeyedArchiver.archivedData(withRootObject: depth.converToDepthsArray() as Any)
 //                managedObject.setValue(depthData, forKey: Constants.CoreData.Capture.Frame.Depth)
 //            }
 //        }
+//
+//        autoreleasepool {
+//            DispatchQueue.background(delay: 0.0, background: background)
+//        }
         
-        let background: (() -> Void) = {
-            if let depth = depth {
-                let depthData = NSKeyedArchiver.archivedData(withRootObject: depth.converToDepthsArray() as Any)
-                managedObject.setValue(depthData, forKey: Constants.CoreData.Capture.Frame.Depth)
-            }
-        }
-        DispatchQueue.background(delay: 0.0, background: background, completion: nil)
+//        if let depth = depth {
+//            let depthData = NSKeyedArchiver.archivedData(withRootObject: depth.convert() as Any)
+//            managedObject.setValue(depthData, forKey: Constants.CoreData.Capture.Frame.Depth)
+//        }
         
         // Time
         if let time = time {
@@ -158,19 +158,14 @@ extension ModelWrapper {
 }
 
 extension DispatchQueue {
-    static func background(delay: Double = 0.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
-        DispatchQueue.global(qos: .background).async {
+    static func background(delay: Double, background: (()->Void)?) {
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + delay) {
             background?()
-            if let completion = completion {
-                DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-                    completion()
-                })
-            }
         }
     }
 }
 
-// Convert an UnsafeMutablePointer given by the structure io into an array for core data to store
+//// Convert an UnsafeMutablePointer given by the structure io into an array for core data to store
 func convertCameraToArray(_ array: UnsafeMutablePointer<Float>) -> [Float] {
     var points = [Float]()
     let length = 16
@@ -196,6 +191,18 @@ extension UIImage {
         return nil
     }
     
+    // Convert sample buffer to data
+    static func dataFromSampleBuffer(_ sampleBuffer : CMSampleBuffer) -> Data? {
+        let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
+        CVPixelBufferLockBaseAddress(imageBuffer!, CVPixelBufferLockFlags(rawValue: 0))
+        let bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer!)
+        let height = CVPixelBufferGetHeight(imageBuffer!)
+        let src_buff = CVPixelBufferGetBaseAddress(imageBuffer!)
+        let data = NSData(bytes: src_buff, length: bytesPerRow * height)
+        CVPixelBufferUnlockBaseAddress(imageBuffer!, CVPixelBufferLockFlags(rawValue: 0))
+        return data as Data?
+    }
+    
     // Convert a PNG image to binary data
     func fromPNGToData() -> Data? {
         return UIImagePNGRepresentation(self)
@@ -216,5 +223,13 @@ extension STDepthFrame {
             depths.append(depthsPointer[Int(index)])
         }
         return depths
+    }
+    
+    func convert() -> [Float]? {
+        guard let depthsPointer = self.depthInMillimeters else {
+            return nil
+        }
+        let buffer = UnsafeBufferPointer(start: depthsPointer, count: Int(self.height * self.width))
+        return Array(buffer)
     }
 }

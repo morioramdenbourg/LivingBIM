@@ -60,7 +60,7 @@
 
 -(void)explicitDealloc
 {
-    managedContext
+    [ managedContext reset ];
     NSLog(@"in explicit dealloc");
 }
 
