@@ -131,9 +131,17 @@ extension ModelWrapper {
         // Color
         if let color = color {
 //            let rgbData = UIImage.dataFromSampleBuffer(color.sampleBuffer)
-            let rgbFrame = UIImage.imageFromSampleBuffer(color.sampleBuffer)
-            let rgbData = rgbFrame?.fromPNGToData()
+//            let rgbFrame = UIImage.imageFromSampleBuffer(color.sampleBuffer)
+//            let rgbData = rgbFrame?.fromPNGToData()
+            
+//            AVCaptureStillImageOu
+            let buff = CMSampleBufferGetImageBuffer(color.sampleBuffer)
+            let ciImage = CIImage(cvPixelBuffer: buff!)
+            let context = CIContext()
+            let colorSpace = CGColorSpaceCreateDeviceRGB()
+            let rgbData = context.jpegRepresentation(of: ciImage, colorSpace: colorSpace, options:[:])
             managedObject.setValue(rgbData, forKey: Constants.CoreData.Capture.Frame.Color)
+//            let image = UIImage(data: imageData) //  Here you have UIImage
         }
         
 //        // Depth

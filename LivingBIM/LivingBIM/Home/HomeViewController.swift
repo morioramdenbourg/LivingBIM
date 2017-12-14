@@ -17,7 +17,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Core Data
     private var appDelegate: AppDelegate?
-    private var managedContext: NSManagedObjectContext?
+    private var managedContext: NSManagedObjectContext!
     private var entity: NSEntityDescription?
     
     // Other variables
@@ -149,9 +149,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Grab data
         let username = capture.value(forKeyPath: Constants.CoreData.Capture.Username) as? String
         let timeCaptured = capture.value(forKeyPath: Constants.CoreData.Capture.CaptureTime) as? Date
-    //    let frames = capture.value(forKeyPath: Constants.CoreData.Keys.CaptureToFrame) as? NSOrderedSet
-    //    let first = frames?.firstObject as? NSManagedObject // Get first frame
-    //    let rgb = first?.value(forKey: Constants.CoreData.Capture.Frame.Color) as? Data
         
         // Put data and first frame on the cell
         cell.usernameLabel.text = username
@@ -160,15 +157,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Hack - set to nil for async operations and add tag
         cell.imgView.image = nil
         cell.tag = indexPath.row
-        
-//        // Display the first frame
-//        DispatchQueue.main.async { _ in
-//            if cell.tag == indexPath.row {
-//                if let data = rgb {
-//                    cell.imgView.image = UIImage(data: data)
-//                }
-//            }
-//        }
     
         return cell
         
@@ -235,14 +223,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     // Find the folder
                     if (items != nil && error == nil) {
-                        let items = items as! [BOXFolder]
-                        for item in items {
-                            if (item.name == self.rootFolderName) {
-                                modelID = item.modelID
+                        if let items = items as? [BOXFolder] {
+                            for item in items {
+                                if (item.name == self.rootFolderName) {
+                                    modelID = item.modelID
+                                }
                             }
                         }
                     }
-
+                    
                     // If the file is not there, then create it
                     if (modelID == nil) {
                         let folderCreateRequest: BOXFolderCreateRequest = contentClient.folderCreateRequest(withName: self.rootFolderName, parentFolderID: BOXAPIFolderIDRoot)
@@ -286,12 +275,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             else {
                 log(name: module, "error while uploading")
-                log(name: module, error)
+                log(name: module, error as Any)
             }
         }
         
+        print("CAPTURES:", captures)
+        
         // Iterate through the captures
-        for (index, capture) in captures.enumerated() {
+        for (captureIndex, capture) in captures.enumerated() {
             
             // Grab from core data
             let username = capture.value(forKey: Constants.CoreData.Capture.Username) as? String ?? "<invalid_name>"
@@ -299,8 +290,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let captureTime = capture.value(forKey: Constants.CoreData.Capture.CaptureTime) as? Date ?? Date()
             let meshZip = capture.value(forKey: Constants.CoreData.Capture.Mesh) as? Data
             let fs = capture.value(forKey: Constants.CoreData.Keys.CaptureToFrame) as? NSOrderedSet
-            
-            print(fs)
             
             // Create the folder to hold the data
             let format = "yyy-MM-dd_HH:mm:ss"
@@ -350,49 +339,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 frameFolderRequest.perform(completion: { (frameFolder: BOXFolder?, frameError: Error?) in
                                     if (frameError == nil) {
                                         let frameFolder = frameFolder!
-                                        
-//                                        log(name: module, "uploading data to folder:", frameFolder.name!)
-                                        
-                                        // Add the rgb photo
-                                        if let rgb = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Color) as? Data {
-                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgb, fileName: "color.png").perform(progress: nil, completion: uploadCheck)
-                                        }
 
                                         // Upload metadata as a json file
                                         var frameMetadata = JSON()
-                                        
-                                        // Add depth as an array
-                                        if let depth = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Depth) as? Data {
-                                            var depthJSON = JSON()
-                                         //   print("IN HERE:", depth)
-//                                            let value = data.withUnsafeBytes { (ptr: UnsafePointer<Double>) -> Double in
-//                                                return ptr.pointee
-//                                            }
-//                                            print(value) // 42.13
-                                            var d: [Float] = depth.toArray(type: Float.self)
-                                            d = d.map {$0.isNaN ? 0 : $0}
-                                            depthJSON["depth"].arrayObject = d
-//                                                    var arr: [Float] = [Float]()
-//                                                    arr.reserveCapacity(length)
-//                                                    print(length)
-//                                                    for i in 0..<length {
-//                                                        print("i:", i, "number:", ptr[i])
-//                                                        print("isnan:", ptr[i].isNaN)
-//                                                        arr.append(ptr[i].isNaN ? 0 : ptr[i])
-//                                                    }
-//                                                    depthJSON["depth"].arrayObject = arr
-//                                                })
-                                            
-                                        
-                                            do {
-                                                let rawDepth = try depthJSON.rawData()
-                                                contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rawDepth, fileName: "depth.json").perform(progress: nil, completion: uploadCheck)
-                                            }
-                                            catch let error as NSError {
-                                                log(name: module, "unable to upload metadata file to:", folder.name)
-                                                log(name: module, error)
-                                            }
-                                        }
                                         
                                         // Add projection matrix
                                         if let projection = frame.value(forKey: Constants.CoreData.Capture.Frame.CameraGLProjection) as? Data {
@@ -471,11 +420,45 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                             frameMetadata["magnetometer"] = magnetometer
                                         }
                                         
-//                                        print("FRAME:", frameMetadata)
-
+                                        // Upload json file
                                         do {
                                             let raw = try frameMetadata.rawData()
-                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: raw, fileName: ".metadata.json").perform(progress: nil, completion: uploadCheck)
+                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: raw, fileName: ".metadata.json").perform(progress: nil, completion: {(file: BOXFile?, error: Error?) in
+                                                    if (error == nil && file != nil) {
+                                                        // Add the rgb photo
+                                                        if let rgb = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Color) as? Data {
+                                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgb, fileName: "color.jpg").perform(progress: nil, completion: {(file: BOXFile?, error: Error?) in
+                                                                if (error == nil && file != nil) {
+                                                                    // Add depth as an array
+                                                                    if let depth = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Depth) as? Data {
+                                                                        var depthJSON = JSON()
+                                                                        var d: [Float] = depth.toArray(type: Float.self)
+                                                                        d = d.map {$0.isNaN ? 0 : $0}
+                                                                        depthJSON["depth"].arrayObject = d
+                                                                        do {
+                                                                            let rawDepth = try depthJSON.rawData()
+                                                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rawDepth, fileName: "depth.json").perform(progress: nil, completion: {(file: BOXFile?, error: Error?) in
+                                                                                
+                                                                                // Delete the frame
+                                                                                print("deleting frame:", frameFolderName)
+                                                                                self.managedContext.delete(frame)
+                                                                                do {
+                                                                                    try self.managedContext?.save()
+                                                                                } catch let error as NSError {
+                                                                                    print("failed to delete row")
+                                                                                    print(error)
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                        catch let error as NSError {
+                                                                            log(name: module, "unable to upload metadata file to:", folder.name)
+                                                                            log(name: module, error)
+                                                                        }
+                                                                    }
+                                                                }
+                                                            })
+                                                        }
+                                                }})
                                         }
                                         catch let error as NSError {
                                             log(name: module, "unable to upload metadata file to:", folder.name)
@@ -491,36 +474,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     log(name: module, "error creating folder:", folderName)
                     log(name: module, error!)
                 }
-                
-                // If last element has been uploaded, then remove all
-                if (index == captures.count - 1) {
-                    log(name: module, "Deleting the captures")
-                    
-                    // Get managed object
-                    guard let managedContext = self.managedContext else {
-                        return
-                    }
-                    
-                    // Perform delete
-                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.CoreData.Keys.Capture)
-                    let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-                    do {
-                        self.captures?.removeAll()
-                        try managedContext.execute(deleteRequest)
-                        
-                        // Delete the in-memory array and reload table
-                        self.reloadCheck()
-                    } catch let error as NSError {
-                        // Handle error
-                        log(name: module, "Error while deleting objects")
-                        log(name: module, error)
-                    }
-                    
-                    // Remove spinner
-                    self.spinner?.removeFromSuperview()
-                }
             })
+            // Delete the capture
+//            self.managedContext.delete(capture)
+//            do {
+//                try self.managedContext?.save()
+//            } catch let error as NSError {
+//                print("failed to delete row")
+//                print(error)
+//            }
+//            print("DELETING CAPTURE")
+//            self.reloadCheck()
         }
+        
     }
     
     @IBAction func modelButton(_ sender: Any) {

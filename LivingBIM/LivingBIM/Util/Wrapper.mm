@@ -17,7 +17,6 @@
     ViewController * vc;
     NSManagedObjectContext * managedContext;
     NSManagedObject * capture;
-//    NSMutableSet * frames;
     NSDate * captureTime;
     GLKMatrix4 projection;
     GLKMatrix4 viewpoint;
@@ -30,9 +29,7 @@
     
     // Core data
     managedContext = AppDelegate.delegate.persistentContainer.viewContext;
-    [ managedContext setRetainsRegisteredObjects:YES];
     capture = [NSEntityDescription insertNewObjectForEntityForName: @"Capture" inManagedObjectContext: managedContext];
-//    frames = [capture mutableSetValueForKey:@"Frames"];
     
     return self;
 }
@@ -47,6 +44,8 @@
     NSLog(@"saving");
     [ModelWrapper addCaptureDataWithManagedObject:capture captureTime:captureTime zipData:zipData description:description];
     [capture.managedObjectContext save: nil];
+    capture = nil;
+    
 }
 
 -(NSObject*)getVC
@@ -61,9 +60,10 @@
 
 -(void)explicitDealloc
 {
-//    [ managedContext reset ];
-    managedContext = nil;
+    [ managedContext reset ];
     NSLog(@"in explicit dealloc");
+    managedContext = nil;
+    vc = nil;
 }
 
 -(void)setMatrix: (GLKMatrix4) cameraGLProjection cameraViewPoint: (GLKMatrix4) cameraViewPoint
@@ -74,7 +74,6 @@
 
 -(void)reset
 {
-//    [ AppDelegate resetToHome ];
 }
 
 -(void)addFrame: (NSDate*) time depthFrame: (STDepthFrame *) depthFrame colorFrame: (STColorFrame *) colorFrame
@@ -89,7 +88,6 @@
     [ ModelWrapper addFrameDataWithManagedObject:frame captureTime:time depthFrame:downsizedDepth colorFrame:downsizedColor cameraGLProjection:projection.m cameraViewPoint: viewpoint.m];
     NSMutableSet * test = [capture mutableSetValueForKey:@"Frames"];
     [ test addObject: frame ];
-//    [ frames addObject:frame ];
 }
 @end
 
