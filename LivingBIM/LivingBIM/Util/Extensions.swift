@@ -139,7 +139,8 @@ extension ModelWrapper {
             let ciImage = CIImage(cvPixelBuffer: buff!)
             let context = CIContext()
             let colorSpace = CGColorSpaceCreateDeviceRGB()
-            let rgbData = context.jpegRepresentation(of: ciImage, colorSpace: colorSpace, options:[:])
+            let rgbData = context.pngRepresentation(of: ciImage, format: kCIFormatRGBA8, colorSpace: colorSpace, options:[:])
+//            let rgbData = context.jpegRepresentation(of: ciImage, colorSpace: colorSpace, options:[:])
             managedObject.setValue(rgbData, forKey: Constants.CoreData.Capture.Frame.Color)
 //            let image = UIImage(data: imageData) //  Here you have UIImage
         }

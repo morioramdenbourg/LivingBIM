@@ -37,6 +37,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var buildingLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     
     @IBAction func setLocationAction(_ sender: Any) {
         askBuildingInfo(viewController: self) { (abbr, name, room) in
@@ -341,7 +342,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                             let sizeCheck = { (file: BOXFile?, error: Error?) in
                                 self.count[captureIndex] += 1
                                 print("COUNT:", self.count[captureIndex], "FRAMES:", framesArr.count, "CAPTURE#:", captureIndex)
-                                if self.count[captureIndex] == (framesArr.count * 3) {
+                                let realCount = framesArr.count * 3
+                                self.statusLabel.text = String(format: "%.2f", (Double(self.count[captureIndex]) / Double(realCount)) * 100.0) + "% for capture: " + String(captureIndex)
+                                if self.count[captureIndex] == realCount {
+                                    self.statusLabel.text = "Done with capture: " + String(captureIndex)
                                     self.managedContext.delete(capture)
                                     do {
                                         try self.managedContext?.save()
@@ -356,6 +360,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                     self.reloadCheck()
                                     if (captures.count == 0) {
                                         self.spinner?.removeFromSuperview()
+                                        self.statusLabel.text = "Done"
                                     }
                                 }
                             }
@@ -466,7 +471,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                         
                                         // Add the rgb photo
                                         if let rgb = frame.value(forKeyPath: Constants.CoreData.Capture.Frame.Color) as? Data {
-                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgb, fileName: "color.jpg").perform(progress: nil, completion: sizeCheck)
+                                            print("rgb data", rgb)
+                                            contentClient.fileUploadRequestToFolder(withID: frameFolder.modelID, from: rgb, fileName: "color.png").perform(progress: nil, completion: sizeCheck)
                                         }
                                         
                                         // Upload json file

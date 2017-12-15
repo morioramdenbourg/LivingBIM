@@ -296,6 +296,13 @@
                                         <rect key="frame" x="-19" y="-17" width="41" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="liw-2g-iaq">
+                                        <rect key="frame" x="277" y="-32" width="441" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -323,6 +330,7 @@
                         <outlet property="buildingLabel" destination="k9o-j0-zLi" id="wkt-dl-u81"/>
                         <outlet property="buttonOutlet" destination="YNa-LG-HOF" id="Hd2-WV-lei"/>
                         <outlet property="locationLabel" destination="rSu-Xo-HgJ" id="RIG-3J-I5g"/>
+                        <outlet property="statusLabel" destination="liw-2g-iaq" id="1VU-4O-E6Q"/>
                         <outlet property="tableView" destination="CnO-Hq-KHM" id="6DE-bl-Q6s"/>
                         <outlet property="usernameLabel" destination="b3X-wS-udW" id="qeP-Vu-jcQ"/>
                     </connections>
