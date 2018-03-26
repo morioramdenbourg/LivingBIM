@@ -159,7 +159,7 @@ extension ModelWrapper {
         
         if let depth = depth {
             let length = Int(depth.height * depth.width)
-            let depthData = Data(bytes: depth.depthInMillimeters, count: length)
+            let depthData = Data(bytes: depth.depthInMillimeters, count: 4*length)
             managedObject.setValue(depthData, forKey: Constants.CoreData.Capture.Frame.Depth)
             managedObject.setValue(length, forKey: "lengthDepth")
         }
